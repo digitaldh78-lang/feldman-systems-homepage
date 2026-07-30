@@ -7,6 +7,18 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var deskHover = window.matchMedia('(hover: hover) and (min-width: 1000px)').matches;
 
+  /* Host themes (WoodMart) set html{overflow-x:hidden}, which turns the root into
+     a scroll container and silently breaks position:sticky — the pinned steps
+     section would just scroll away and leave dead space. A stylesheet override
+     loses the cascade here, so force it on the element itself. `clip` blocks
+     sideways overflow without creating a scroll container. */
+  try {
+    var de = document.documentElement;
+    if (window.getComputedStyle(de).overflowX === 'hidden') {
+      de.style.setProperty('overflow-x', 'clip', 'important');
+    }
+  } catch (e) {}
+
   /* ── year ── */
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
