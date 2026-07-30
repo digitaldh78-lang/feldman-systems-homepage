@@ -475,19 +475,46 @@ body.admin-bar-showing .nav{top:32px}
 @media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr);margin-bottom:var(--s6)}}
 
 /* ═══════ PROCESS RAIL ═══════ */
-.rail{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;position:relative}
-.rail::before{content:"";position:absolute;top:26px;inset-inline:34px;height:2px;background:var(--border)}
-.rail::after{content:"";position:absolute;top:26px;inset-inline-end:34px;height:2px;width:var(--fill,0);
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width 1.2s var(--e);box-shadow:0 0 12px var(--a-45)}
+.rail{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;position:relative;padding-top:6px}
+/* dashed track */
+.rail::before{content:"";position:absolute;top:32px;inset-inline:34px;height:2px;
+  background-image:linear-gradient(90deg,var(--border) 0 8px,transparent 8px 16px);background-size:16px 2px}
+/* scroll-linked fill + travelling comet head */
+.rail::after{content:"";position:absolute;top:31px;inset-inline-end:34px;height:4px;border-radius:4px;
+  width:calc((100% - 68px) * var(--p,0));background:linear-gradient(90deg,var(--btn),var(--accent));
+  box-shadow:0 0 18px var(--btn-45),0 0 42px var(--btn-45)}
+.rail-head{position:absolute;top:26px;inset-inline-end:calc(34px + (100% - 68px) * var(--p,0));width:14px;height:14px;
+  border-radius:50%;background:#FFFFFF;border:3px solid var(--btn);z-index:3;
+  box-shadow:0 0 0 6px rgba(72,159,223,.18),0 0 26px var(--btn-45);opacity:0;
+  transition:opacity .4s var(--e)}
+.rail.live .rail-head{opacity:1}
+
 .rs{position:relative;text-align:center}
-.rs-n{position:relative;z-index:2;width:54px;height:54px;margin:0 auto 14px;border-radius:50%;
+.rs-n{position:relative;z-index:2;width:60px;height:60px;margin:0 auto 16px;border-radius:50%;
   display:grid;place-items:center;background:var(--surface);border:2px solid var(--border);
-  font-family:'Heebo',sans-serif;font-weight:800;font-size:15px;color:var(--primary);box-shadow:var(--sh-s);
-  transition:background .45s var(--e),border-color .45s var(--e),color .45s var(--e),transform .45s var(--e)}
-.rs:hover .rs-n{background:var(--accent);border-color:var(--accent);transform:scale(1.12) translateY(-3px);box-shadow:var(--sh-a)}
-.rs h4{margin-bottom:5px;font-size:15.5px}
+  font-family:'Heebo',sans-serif;font-weight:800;font-size:16px;color:var(--primary);box-shadow:var(--sh-s);
+  transition:background .5s var(--e),border-color .5s var(--e),color .5s var(--e),transform .5s var(--e),box-shadow .5s var(--e)}
+/* halo ring that scales in when the step activates */
+.rs-n::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid var(--btn);
+  opacity:0;transform:scale(.75);transition:opacity .55s var(--e),transform .55s var(--e)}
+.rs h4{margin-bottom:5px;font-size:15.5px;transition:color .5s var(--e)}
 .rs p{font-size:13.5px;line-height:1.55;color:var(--text)}
-@media(max-width:1100px){.rail{grid-template-columns:repeat(4,1fr);gap:28px}.rail::before,.rail::after{display:none}}
+/* activated state — set by JS as the line passes each node */
+.rs.on .rs-n{background:var(--btn);border-color:var(--btn);color:#FFFFFF;
+  transform:translateY(-4px) scale(1.06);box-shadow:0 16px 36px -12px var(--btn-45)}
+.rs.on .rs-n::before{opacity:.55;transform:scale(1)}
+.rs.on h4{color:var(--btn)}
+.rs:hover .rs-n{transform:translateY(-6px) scale(1.1);box-shadow:0 18px 40px -12px var(--btn-45)}
+
+@media(max-width:1100px){
+  .rail{grid-template-columns:repeat(4,1fr);gap:28px}
+  .rail::before,.rail::after,.rail-head{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .rail::after{--p:1}
+  .rail-head{display:none}
+  .rs .rs-n{background:var(--btn);border-color:var(--btn);color:#FFFFFF}
+}
 @media(max-width:620px){.rail{grid-template-columns:repeat(2,1fr)}}
 
 /* ═══════ ACCORDION ═══════ */

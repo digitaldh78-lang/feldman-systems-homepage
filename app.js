@@ -275,17 +275,42 @@
     });
   });
 
-  /* ── process rail progressive fill ── */
+  /* ── process rail: scroll-linked fill, 0 → 100% as it crosses the viewport ── */
   var rail = document.getElementById('rail');
-  if (rail && !reduce && 'IntersectionObserver' in window) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        rail.style.setProperty('--fill', 'calc(100% - 68px)');
-        rio.unobserve(rail);
+  if (rail && !reduce) {
+    var steps = Array.prototype.slice.call(rail.querySelectorAll('.rs'));
+    var head = document.createElement('span');
+    head.className = 'rail-head';
+    head.setAttribute('aria-hidden', 'true');
+    rail.appendChild(head);
+
+    var rTick = false;
+    function drawRail() {
+      var r = rail.getBoundingClientRect();
+      var vh = window.innerHeight;
+      /* start when the rail's top reaches 78% of the viewport,
+         finish once it has travelled past 32% — a comfortable read pace */
+      var start = vh * 0.78, end = vh * 0.32;
+      var p = (start - r.top) / (start - end);
+      p = Math.max(0, Math.min(1, p));
+
+      rail.style.setProperty('--p', p.toFixed(4));
+      rail.classList.toggle('live', p > 0.01 && p < 0.995);
+
+      /* light each node as the line reaches it */
+      var n = steps.length;
+      steps.forEach(function (s, i) {
+        s.classList.toggle('on', p >= (i + 0.55) / n);
       });
-    }, { threshold: 0.35 });
-    rio.observe(rail);
+      rTick = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (rTick) return;
+      rTick = true;
+      requestAnimationFrame(drawRail);
+    }, { passive: true });
+    window.addEventListener('resize', drawRail, { passive: true });
+    drawRail();
   }
 
   /* ── magnetic buttons ── */
