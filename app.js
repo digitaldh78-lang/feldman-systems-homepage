@@ -140,6 +140,51 @@
     }, { passive: true });
   }
 
+  /* ── mega menu ── */
+  var megaTrig = document.getElementById('megaTrig');
+  var megaPanel = document.getElementById('megaPanel');
+  if (megaTrig && megaPanel) {
+    var megaOpen = false;
+    var megaCloseTimer = null;
+
+    function setMega(open) {
+      megaOpen = open;
+      megaTrig.setAttribute('aria-expanded', String(open));
+      megaPanel.setAttribute('aria-hidden', String(!open));
+      megaPanel.classList.toggle('open', open);
+    }
+
+    megaTrig.addEventListener('click', function (e) {
+      e.preventDefault();
+      setMega(!megaOpen);
+    });
+
+    if (deskHover) {
+      var wrap = megaTrig.closest('.has-mega');
+      wrap.addEventListener('mouseenter', function () {
+        clearTimeout(megaCloseTimer);
+        setMega(true);
+      });
+      wrap.addEventListener('mouseleave', function () {
+        megaCloseTimer = setTimeout(function () { setMega(false); }, 160);
+      });
+    }
+
+    megaPanel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMega(false);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (megaOpen && !e.target.closest('.has-mega')) setMega(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && megaOpen) {
+        setMega(false);
+        megaTrig.focus();
+      }
+    });
+  }
+
   /* ── expanding solutions gallery ── */
   var gal = document.getElementById('gal');
   if (gal) {

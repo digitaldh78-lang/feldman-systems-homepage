@@ -27,7 +27,85 @@
     </a>
     <nav class="nav-links" aria-label="ניווט ראשי">
       <a href="#core">הליבה</a>
-      <a href="#solutions">פתרונות</a>
+
+      <div class="has-mega">
+        <button class="mega-trig" id="megaTrig" aria-expanded="false" aria-controls="megaPanel">
+          פתרונות
+          <svg viewBox="0 0 20 20" class="mega-ar" aria-hidden="true"><path d="M5 7.5 10 13l5-5.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="mega" id="megaPanel" aria-hidden="true">
+          <div class="mega-in">
+
+            <div class="mega-col">
+              <p class="mega-h">לפי תחום</p>
+              <a class="mega-item" href="#solutions" data-i="0">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span>
+                <span><b>תאורה אדריכלית</b><em>עמעום, גוני לבן, סצנות לפי שעה</em></span>
+              </a>
+              <a class="mega-item" href="#solutions" data-i="1">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
+                <span><b>חשמל ומתגים</b><em>שליטה על כל מעגל, ניטור צריכה</em></span>
+              </a>
+              <a class="mega-item" href="#solutions" data-i="2">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 14h18"/></svg></span>
+                <span><b>תריסים ווילונות</b><em>נפתחים ונסגרים לפי שעה ומזג אוויר</em></span>
+              </a>
+              <a class="mega-item" href="#solutions" data-i="3">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M3 8h13a3 3 0 1 0-3-3M3 14h16a3 3 0 1 1-3 3"/></svg></span>
+                <span><b>אקלים ומיזוג</b><em>מגיב לנוכחות, לשעה ולתחזית</em></span>
+              </a>
+              <a class="mega-item" href="#solutions" data-i="4">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <span><b>אבטחה ומצלמות</b><em>הקלטה מקומית, התראות בזמן אמת</em></span>
+              </a>
+              <a class="mega-item" href="#solutions" data-i="5">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+                <span><b>מולטימדיה ואינטרקום</b><em>שמע מרובה חדרים, נשלט מלוח אחד</em></span>
+              </a>
+            </div>
+
+            <div class="mega-col">
+              <p class="mega-h">לפי סוג נכס</p>
+              <a class="mega-item" href="#audience">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span>
+                <span><b>דירות ובתים פרטיים</b><em>התקנה נקייה בנכס מאוכלס</em></span>
+              </a>
+              <a class="mega-item" href="#audience">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/></svg></span>
+                <span><b>וילות ובתי יוקרה</b><em>תכנון תשתית מלא מהיסוד</em></span>
+              </a>
+              <a class="mega-item" href="#audience">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M4 21V8l6-4 6 4v13"/><path d="M14 21v-7h6v7"/></svg></span>
+                <span><b>קבלנים ואדריכלים</b><em>ליווי מקצועי לפרויקט</em></span>
+              </a>
+
+              <p class="mega-h mega-h2">משאבים</p>
+              <a class="mega-item mega-item-sm" href="#process">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h10"/></svg></span>
+                <span><b>איך התהליך עובד</b></span>
+              </a>
+              <a class="mega-item mega-item-sm" href="#faq">
+                <span class="mega-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7"/><path d="M12 17h.01"/></svg></span>
+                <span><b>שאלות נפוצות</b></span>
+              </a>
+            </div>
+
+            <a class="mega-promo" href="#proof">
+              <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-aquarium-dashboard-ha.jpg" alt="" width="360" height="240" loading="lazy">
+              <span class="mega-promo-in">
+                <b>הוכחה חיה למערכת שעובדת</b>
+                <em>מערכת ניטור אקווריומים שרצה על Home Assistant — 24/7, בלי הפסקה</em>
+                <span class="mega-promo-cta">לראות את המערכת
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6 10l6.5 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 10 10)"/></svg>
+                </span>
+              </span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
       <a href="#audience">למי זה מיועד</a>
       <a href="#proof">הוכחה</a>
       <a href="#process">התהליך</a>
