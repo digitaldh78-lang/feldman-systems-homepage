@@ -49,7 +49,10 @@
 
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 28px);-webkit-text-size-adjust:100%}
+/* The host WordPress theme sets html{overflow-x:hidden}, which turns the root
+   into a scroll container and breaks position:sticky (pinned steps section).
+   `clip` gives the same overflow protection without that side effect. */
+html{overflow-x:clip!important;scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 28px);-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);color:var(--text);
   font-family:'Assistant',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
