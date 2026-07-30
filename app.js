@@ -90,8 +90,32 @@
         setTimeout(function () { el.classList.add('in'); }, Math.min(idx, 8) * 90);
         io.unobserve(el);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.01, rootMargin: '0px 0px -40px 0px' });
     rvs.forEach(function (el) { io.observe(el); });
+
+    /* safety net: anchor jumps / fast scrolling can skip past elements
+       before the observer evaluates them. Reveal anything already at or
+       above the fold so no section is ever left invisible. */
+    var sweeping = false;
+    function sweep() {
+      var left = 0;
+      rvs.forEach(function (el) {
+        if (el.classList.contains('in')) return;
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.95) {
+          el.classList.add('in');
+          io.unobserve(el);
+        } else { left++; }
+      });
+      sweeping = false;
+      if (!left) window.removeEventListener('scroll', onSweep);
+    }
+    function onSweep() {
+      if (sweeping) return;
+      sweeping = true;
+      requestAnimationFrame(sweep);
+    }
+    window.addEventListener('scroll', onSweep, { passive: true });
+    window.addEventListener('load', function () { setTimeout(sweep, 400); });
   }
 
   /* ── count-up numbers ── */
@@ -140,47 +164,62 @@
     }, { passive: true });
   }
 
-  /* ── mega menu ── */
-  var megaTrig = document.getElementById('megaTrig');
-  var megaPanel = document.getElementById('megaPanel');
-  if (megaTrig && megaPanel) {
-    var megaOpen = false;
-    var megaCloseTimer = null;
+  /* ── mega menus (multiple) ── */
+  var megas = Array.prototype.slice.call(document.querySelectorAll('.has-mega'));
+  if (megas.length) {
+    var openMega = null;
+    var megaTimer = null;
 
-    function setMega(open) {
-      megaOpen = open;
-      megaTrig.setAttribute('aria-expanded', String(open));
-      megaPanel.setAttribute('aria-hidden', String(!open));
-      megaPanel.classList.toggle('open', open);
+    function setMega(host, open) {
+      var trig = host.querySelector('.mega-trig');
+      var panel = host.querySelector('.mega');
+      if (!trig || !panel) return;
+      trig.setAttribute('aria-expanded', String(open));
+      panel.setAttribute('aria-hidden', String(!open));
+      panel.classList.toggle('open', open);
+      openMega = open ? host : (openMega === host ? null : openMega);
+    }
+    function closeAll() {
+      megas.forEach(function (h) { setMega(h, false); });
+      openMega = null;
     }
 
-    megaTrig.addEventListener('click', function (e) {
-      e.preventDefault();
-      setMega(!megaOpen);
-    });
+    megas.forEach(function (host) {
+      var trig = host.querySelector('.mega-trig');
+      var panel = host.querySelector('.mega');
+      if (!trig || !panel) return;
 
-    if (deskHover) {
-      var wrap = megaTrig.closest('.has-mega');
-      wrap.addEventListener('mouseenter', function () {
-        clearTimeout(megaCloseTimer);
-        setMega(true);
+      trig.addEventListener('click', function (e) {
+        e.preventDefault();
+        var isOpen = openMega === host;
+        closeAll();
+        if (!isOpen) setMega(host, true);
       });
-      wrap.addEventListener('mouseleave', function () {
-        megaCloseTimer = setTimeout(function () { setMega(false); }, 160);
-      });
-    }
 
-    megaPanel.addEventListener('click', function (e) {
-      if (e.target.closest('a')) setMega(false);
+      if (deskHover) {
+        host.addEventListener('mouseenter', function () {
+          clearTimeout(megaTimer);
+          if (openMega && openMega !== host) setMega(openMega, false);
+          setMega(host, true);
+        });
+        host.addEventListener('mouseleave', function () {
+          megaTimer = setTimeout(function () { setMega(host, false); }, 160);
+        });
+      }
+
+      panel.addEventListener('click', function (e) {
+        if (e.target.closest('a')) closeAll();
+      });
     });
 
     document.addEventListener('click', function (e) {
-      if (megaOpen && !e.target.closest('.has-mega')) setMega(false);
+      if (openMega && !e.target.closest('.has-mega')) closeAll();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && megaOpen) {
-        setMega(false);
-        megaTrig.focus();
+      if (e.key === 'Escape' && openMega) {
+        var t = openMega.querySelector('.mega-trig');
+        closeAll();
+        if (t) t.focus();
       }
     });
   }
