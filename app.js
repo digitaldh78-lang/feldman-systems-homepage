@@ -381,4 +381,29 @@
     window.addEventListener('resize', drawSteps, { passive: true });
     drawSteps();
   }
+
+  /* ── showreel: play only while visible, optional sound ── */
+  var reel = document.getElementById('reel');
+  if (reel) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { reel.play().catch(function () {}); }
+          else { reel.pause(); }
+        });
+      }, { threshold: 0.25 }).observe(reel);
+    } else {
+      reel.setAttribute('autoplay', '');
+    }
+
+    var snd = document.getElementById('reelSound');
+    if (snd) {
+      snd.addEventListener('click', function () {
+        reel.muted = !reel.muted;
+        snd.setAttribute('aria-pressed', String(!reel.muted));
+        snd.setAttribute('aria-label', reel.muted ? 'הפעלת קול' : 'השתקה');
+        if (!reel.muted) reel.play().catch(function () {});
+      });
+    }
+  }
 })();
