@@ -674,7 +674,9 @@ body.admin-bar-showing .nav{top:32px}
 /* ═══════ FEATURED PRODUCTS ═══════ */
 .prod-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s3);margin-bottom:var(--s5)}
 .prod-head .head{margin-bottom:0;text-align:right}
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--s3)}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media(max-width:980px){.prod-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.prod-grid{grid-template-columns:1fr}}
 .pc{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);
   border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh-s);
   transition:transform .5s var(--e),box-shadow .5s var(--e),border-color .5s var(--e)}
