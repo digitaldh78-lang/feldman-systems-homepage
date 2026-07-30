@@ -518,3 +518,12 @@ h4{font-size:16px;font-weight:700;color:var(--primary-2)}
   .gp-in{opacity:1 !important;transform:none !important}
   .gp-lab{opacity:0 !important}
 }
+
+
+/* gallery backgrounds */
+.gp[data-i="0"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-villa-dusk.jpg")}
+.gp[data-i="1"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-smart-kitchen.jpg")}
+.gp[data-i="2"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-office-smart.jpg")}
+.gp[data-i="3"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-living-room.jpg")}
+.gp[data-i="4"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-entryway-panel.jpg")}
+.gp[data-i="5"]{--bg:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-devices-set.jpg")}
