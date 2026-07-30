@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פלדמן מערכות | בקרת בית חכם מבוססת Home Assistant — תכנון, הקמה וליווי</title>
+<meta name="description" content="מחשב בקרה אחד שמאחד תאורה, אקלים, תריסים, אבטחה ומולטימדיה במערכת אחת — מבוסס Home Assistant, פועל מקומית בנכס שלכם. לדירות, וילות, משרדים, קבלנים ואדריכלים.">
+<meta name="keywords" content="בית חכם, Home Assistant, בקרת בית חכם, אוטומציה לבית, מערכת בית חכם, בית חכם לוילה, בית חכם למשרד">
+<meta property="og:title" content="פלדמן מערכות | בקרת בית חכם מבוססת Home Assistant">
+<meta property="og:description" content="מחשב בקרה אחד שמאחד את כל מערכות הנכס. פועל מקומית, בשליטה מלאה שלכם.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">דלג לתוכן הראשי</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#" aria-label="פלדמן מערכות — לדף הבית">
+      <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/%D7%9C%D7%95%D7%92%D7%95-%D7%97%D7%93%D7%A9-2.jpg" alt="פלדמן מערכות" width="200" height="55">
+    </a>
+    <nav class="nav-links" aria-label="ניווט ראשי">
+      <a href="#core">הליבה</a>
+      <a href="#solutions">פתרונות</a>
+      <a href="#audience">למי זה מיועד</a>
+      <a href="#proof">הוכחה</a>
+      <a href="#process">התהליך</a>
+      <a href="#faq">שאלות</a>
+    </nav>
+    <div class="nav-act">
+      <a class="btn btn-pri btn-sm" href="#contact"><span>תיאום שיחת אפיון</span></a>
+      <button class="burger" id="burger" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="ניווט מובייל">
+    <a href="#core">הליבה</a><a href="#solutions">פתרונות</a><a href="#audience">למי זה מיועד</a>
+    <a href="#proof">הוכחה</a><a href="#process">התהליך</a><a href="#faq">שאלות</a>
+    <a class="btn btn-pri" href="#contact"><span>תיאום שיחת אפיון</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span>
+    <span class="mesh"></span>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="pill rv" data-d="0">
+        <i class="dot" aria-hidden="true"></i>Home Assistant · שליטה מקומית · קוד פתוח
+      </span>
+      <h1 class="rv" data-d="1">
+        <span class="ln">מחשב בקרה אחד.</span>
+        <span class="ln grad">כל הנכס מדבר איתו.</span>
+      </h1>
+      <p class="lead rv" data-d="2">
+        אנחנו בונים, מגדירים ומריצים את מחשב הבקרה שמאחד תאורה, אקלים, תריסים, אבטחה
+        ומולטימדיה למערכת אחת — ומלמדים אתכם לשלוט בה. דירה, וילה או משרד.
+      </p>
+      <div class="hero-cta rv" data-d="3">
+        <a class="btn btn-pri btn-lg mag" href="#contact"><span>תיאום שיחת אפיון</span></a>
+        <a class="btn btn-gho btn-lg" href="#core">
+          <span>איך זה עובד</span>
+          <svg viewBox="0 0 20 20" class="ar" aria-hidden="true"><path d="M12.5 4 6 10l6.5 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <dl class="kpi rv" data-d="4">
+        <div><dt data-num="30">0</dt><dd>שנות הנדסת מערכות</dd></div>
+        <div><dt data-num="100">0</dt><dd>אחוז שליטה מקומית</dd></div>
+        <div><dt>∞</dt><dd>הרחבה ללא נעילת ספק</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero-vis rv" data-d="2">
+      <div class="ctrl" data-par="-0.05">
+        <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-core-controller.jpg"
+             alt="מחשב הבקרה של פלדמן מערכות המריץ Home Assistant" width="1024" height="1024" fetchpriority="high">
+        <span class="ctrl-glow" aria-hidden="true"></span>
+        <span class="ctrl-tag"><i></i>ONLINE · פועל מקומית</span>
+      </div>
+
+      <!-- orbiting connected nodes -->
+      <div class="orbit" aria-hidden="true">
+        <span class="node n1"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span>
+        <span class="node n2"><svg viewBox="0 0 24 24"><path d="M3 8h13a3 3 0 1 0-3-3M3 14h16a3 3 0 1 1-3 3"/></svg></span>
+        <span class="node n3"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M8 9v12"/></svg></span>
+        <span class="node n4"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <span class="node n5"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco">
+    <div class="wrap">
+      <p class="eco-cap">מתממשק עם כל האקוסיסטם — בלי לכבול אותך לאף אחד מהם</p>
+      <div class="eco-row">
+        <span class="eco-item"><img src="https://svgl.app/library/home-assistant.svg" alt="" width="26" height="26" loading="lazy"><b>Home Assistant</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 7v11H3V10z"/><path d="M9 21v-7h6v7"/></svg><b>Google Home</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><b>Amazon Alexa</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 6v12H4V8z"/><circle cx="12" cy="13" r="2.5"/></svg><b>Apple HomeKit</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l8-11 8 11M8 17h8"/></svg><b>Zigbee</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>MQTT</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M10 7h4a3 3 0 0 1 3 3v4"/></svg><b>Matter</b></span>
+        <span class="eco-item"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><b>Tuya</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CORE ═══════════ -->
+<section id="core" class="sec">
+  <div class="wrap">
+    <header class="head">
+      <span class="eye rv">הליבה של המערכת</span>
+      <h2 class="rv">לא עוד אוסף גאדג'טים. <span class="grad">מוח אחד לנכס.</span></h2>
+      <p class="rv">רוב הבתים ה"חכמים" הם חמש אפליקציות שלא מדברות. אנחנו מתחילים מהסוף: מחשב בקרה ייעודי שמותקן אצלכם, מריץ Home Assistant, ומחבר את כל היצרנים לשפה אחת.</p>
+    </header>
+
+    <div class="core-grid">
+      <article class="cc cc-lg rv">
+        <div class="cc-body">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M6 14h.01"/><path d="M10 12h8"/></svg></span>
+          <h3>מחשב הבקרה</h3>
+          <p>יחידה ייעודית ללא מאווררים, נבחרת לפי גודל הנכס. מותקנת בארון התקשורת, מוקשחת, עם גיבוי הגדרות מלא. זה הלב — וכל השאר תלוי בו.</p>
+          <ul class="mini">
+            <li>אין תלות בענן חיצוני</li>
+            <li>ממשיך לפעול בנפילת אינטרנט</li>
+            <li>גיבוי ושחזור מלא</li>
+          </ul>
+        </div>
+        <span class="cc-shine" aria-hidden="true"></span>
+      </article>
+
+      <article class="cc rv">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <h3>Home Assistant</h3>
+        <p>פלטפורמת הבקרה בקוד פתוח. אנחנו מקנפגים אותה מאפס — אינטגרציות, ישויות, לוחות בקרה בעברית.</p>
+      </article>
+
+      <article class="cc rv">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></span>
+        <h3>בקרים ורכיבים</h3>
+        <p>ממסרים, מתגים חכמים, שקעים מנוהלים וחיישנים — נבחרים לפי התשתית שיש, לא לפי מה שנוח לספק.</p>
+      </article>
+
+      <article class="cc rv">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5.5 5.5 0 0 1 7 0"/></svg></span>
+        <h3>רשת ותקשורת</h3>
+        <p>Wi-Fi, Zigbee ו-LAN מתוכננים יחד. כיסוי מלא בנכס, בלי נקודות מתות שמפילות אוטומציה.</p>
+      </article>
+
+      <article class="cc rv">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/><circle cx="19" cy="12" r="2"/><circle cx="20" cy="18" r="1.6"/></svg></span>
+        <h3>סצנות ואוטומציות</h3>
+        <p>"יציאה מהבית", "לילה", "אורחים" — הלוגיקה שהופכת רכיבים למערכת שעובדת לבד.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SOLUTIONS — expanding gallery ═══════════ -->
+<section id="solutions" class="sec sec-dark">
+  <div class="wrap">
+    <header class="head">
+      <span class="eye rv">מה מתחבר למערכת</span>
+      <h2 class="rv">כל מערכת בנכס — <span class="grad">בממשק אחד</span></h2>
+      <p class="rv">העבירו את העכבר על כל אזור. במובייל — הקישו.</p>
+    </header>
+  </div>
+
+  <div class="gal" id="gal">
+    <button class="gp is-open" data-i="0" aria-expanded="true"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-villa-dusk.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span>
+      <span class="gp-in">
+        <b>תאורה אדריכלית</b>
+        <em>עמעום, גוני לבן, סצנות לפי שעה ולפי נוכחות. התאורה מפסיקה להיות מפסק ומתחילה להיות אווירה.</em>
+      </span>
+      <span class="gp-lab">תאורה</span>
+    </button>
+
+    <button class="gp" data-i="1" aria-expanded="false"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-smart-kitchen.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
+      <span class="gp-in">
+        <b>חשמל ומתגים</b>
+        <em>מתגים חכמים וממסרים בלוח, בלי לשבור קירות. שליטה על כל מעגל, ניטור צריכה וכיבוי מרחוק.</em>
+      </span>
+      <span class="gp-lab">חשמל</span>
+    </button>
+
+    <button class="gp" data-i="2" aria-expanded="false"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-office-smart.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 14h18"/></svg></span>
+      <span class="gp-in">
+        <b>תריסים ווילונות</b>
+        <em>נפתחים עם הזריחה, נסגרים בשיא החום. חוסכים באנרגיה ומגנים על הרהיטים בלי שתחשבו על זה.</em>
+      </span>
+      <span class="gp-lab">תריסים</span>
+    </button>
+
+    <button class="gp" data-i="3" aria-expanded="false"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-living-room.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><path d="M3 8h13a3 3 0 1 0-3-3M3 14h16a3 3 0 1 1-3 3"/></svg></span>
+      <span class="gp-in">
+        <b>אקלים ומיזוג</b>
+        <em>מיזוג שמגיב לנוכחות, לשעה ולתחזית. GREE, תדיראן, Sensibo — הכל מתאחד לבקרה אחת.</em>
+      </span>
+      <span class="gp-lab">אקלים</span>
+    </button>
+
+    <button class="gp" data-i="4" aria-expanded="false"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-entryway-panel.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <span class="gp-in">
+        <b>אבטחה ומצלמות</b>
+        <em>מצלמות IP, חיישני פתיחה ותנועה, התראות בזמן אמת. הקלטה מקומית — לא בענן של אף אחד.</em>
+      </span>
+      <span class="gp-lab">אבטחה</span>
+    </button>
+
+    <button class="gp" data-i="5" aria-expanded="false"
+      style="--bg:url('https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-devices-set.jpg')">
+      <span class="gp-ic"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+      <span class="gp-in">
+        <b>מולטימדיה ואינטרקום</b>
+        <em>שמע מרובה חדרים, מסכים ואינטרקום — נשלטים מאותו לוח, באותה שפה.</em>
+      </span>
+      <span class="gp-lab">מולטימדיה</span>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════ AUDIENCE ═══════════ -->
+<section id="audience" class="sec">
+  <div class="wrap">
+    <header class="head head-c">
+      <span class="eye rv">למי זה מיועד</span>
+      <h2 class="rv">אותה הנדסה. <span class="grad">שלוש נקודות פתיחה שונות.</span></h2>
+    </header>
+    <div class="aud">
+      <article class="ac rv">
+        <span class="ac-n">01</span>
+        <h3>דירות ובתים פרטיים</h3>
+        <p>מתחילים ממה שכבר קיים. חלק גדול מהרכיבים אלחוטיים ונכנסים לקופסאות החשמל הקיימות — בלי שיפוץ ובלי לפתוח קירות.</p>
+        <span class="ac-tag">התקנה נקייה בנכס מאוכלס</span>
+      </article>
+      <article class="ac rv">
+        <span class="ac-n">02</span>
+        <h3>וילות ובתי יוקרה</h3>
+        <p>נכס גדול דורש תכנון רשת ותשתית מהיסוד. אנחנו נכנסים בשלב התכנון, מגדירים ריכוזים, ובונים מערכת שמחזיקה עשור.</p>
+        <span class="ac-tag">תכנון תשתית מלא</span>
+      </article>
+      <article class="ac rv">
+        <span class="ac-n">03</span>
+        <h3>קבלנים ואדריכלים</h3>
+        <p>שותף טכנולוגי לפרויקט. תוכניות חשמל ומתח נמוך, מפרט רכיבים, ותיאום מול הצוות באתר — בלי שתצטרכו להיות מומחי אוטומציה.</p>
+        <span class="ac-tag">ליווי מקצועי לפרויקט</span>
+      </article>
+    </div>
+
+    <div class="split split-flip">
+      <figure class="fig rv">
+        <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-planning-blueprint.jpg"
+             alt="תכנון מערכת בית חכם על גבי תוכניות אדריכליות" loading="lazy" width="1024" height="1024">
+        <span class="fig-fr" aria-hidden="true"></span>
+      </figure>
+      <div class="split-copy">
+        <span class="eye rv">שלב התכנון</span>
+        <h3 class="rv h3-lg">הזמן הזול ביותר לתכנן בית חכם הוא לפני שיוצקים</h3>
+        <p class="rv">חוט שלא נמשך בזמן הופך אחר כך לפתרון אלחוטי מאולץ. אנחנו נכנסים עם תוכניות החשמל, מסמנים נקודות, ומגדירים ריכוזים — כדי שבסוף תהיה מערכת ולא תיקונים.</p>
+        <ul class="ticks rv">
+          <li>מפרט רכיבים מותאם לתקציב הפרויקט</li>
+          <li>תוכניות מתח נמוך ותקשורת</li>
+          <li>תיאום מול חשמלאי הפרויקט</li>
+          <li>מסירה עם הדרכה ללקוח הסופי</li>
+        </ul>
+        <a class="btn btn-pri rv" href="#contact"><span>דברו איתנו על פרויקט</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROOF ═══════════ -->
+<section id="proof" class="sec sec-dark">
+  <div class="wrap">
+    <header class="head head-c">
+      <span class="eye rv">הוכחה, לא הצהרה</span>
+      <h2 class="rv">מערכת שרצה בבית שלנו <span class="grad">כבר שנים</span></h2>
+      <p class="rv">קובי בנה מאפס מערכת ניטור אקווריומים על Home Assistant — חיישני pH, מוליכות, ORP, דוסינג אוטומטי וחיישני הצפה. אם אנחנו יכולים לנטר כימיה של מים בזמן אמת, נדע לנהל את התאורה שלכם.</p>
+    </header>
+
+    <div class="proof">
+      <figure class="fig fig-d rv">
+        <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-aquarium-dashboard-ha.jpg"
+             alt="דשבורד Home Assistant לניטור אקווריום עם pH, TDS, מוליכות ו-ORP" loading="lazy" width="1024" height="768">
+        <figcaption><i></i>לוח בקרה אמיתי · לא הדמיה</figcaption>
+      </figure>
+      <figure class="fig fig-d rv">
+        <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-aquarium-tanks-real.jpg"
+             alt="שני אקווריומי ריף ביתיים המנוטרים דרך Home Assistant" loading="lazy" width="1024" height="768">
+      </figure>
+    </div>
+
+    <div class="metrics">
+      <article class="mc rv"><b>pH</b><span>ניטור חומציות רציף עם התראת חריגה</span></article>
+      <article class="mc rv"><b>TDS</b><span>מוליכות ומליחות — יציבות לאורך זמן</span></article>
+      <article class="mc rv"><b>ORP</b><span>פוטנציאל חמצון כאינדיקציה מקדימה</span></article>
+      <article class="mc rv"><b>24/7</b><span>דוסינג אוטומטי וחיישני הצפה</span></article>
+    </div>
+
+    <div class="split">
+      <div class="split-copy">
+        <span class="eye rv">מה שמאחורי הקיר</span>
+        <h3 class="rv h3-lg">לוח מסודר היום הוא תקלה שלא תקרה בעוד עשר שנים</h3>
+        <p class="rv">חיווט מסומן, ממסרים נגישים, ריכוז מתועד. הלקוח לא רואה את זה ביום־יום — אבל זה ההבדל בין החלפת רכיב בעשר דקות לבין פירוק חצי מערכת.</p>
+        <ul class="ticks rv">
+          <li>תשתית מתוכננת, לא מאולתרת</li>
+          <li>כל מעגל מסומן ומתועד</li>
+          <li>אפשר להחליף רכיב בלי להחליף מערכת</li>
+        </ul>
+      </div>
+      <figure class="fig fig-d rv">
+        <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-about-electrical-panel-install.jpg"
+             alt="התקנת לוח חשמל וחיווט מסודר למערכת בית חכם" loading="lazy" width="1024" height="768">
+        <span class="fig-fr" aria-hidden="true"></span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOUNDER ═══════════ -->
+<section class="sec">
+  <div class="wrap split split-flip">
+    <figure class="fig rv">
+      <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-kobi-portrait.jpg"
+           alt="קובי ניסן פלדמן, מייסד פלדמן מערכות" loading="lazy" width="1024" height="768">
+      <span class="fig-fr" aria-hidden="true"></span>
+    </figure>
+    <div class="split-copy">
+      <span class="eye rv">מי מתכנן את המערכת שלכם</span>
+      <h2 class="rv">קובי ניסן פלדמן</h2>
+      <p class="rv">שלושים שנה בהנדסת חומרה ותוכנה — פיתוח מערכות משובצות מחשב, אינטגרציה ופיתוח מוצרים. טכנאי אלקטרוניקה בחיל האוויר, בסיס רמת דוד, בהתמחות מערכות פיקוד חימוש.</p>
+      <p class="rv">היום מפתח מוצרים לבית החכם על Home Assistant ו-Tuya. הכלל אצלנו פשוט: מערכת לא מוצעת ללקוח לפני שהיא עבדה חצי שנה בבית שלנו.</p>
+      <ul class="ticks rv">
+        <li>הנדסאי אלקטרוניקה בעל דיפלומה</li>
+        <li>רישיון עוזר חשמלאי</li>
+        <li>פיתוח מערכות משובצות מחשב</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROCESS ═══════════ -->
+<section id="process" class="sec">
+  <div class="wrap">
+    <header class="head head-c">
+      <span class="eye rv">התהליך</span>
+      <h2 class="rv">שבעה שלבים, <span class="grad">אפס הפתעות</span></h2>
+      <p class="rv">בכל רגע אתם יודעים איפה הפרויקט עומד ומה השלב הבא.</p>
+    </header>
+    <ol class="rail" id="rail">
+      <li class="rs rv"><span class="rs-n">01</span><h4>אפיון</h4><p>איך אתם באמת חיים בנכס — לא איזה גאדג'ט אופנתי</p></li>
+      <li class="rs rv"><span class="rs-n">02</span><h4>תכנון</h4><p>ארכיטקטורת מערכת, רשת ותשתית</p></li>
+      <li class="rs rv"><span class="rs-n">03</span><h4>מפרט</h4><p>בחירת מחשב הבקרה והרכיבים לפי תקציב</p></li>
+      <li class="rs rv"><span class="rs-n">04</span><h4>התקנה</h4><p>לוח, חיווט וריכוזים — מסודר ומתועד</p></li>
+      <li class="rs rv"><span class="rs-n">05</span><h4>קונפיגורציה</h4><p>Home Assistant, אינטגרציות, סצנות ואוטומציות</p></li>
+      <li class="rs rv"><span class="rs-n">06</span><h4>הדרכה</h4><p>עד שאתם משנים שגרות ומוסיפים מכשירים לבד</p></li>
+      <li class="rs rv"><span class="rs-n">07</span><h4>ליווי</h4><p>תמיכה, עדכונים והרחבות לאורך זמן</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq" class="sec">
+  <div class="wrap wrap-n">
+    <header class="head head-c">
+      <span class="eye rv">שאלות שנשאלות באמת</span>
+      <h2 class="rv">מה שחשוב לדעת לפני שמתחילים</h2>
+    </header>
+    <div class="acc" id="acc">
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>אפשר להתקין בנכס מאוכלס בלי שיפוץ?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>ברוב המקרים כן. חלק גדול מהרכיבים אלחוטיים או נכנסים לתוך קופסאות החשמל הקיימות, בלי לפתוח קירות. בשיחת האפיון אנחנו בודקים מה מתאפשר בנכס הספציפי — ואומרים לכם בכנות אם משהו דורש עבודת חשמל.</p></div>
+      </div>
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>מה קורה כשהאינטרנט נופל?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>המערכת ממשיכה לעבוד. מחשב הבקרה יושב בנכס ומריץ את כל האוטומציות מקומית — תאורה, אקלים, תריסים וסצנות ממשיכים כרגיל. מה שנפסק זמנית זו רק הגישה מרחוק מחוץ לנכס.</p></div>
+      </div>
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>למה Home Assistant ולא מערכת של יצרן?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>כי מערכת של יצרן כובלת אותך אליו — לרכיבים שלו, לענן שלו ולמחירים שלו. Home Assistant בקוד פתוח מדבר עם למעלה מאלף יצרנים, ולכן אפשר לבחור את הרכיב הנכון לכל תפקיד ולהחליף אותו בעתיד בלי להחליף מערכת.</p></div>
+      </div>
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>אני תלוי בכם אחרי ההתקנה?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>לא, וזו החלטה מכוונת. חלק מהמסירה היא הדרכה עד שאתם יודעים לשנות סצנה, להוסיף מכשיר ולנהל את המערכת. אנחנו נשארים זמינים לתמיכה ולהרחבות — אבל כבחירה שלכם, לא כתלות.</p></div>
+      </div>
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>מה טווח המחירים?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>המחיר נגזר מגודל הנכס, ממספר המערכות שנכנסות לבקרה ומהרכיבים שנבחרים — דירה שמתחילה מתאורה בלבד היא סיפור אחר מווילה עם תשתית מלאה. אחרי שיחת אפיון קצרה תקבלו הצעה מפורטת לפי סעיפים, בלי הפתעות.</p></div>
+      </div>
+      <div class="ai rv">
+        <button class="ab" aria-expanded="false"><span>אפשר להתחיל בקטן ולהרחיב?</span><i aria-hidden="true"></i></button>
+        <div class="ap"><p>זו בעצם הדרך המומלצת. מתחילים ממחשב הבקרה ומערכת אחת — בדרך כלל תאורה — ומוסיפים אקלים, תריסים או אבטחה בהמשך. הבסיס נשאר, וכל הרחבה מצטרפת לאותו ממשק.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section id="contact" class="sec">
+  <div class="wrap">
+    <div class="cta rv">
+      <span class="cta-glow" aria-hidden="true"></span>
+      <span class="eye">הצעד הראשון</span>
+      <h2>נתחיל משיחת אפיון קצרה</h2>
+      <p>ללא התחייבות ובלי מכירה בכוח. נבין את הנכס ואת מה שחשוב לכם, ונגיד בכנות מה שווה לעשות — וממה כדאי להתחיל.</p>
+      <div class="cta-act">
+        <a class="btn btn-pri btn-lg mag" href="tel:0544777238"><span>054-477-7238</span></a>
+        <a class="btn btn-gho btn-lg" href="mailto:info@feldman-systems.co.il"><span>שליחת מייל</span></a>
+      </div>
+      <p class="cta-note">א׳–ה׳ · 09:00–18:00 · הרב קוק 48, בני ברק · שירות בכל אזור המרכז והשפלה</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="ft">
+  <div class="wrap ft-grid">
+    <div class="ft-brand">
+      <img src="https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/%D7%9C%D7%95%D7%92%D7%95-%D7%97%D7%93%D7%A9-2.jpg" alt="פלדמן מערכות" width="200" height="55" loading="lazy">
+      <p>תכנון, הקמה וליווי של מערכות בקרת בית חכם מבוססות Home Assistant — לדירות, וילות ומשרדים. המערכת רצה אצלכם, המידע נשאר אצלכם.</p>
+    </div>
+    <nav class="ft-col" aria-label="ניווט תחתון">
+      <h4>ניווט</h4>
+      <a href="#core">הליבה של המערכת</a>
+      <a href="#solutions">מה מתחבר למערכת</a>
+      <a href="#audience">למי זה מיועד</a>
+      <a href="#proof">הוכחה</a>
+      <a href="#process">התהליך</a>
+      <a href="#faq">שאלות נפוצות</a>
+    </nav>
+    <div class="ft-col">
+      <h4>יצירת קשר</h4>
+      <a href="tel:0544777238">054-477-7238</a>
+      <a href="mailto:info@feldman-systems.co.il">info@feldman-systems.co.il</a>
+      <span>הרב קוק 48, כניסה א׳, בני ברק</span>
+      <span>א׳–ה׳ · 09:00–18:00</span>
+    </div>
+  </div>
+  <div class="wrap ft-bot">
+    <span>© <span id="yr"></span> פלדמן מערכות. כל הזכויות שמורות.</span>
+    <span class="ft-legal"><a href="#">מדיניות פרטיות</a><a href="#">תנאי שימוש</a><a href="#">הצהרת נגישות</a></span>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/972544777238" aria-label="שליחת הודעת וואטסאפ">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-1-2.2c-.2-.6-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4-.9.9-1.1 2-.8 3.2.4 1.4 1.3 2.7 1.5 2.9.2.2 2.5 3.9 6.1 5.3 2.2.9 3.1.9 4.2.8.7-.1 2-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+</a>
+
+<script src="app.js" defer></script>
+</body>
+</html>
