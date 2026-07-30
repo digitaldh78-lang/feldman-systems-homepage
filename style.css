@@ -497,10 +497,10 @@ body.admin-bar-showing .nav{top:32px}
 .rail::before{content:"";position:absolute;top:32px;inset-inline:34px;height:2px;
   background-image:linear-gradient(90deg,var(--border) 0 8px,transparent 8px 16px);background-size:16px 2px}
 /* scroll-linked fill + travelling comet head */
-.rail::after{content:"";position:absolute;top:31px;inset-inline-end:34px;height:4px;border-radius:4px;
+.rail::after{content:"";position:absolute;top:31px;inset-inline-start:34px;height:4px;border-radius:4px;
   width:calc((100% - 68px) * var(--p,0));background:linear-gradient(90deg,var(--btn),var(--accent));
   box-shadow:0 0 18px var(--btn-45),0 0 42px var(--btn-45)}
-.rail-head{position:absolute;top:26px;inset-inline-end:calc(34px + (100% - 68px) * var(--p,0));width:14px;height:14px;
+.rail-head{position:absolute;top:26px;inset-inline-start:calc(34px + (100% - 68px) * var(--p,0));width:14px;height:14px;
   border-radius:50%;background:#FFFFFF;border:3px solid var(--btn);z-index:3;
   box-shadow:0 0 0 6px rgba(72,159,223,.18),0 0 26px var(--btn-45);opacity:0;
   transition:opacity .4s var(--e)}
