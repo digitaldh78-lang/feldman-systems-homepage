@@ -382,28 +382,21 @@
     drawSteps();
   }
 
-  /* ── showreel: play only while visible, optional sound ── */
-  var reel = document.getElementById('reel');
-  if (reel) {
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (e.isIntersecting) { reel.play().catch(function () {}); }
-          else { reel.pause(); }
-        });
-      }, { threshold: 0.25 }).observe(reel);
-    } else {
-      reel.setAttribute('autoplay', '');
-    }
-
-    var snd = document.getElementById('reelSound');
-    if (snd) {
-      snd.addEventListener('click', function () {
-        reel.muted = !reel.muted;
-        snd.setAttribute('aria-pressed', String(!reel.muted));
-        snd.setAttribute('aria-label', reel.muted ? 'הפעלת קול' : 'השתקה');
-        if (!reel.muted) reel.play().catch(function () {});
-      });
-    }
+  /* ── showreel: YouTube facade — iframe only loads on click ── */
+  var facade = document.getElementById('reelFacade');
+  if (facade) {
+    facade.addEventListener('click', function () {
+      var id = facade.getAttribute('data-yt');
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id +
+              '?autoplay=1&rel=0&modestbranding=1&playsinline=1&hl=he';
+      f.title = 'פלדמן מערכות — בית חכם בפעולה';
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      f.setAttribute('allowfullscreen', '');
+      f.setAttribute('loading', 'lazy');
+      facade.replaceWith(f);
+      var cap = document.querySelector('.reel-cap');
+      if (cap) cap.remove();
+    });
   }
 })();
