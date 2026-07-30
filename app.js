@@ -344,4 +344,41 @@
       c.addEventListener('mouseleave', function () { c.style.transform = ''; });
     });
   }
+
+  /* ── scroll-pinned 3-step section ── */
+  var track = document.getElementById('stepsTrack');
+  if (track) {
+    var panes = Array.prototype.slice.call(track.querySelectorAll('.step-pane'));
+    var figs  = Array.prototype.slice.call(track.querySelectorAll('.step-fig'));
+    var nums  = Array.prototype.slice.call(track.querySelectorAll('.steps-nums li'));
+    var total = panes.length;
+    var cur = -1, sTick = false;
+
+    function setStep(i) {
+      if (i === cur) return;
+      cur = i;
+      panes.forEach(function (p, n) { p.classList.toggle('on', n === i); });
+      figs.forEach(function (f, n) { f.classList.toggle('on', n === i); });
+      nums.forEach(function (l, n) {
+        l.classList.toggle('on', n === i);
+        l.classList.toggle('done', n < i);
+      });
+    }
+
+    function drawSteps() {
+      var r = track.getBoundingClientRect();
+      var scrollable = r.height - window.innerHeight;
+      if (scrollable <= 0) { setStep(0); sTick = false; return; }
+      var p = Math.max(0, Math.min(0.9999, -r.top / scrollable));
+      setStep(Math.floor(p * total));
+      sTick = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (sTick) return;
+      sTick = true;
+      requestAnimationFrame(drawSteps);
+    }, { passive: true });
+    window.addEventListener('resize', drawSteps, { passive: true });
+    drawSteps();
+  }
 })();
