@@ -7,17 +7,27 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var deskHover = window.matchMedia('(hover: hover) and (min-width: 1000px)').matches;
 
-  /* Host themes (WoodMart) set html{overflow-x:hidden}, which turns the root into
-     a scroll container and silently breaks position:sticky — the pinned steps
-     section would just scroll away and leave dead space. A stylesheet override
-     loses the cascade here, so force it on the element itself. `clip` blocks
-     sideways overflow without creating a scroll container. */
-  try {
-    var de = document.documentElement;
-    if (window.getComputedStyle(de).overflowX === 'hidden') {
-      de.style.setProperty('overflow-x', 'clip', 'important');
-    }
-  } catch (e) {}
+  /* position:sticky silently dies if ANY ancestor is a scroll container.
+     Host themes (WoodMart) set overflow:hidden on <html> and on page wrappers,
+     which is exactly what broke the pinned steps section. Walk up from the
+     section and swap `hidden` for `clip` — same overflow protection, but it
+     does not create a scroll container. */
+  function unclipAncestors(el) {
+    try {
+      var n = el;
+      while (n && n !== document.documentElement) {
+        n = n.parentElement;
+        if (!n) break;
+        var cs = window.getComputedStyle(n);
+        if (cs.overflow === 'hidden' || cs.overflowX === 'hidden' || cs.overflowY === 'hidden') {
+          n.style.setProperty('overflow', 'visible', 'important');
+          n.style.setProperty('overflow-x', 'clip', 'important');
+        }
+      }
+      document.documentElement.style.setProperty('overflow-x', 'clip', 'important');
+      document.documentElement.style.setProperty('overflow-y', 'visible', 'important');
+    } catch (e) {}
+  }
 
   /* ── year ── */
   var yr = document.getElementById('yr');
@@ -360,6 +370,7 @@
   /* ── scroll-pinned 3-step section ── */
   var track = document.getElementById('stepsTrack');
   if (track) {
+    unclipAncestors(track);
     var panes = Array.prototype.slice.call(track.querySelectorAll('.step-pane'));
     var figs  = Array.prototype.slice.call(track.querySelectorAll('.step-fig'));
     var nums  = Array.prototype.slice.call(track.querySelectorAll('.steps-nums li'));
