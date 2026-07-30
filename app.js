@@ -165,14 +165,14 @@
   }
 
   /* ── mega menus (multiple) ── */
-  var megas = Array.prototype.slice.call(document.querySelectorAll('.has-mega'));
+  var megas = Array.prototype.slice.call(document.querySelectorAll('.has-fsmega'));
   if (megas.length) {
     var openMega = null;
     var megaTimer = null;
 
     function setMega(host, open) {
-      var trig = host.querySelector('.mega-trig');
-      var panel = host.querySelector('.mega');
+      var trig = host.querySelector('.fsmega-trig');
+      var panel = host.querySelector('.fsmega');
       if (!trig || !panel) return;
       trig.setAttribute('aria-expanded', String(open));
       panel.setAttribute('aria-hidden', String(!open));
@@ -185,8 +185,8 @@
     }
 
     megas.forEach(function (host) {
-      var trig = host.querySelector('.mega-trig');
-      var panel = host.querySelector('.mega');
+      var trig = host.querySelector('.fsmega-trig');
+      var panel = host.querySelector('.fsmega');
       if (!trig || !panel) return;
 
       trig.addEventListener('click', function (e) {
@@ -213,11 +213,11 @@
     });
 
     document.addEventListener('click', function (e) {
-      if (openMega && !e.target.closest('.has-mega')) closeAll();
+      if (openMega && !e.target.closest('.has-fsmega')) closeAll();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && openMega) {
-        var t = openMega.querySelector('.mega-trig');
+        var t = openMega.querySelector('.fsmega-trig');
         closeAll();
         if (t) t.focus();
       }
@@ -236,11 +236,23 @@
       });
     }
     panels.forEach(function (p) {
-      p.addEventListener('click', function () { openPanel(p); });
+      p.addEventListener('click', function (e) {
+        /* let the CTA link inside an open panel navigate normally */
+        if (e.target.closest('.gp-more')) return;
+        openPanel(p);
+      });
       if (deskHover) {
         p.addEventListener('mouseenter', function () { openPanel(p); });
       }
       p.addEventListener('focus', function () { openPanel(p); });
+      /* role="button" divs need explicit Enter/Space handling */
+      p.addEventListener('keydown', function (e) {
+        if (e.target !== p) return;
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          openPanel(p);
+        }
+      });
     });
   }
 
