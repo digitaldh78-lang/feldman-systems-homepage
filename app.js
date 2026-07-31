@@ -425,16 +425,20 @@
       }
       function track(e) {
         if (!rect) rect = frame.getBoundingClientRect();
-        cx = e.clientX - rect.left;
-        cy = e.clientY - rect.top;
+        /* clientLeft/Top = the frame's border widths. The badge is positioned
+           against the padding box, so without this it sits 1px off the pointer. */
+        cx = e.clientX - rect.left - frame.clientLeft;
+        cy = e.clientY - rect.top - frame.clientTop;
         if (!rafId) rafId = requestAnimationFrame(place);
       }
       function drop() { rect = null; }
 
       frame.addEventListener('pointerenter', function (e) {
         rect = frame.getBoundingClientRect();
-        cx = e.clientX - rect.left;
-        cy = e.clientY - rect.top;
+        /* clientLeft/Top = the frame's border widths. The badge is positioned
+           against the padding box, so without this it sits 1px off the pointer. */
+        cx = e.clientX - rect.left - frame.clientLeft;
+        cy = e.clientY - rect.top - frame.clientTop;
         if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
         place();                       /* land under the pointer, then fade in */
         frame.classList.add('cur-on');
