@@ -806,3 +806,13 @@ body.admin-bar-showing .nav{top:32px}
     border-radius:var(--r-l);padding:22px 20px;
   }
 }
+
+
+/* Hero copy is above the fold — it must never depend on a scroll reveal.
+   If JS is slow, blocked, or the observer misfires, the headline still shows. */
+.hero-shot .hero-copy .rv,
+.hero-shot .hero-copy .rv.in{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+}
