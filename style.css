@@ -772,8 +772,8 @@ body.admin-bar-showing .nav{top:32px}
 .hero-shot{
   background-image:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg");
   background-repeat:no-repeat;
-  background-position:left bottom;
-  background-size:auto 100%;
+  background-position:left center;
+  background-size:cover;
   background-color:#F7F9FC;
   padding:0;
 }
@@ -786,8 +786,8 @@ body.admin-bar-showing .nav{top:32px}
 }
 .hero-shot .hero-copy{
   position:relative;z-index:3;
-  margin-inline-start:auto;                /* pin to the right in RTL */
-  width:min(540px,48%);
+  justify-self:start;        /* inline-start = right in RTL */
+  width:min(540px,46%);
 }
 .hero-shot .eco{position:relative;z-index:3}
 
