@@ -893,6 +893,7 @@ body.admin-bar-showing .nav{top:32px}
 .kc:hover .kc-img img{transform:scale(1.05)}
 
 .kc-score{position:absolute;top:14px;left:14px;display:inline-flex;align-items:baseline;gap:1px;
+  direction:ltr;   /* a rating is a number, not a sentence — RTL flipped "4.5/5" into "5/4.5" */
   padding:7px 13px;border-radius:var(--r-f);background:var(--btn);color:#FFFFFF;
   font-family:'Heebo',sans-serif;font-size:16px;font-weight:800;line-height:1;
   box-shadow:0 12px 30px -10px var(--btn-45)}
