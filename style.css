@@ -778,7 +778,17 @@ body.admin-bar-showing .nav{top:32px}
    dissolves into the page and no shadow reads as "inner shadow on the
    container". Content sits between x 8-60% and y 10-89% of the source, so the
    feathers stay clear of the devices. */
+/* Optical alignment: the copy is inside .wrap, so it clears the viewport edge by
+   the wrap gutter. The photo was pinned to left:0, so it ran flush to the edge —
+   air on the right, none on the left. Matching the gutter is not enough on its
+   own: the source JPG carries ~8% of empty backdrop before the monitor starts,
+   so aligning the *file* to the gutter would push the *monitor* 8% further in
+   and the imbalance would just flip. The offset below subtracts that 8% so the
+   monitor's edge — not the file's edge — lands on the same gutter as the text. */
 .hero-shot{
+  --shot-h:700px;                       /* drives width too: the file is 1433x800 */
+  --shot-w:calc(var(--shot-h) * 1.79125);
+  --gutter:calc((100% - min(var(--wrap),92vw)) / 2);
   position:relative;
   background:var(--bg);
   padding:0;
@@ -787,9 +797,10 @@ body.admin-bar-showing .nav{top:32px}
 .hero-shot .hero-bg{display:none}          /* blobs would muddy the photo */
 .hero-shot::before{
   content:"";position:absolute;z-index:0;pointer-events:none;
-  left:0;top:50%;transform:translateY(-50%);   /* physical left: the shot faces right */
-  height:min(700px,100%);
-  aspect-ratio:1433/800;
+  top:50%;transform:translateY(-50%);   /* physical left: the shot faces right */
+  left:max(0px, calc(var(--gutter) - var(--shot-w) * .08));
+  height:var(--shot-h);
+  width:var(--shot-w);
   background:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg") left center/contain no-repeat;
   -webkit-mask-image:
     linear-gradient(to right,transparent 0,#000 5%,#000 62%,transparent 78%),
@@ -814,7 +825,7 @@ body.admin-bar-showing .nav{top:32px}
 .hero-shot .eco{position:relative;z-index:3}
 
 @media(max-width:1180px){
-  .hero-shot::before{height:min(540px,86%)}
+  .hero-shot{--shot-h:520px}
   .hero-shot .hero-copy{width:min(500px,56%)}
 }
 /* mobile — the shot drops below the copy instead of behind it, so nothing
@@ -822,7 +833,7 @@ body.admin-bar-showing .nav{top:32px}
 @media(max-width:760px){
   .hero-shot::before{
     left:50%;right:auto;top:auto;bottom:0;transform:translateX(-50%);
-    height:auto;width:132%;
+    height:auto;width:132%;aspect-ratio:1433/800;
     -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 100%);
     -webkit-mask-composite:source-over;
     mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 100%);
