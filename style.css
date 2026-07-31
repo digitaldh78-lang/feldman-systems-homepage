@@ -392,21 +392,31 @@ body.admin-bar-showing .nav{top:32px}
    layer — desaturate, darken and lift contrast, then tint everything toward the
    site navy so all six sit in the same colour family. The open card releases
    most of the grade so the photo is seen properly once it matters. */
+/* `multiply`, not `color`. A colour blend keeps each pixel's luminance and only
+   swaps its hue, so on the bright shots (white kitchen, pale door) the light
+   areas stayed light and just went grey — the milky film. Multiplying by navy
+   drives those same pixels down toward the navy itself, which reads as depth
+   rather than haze, and leaves the already-dark shots almost untouched. */
 .gp::before{content:"";position:absolute;inset:0;
-  background-image:linear-gradient(0deg,rgba(13,22,52,.55),rgba(13,22,52,.55)),var(--bg);
-  background-blend-mode:color,normal;
+  background-image:linear-gradient(0deg,rgba(22,34,70,.66),rgba(22,34,70,.66)),var(--bg);
+  background-blend-mode:multiply;
   background-size:cover;background-position:center;
-  transition:transform .9s var(--e),filter .6s var(--e);
-  filter:saturate(.58) brightness(.50) contrast(1.12)}
+  transition:transform .9s var(--e),filter .6s var(--e),background-image .5s var(--e);
+  filter:saturate(.74) contrast(1.06) brightness(.88)}
 .gp::after{content:"";position:absolute;inset:0;transition:background .6s var(--e);
-  background:linear-gradient(to top,rgba(10,17,40,.72) 0%,rgba(11,19,45,.46) 55%,rgba(11,19,45,.40) 100%)}
+  background:linear-gradient(to top,rgba(10,17,40,.58) 0%,rgba(11,19,45,.20) 60%,rgba(11,19,45,.10) 100%)}
 .gp>*{position:relative;z-index:2}
 .gp.is-open{flex-grow:4.6;border-color:var(--a-28)}
-.gp.is-open::before{filter:saturate(1) brightness(.92) contrast(1.02);transform:scale(1.03);
-  background-image:linear-gradient(0deg,rgba(13,22,52,.10),rgba(13,22,52,.10)),var(--bg)}
-/* open panel: soft centre scrim just dark enough for text contrast */
-.gp.is-open::after{background:radial-gradient(120% 88% at 50% 52%,rgba(10,17,40,.60) 0%,rgba(10,17,40,.34) 55%,rgba(10,17,40,.16) 100%)}
-.gp:hover::before{filter:saturate(.72) brightness(.60) contrast(1.10)}
+/* open: the photograph, clean. No tint, no veil — the grade exists to unify the
+   closed strip, and once a card is open the image has earned full fidelity. */
+.gp.is-open::before{filter:none;transform:scale(1.03);
+  background-image:var(--bg);background-blend-mode:normal}
+/* contrast for the copy comes from a scrim that hugs the text, not from washing
+   the whole frame */
+.gp.is-open::after{background:
+  radial-gradient(52% 38% at 50% 52%,rgba(8,14,34,.80) 0%,rgba(8,14,34,.52) 52%,rgba(8,14,34,0) 82%),
+  linear-gradient(to top,rgba(8,14,34,.42) 0%,rgba(8,14,34,0) 34%)}
+.gp:hover::before{filter:saturate(.85) contrast(1.04) brightness(.95)}
 
 /* collapsed: icon pinned bottom-centre */
 .gp-ic{position:absolute;inset-inline-start:50%;bottom:24px;transform:translateX(50%);
