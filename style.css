@@ -459,11 +459,11 @@ body.admin-bar-showing .nav{top:32px}
 .ac:hover{transform:translateY(-8px);box-shadow:var(--sh-l);border-color:var(--a-28)}
 .ac:hover::after{height:100%}
 .ac-n{display:block;font-family:'Heebo',sans-serif;font-size:46px;font-weight:900;line-height:1;margin-bottom:16px;
-  color:var(--accent)}
+  color:var(--btn)}   /* #00D2FF on white is 1.80:1 — fails even the 3:1 large-text bar */
 .ac h3{margin-bottom:10px}
 .ac p{font-size:15.5px;margin-bottom:16px}
 .ac-tag{display:inline-block;font-size:13px;font-weight:700;font-family:'Heebo',sans-serif;
-  color:var(--accent-2);background:var(--g-10);border-radius:var(--r-f);padding:6px 14px}
+  color:var(--eye-ink);background:var(--g-10);border-radius:var(--r-f);padding:6px 14px}
 @media(max-width:900px){.aud{grid-template-columns:1fr;margin-bottom:var(--s6)}}
 
 /* ═══════ SPLIT ═══════ */
@@ -721,7 +721,7 @@ body.admin-bar-showing .nav{top:32px}
 .pc-body h3{font-size:17px;line-height:1.3}
 .pc-body p{font-size:14px;line-height:1.6;color:var(--text);flex:1 1 auto}
 .pc-tags{display:flex;flex-wrap:wrap;gap:6px}
-.pc-tags span{font-size:11.5px;font-weight:700;font-family:'Heebo',sans-serif;color:var(--accent-2);
+.pc-tags span{font-size:11.5px;font-weight:700;font-family:'Heebo',sans-serif;color:var(--eye-ink);
   background:var(--g-10);border-radius:var(--r-f);padding:4px 10px}
 .pc-cta{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:6px;padding:12px 18px;
   border-radius:var(--r-f);background:var(--btn);color:#FFFFFF;font-family:'Heebo',sans-serif;
