@@ -93,8 +93,8 @@ h4{font-size:16px;font-weight:700;color:var(--primary-2)}
   background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 14px var(--a-45)}
 
 /* ═══════ NAV ═══════ */
-.nav{position:fixed;inset-inline:0;top:0;z-index:150;padding:26px 0 0;transition:padding .4s var(--e)}
-.nav.on{padding:12px 0 0}
+.nav{position:fixed;inset-inline:0;top:0;z-index:150;padding:34px 0 0;transition:padding .4s var(--e)}
+.nav.on{padding:14px 0 0}
 /* WP admin bar offset (logged-in preview only) */
 body.admin-bar-showing .nav{top:32px}
 @media screen and (max-width:782px){body.admin-bar-showing .nav{top:46px}}
@@ -769,11 +769,20 @@ body.admin-bar-showing .nav{top:32px}
 /* ═══════ HERO AS FULL-WIDTH BACKGROUND SHOT ═══════ */
 /* the device photo is the hero background; copy sits over the empty
    right side of the frame, which is where the shot was composed. */
+/* The photo is cropped by the section's bottom edge, which cut the devices off
+   with a hard horizontal line. A gradient layer on top dissolves the photo into
+   the page background instead, so the crop reads as intentional depth. */
 .hero-shot{
-  background-image:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg");
-  background-repeat:no-repeat;
-  background-position:left center;
-  background-size:cover;
+  background-image:
+    linear-gradient(to bottom,
+      rgba(244,247,250,0) 56%,
+      rgba(244,247,250,.72) 80%,
+      rgba(244,247,250,.97) 94%,
+      var(--bg) 100%),
+    url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg");
+  background-repeat:no-repeat,no-repeat;
+  background-position:center,left center;
+  background-size:cover,cover;
   background-color:#F7F9FC;
   padding:0;
 }
