@@ -413,21 +413,38 @@
     var frame  = facade.closest('.reel-frame');
     var cursor = document.getElementById('reelCursor');
     if (frame && cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      var cTick = false, cx = 0, cy = 0;
-      frame.addEventListener('pointerenter', function () { frame.classList.add('cur-on'); });
-      frame.addEventListener('pointerleave', function () { frame.classList.remove('cur-on'); });
-      frame.addEventListener('pointermove', function (e) {
-        var r = frame.getBoundingClientRect();
-        cx = e.clientX - r.left;
-        cy = e.clientY - r.top;
-        if (cTick) return;
-        cTick = true;
-        requestAnimationFrame(function () {
-          cursor.style.setProperty('--cx', cx + 'px');
-          cursor.style.setProperty('--cy', cy + 'px');
-          cTick = false;
-        });
+      /* The frame's box is cached instead of measured on every pointermove —
+         getBoundingClientRect() forces layout, and doing that per move is what
+         makes a follow-cursor feel gritty. Invalidated on scroll/resize. */
+      var rect = null, rafId = 0, cx = 0, cy = 0;
+
+      function place() {
+        rafId = 0;
+        cursor.style.setProperty('--cx', cx + 'px');
+        cursor.style.setProperty('--cy', cy + 'px');
+      }
+      function track(e) {
+        if (!rect) rect = frame.getBoundingClientRect();
+        cx = e.clientX - rect.left;
+        cy = e.clientY - rect.top;
+        if (!rafId) rafId = requestAnimationFrame(place);
+      }
+      function drop() { rect = null; }
+
+      frame.addEventListener('pointerenter', function (e) {
+        rect = frame.getBoundingClientRect();
+        cx = e.clientX - rect.left;
+        cy = e.clientY - rect.top;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+        place();                       /* land under the pointer, then fade in */
+        frame.classList.add('cur-on');
       });
+      frame.addEventListener('pointermove', track, { passive: true });
+      frame.addEventListener('pointerleave', function () {
+        frame.classList.remove('cur-on');
+      });
+      window.addEventListener('scroll', drop, { passive: true });
+      window.addEventListener('resize', drop, { passive: true });
     }
 
     facade.addEventListener('click', function () {
