@@ -265,10 +265,10 @@ body.admin-bar-showing .nav{top:32px}
 .kpi dd{font-size:14.5px;color:var(--text);margin-top:5px}
 
 /* hero visual: controller + orbit */
-.hero-vis{position:relative;display:grid;place-items:center;min-height:380px}
-.ctrl{position:relative;width:min(660px,100%);border-radius:var(--r-xl);overflow:hidden;
+.hero-vis{position:relative;display:block}
+.ctrl{position:relative;width:100%;border-radius:var(--r-xl);overflow:hidden;
   border:1px solid var(--border);box-shadow:var(--sh-l);z-index:2;will-change:transform}
-.ctrl img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.ctrl img{width:100%;height:auto;object-fit:contain;display:block}
 .ctrl-glow{position:absolute;inset:-26%;z-index:-1;border-radius:50%;
   background:radial-gradient(circle,var(--a-45),transparent 66%);filter:blur(46px);animation:pulseGlow 5.5s var(--e-io) infinite alternate}
 @keyframes pulseGlow{to{opacity:.55;transform:scale(1.1)}}
