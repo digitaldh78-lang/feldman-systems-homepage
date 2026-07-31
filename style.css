@@ -416,7 +416,10 @@ body.admin-bar-showing .nav{top:32px}
 .gp.is-open::after{background:
   radial-gradient(52% 38% at 50% 52%,rgba(8,14,34,.80) 0%,rgba(8,14,34,.52) 52%,rgba(8,14,34,0) 82%),
   linear-gradient(to top,rgba(8,14,34,.42) 0%,rgba(8,14,34,0) 34%)}
-.gp:hover::before{filter:saturate(.85) contrast(1.04) brightness(.95)}
+.gp:not(.is-open):hover::before{filter:saturate(.85) contrast(1.04) brightness(.95)}
+/* :hover and .is-open carry equal specificity, so the later rule won and the grade
+   crept back onto the open card while the pointer sat on it. Scope hover to the
+   closed cards, which are the only ones that have a grade to lift. */
 
 /* collapsed: icon pinned bottom-centre */
 .gp-ic{position:absolute;inset-inline-start:50%;bottom:24px;transform:translateX(50%);
