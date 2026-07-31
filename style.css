@@ -407,15 +407,24 @@ body.admin-bar-showing .nav{top:32px}
 .gp-ic svg{width:21px;height:21px;fill:none;stroke:#FFFFFF;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .gp.is-open .gp-ic{opacity:0;transform:translateX(50%) scale(.8);pointer-events:none}
 
-/* Centred, not pinned 84px off the bottom — at that offset it sat around 75%
-   of the card height and read as misaligned. The pill behind it is what makes it
-   legible over the bright shots (the white sensor, the pale door). */
-.gp-lab{position:absolute;inset-inline-start:50%;top:50%;bottom:auto;
-  transform:translate(50%,-50%) rotate(180deg);
-  writing-mode:vertical-rl;font-family:'Heebo',sans-serif;font-size:16px;font-weight:800;color:#FFFFFF;
-  white-space:nowrap;padding:16px 7px;border-radius:var(--r-f);
-  background:rgba(10,17,40,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  text-shadow:0 1px 10px rgba(10,17,40,.85);transition:opacity .35s var(--e)}
+/* Centred with PHYSICAL left + a negative self-translate. The logical
+   `inset-inline-start:50%` with `translate(50%,…)` resolved against the RTL
+   direction and pushed the pill to the card's right edge — measured 66px off
+   centre on a 134px card, with 20px hanging outside and clipped by the card's
+   `overflow:hidden`. That is why the words looked cut in half.
+   Sized up too: at 16px in a 520px-tall card the label was easy to miss, and a
+   closed card has to announce what it is before anyone hovers it. */
+.gp-lab{position:absolute;
+  left:50%;right:auto;top:50%;bottom:auto;
+  transform:translate(-50%,-50%) rotate(180deg);
+  writing-mode:vertical-rl;font-family:'Heebo',sans-serif;
+  font-size:23px;font-weight:800;letter-spacing:.01em;color:#FFFFFF;
+  white-space:nowrap;padding:22px 11px;border-radius:var(--r-f);
+  background:rgba(10,17,40,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 8px 28px -10px rgba(10,17,40,.6);
+  text-shadow:0 2px 14px rgba(10,17,40,.9);
+  transition:opacity .35s var(--e)}
 .gp.is-open .gp-lab{opacity:0}
 
 /* open panel content: icon → title → text → button, centred */
@@ -441,7 +450,9 @@ body.admin-bar-showing .nav{top:32px}
   .gal{flex-direction:column;height:auto;gap:10px}
   .gp{height:96px;flex:none;transition:height .6s var(--e)}
   .gp.is-open{height:330px}
-  .gp-lab{writing-mode:horizontal-tb;transform:none;inset-inline-start:auto;inset-inline-end:88px;bottom:auto;top:34px;font-size:18px}
+  /* stacked cards on small screens: horizontal label, reset the desktop centring */
+  .gp-lab{writing-mode:horizontal-tb;transform:none;left:auto;right:auto;
+    inset-inline-start:auto;inset-inline-end:88px;bottom:auto;top:26px;font-size:19px;padding:9px 16px}
   .gp-ic{inset-inline-start:auto;inset-inline-end:24px;transform:none;top:26px;bottom:auto}
   .gp.is-open .gp-ic{inset-inline-start:auto;inset-inline-end:24px;top:26px}
   .gp-in{inset-inline:24px;bottom:24px}
