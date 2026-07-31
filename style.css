@@ -737,3 +737,30 @@ body.admin-bar-showing .nav{top:32px}
 .reel-sound:hover{background:var(--btn);border-color:var(--btn)}
 .reel-sound svg{width:19px;height:19px;fill:none;stroke:#FFFFFF;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:700px){.reel{padding:var(--s6) 0}.reel-cap{inset-inline-start:14px;bottom:14px;padding:8px 14px}}
+
+
+/* ── custom play cursor, video frame only ── */
+.reel-cursor{position:absolute;top:0;inset-inline-start:0;width:78px;height:78px;border-radius:50%;
+  display:grid;place-items:center;background:var(--btn);color:#FFFFFF;z-index:5;pointer-events:none;
+  box-shadow:0 14px 40px -10px var(--btn-45);opacity:0;
+  transform:translate3d(var(--cx,0),var(--cy,0),0) translate(-50%,-50%) scale(.4);
+  transition:opacity .25s var(--e-io),transform .25s var(--e-io)}
+.reel-cursor::after{content:"";position:absolute;inset:-11px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.6)}
+.reel-cursor svg{width:30px;height:30px;margin-inline-start:4px}
+.reel-frame.cur-on .reel-cursor{opacity:1;
+  transform:translate3d(var(--cx,0),var(--cy,0),0) translate(-50%,-50%) scale(1)}
+/* while the pointer is inside, hide the arrow and the static button */
+@media(hover:hover) and (pointer:fine){
+  .reel-facade{cursor:none}
+  .reel-frame.cur-on .reel-play{opacity:0;transform:translate(-50%,-50%) scale(.75)}
+}
+/* touch devices keep the static button and the normal cursor */
+@media(hover:none),(pointer:coarse){.reel-cursor{display:none}}
+
+/* ── controller card: lift the black product off the dark card ── */
+.cc-hero::before{content:"";position:absolute;inset-inline:8%;top:-6%;height:96%;z-index:0;
+  background:radial-gradient(closest-side,rgba(72,159,223,.28),transparent 72%);filter:blur(18px)}
+.cc-hero img{position:relative;z-index:1;filter:brightness(1.85) contrast(1.06) saturate(1.05)}
+.cc-lg:hover .cc-hero img{filter:brightness(2) contrast(1.08) saturate(1.08)}
+.cc-hero::after{background:linear-gradient(to bottom,rgba(10,17,40,.12) 0%,rgba(10,17,40,.62) 68%,var(--primary-2) 100%)}

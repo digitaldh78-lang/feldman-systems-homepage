@@ -408,6 +408,28 @@
   /* ── showreel: YouTube facade — iframe only loads on click ── */
   var facade = document.getElementById('reelFacade');
   if (facade) {
+    /* play-shaped cursor that tracks the pointer inside the video frame,
+       so it reads as a video and not a static image */
+    var frame  = facade.closest('.reel-frame');
+    var cursor = document.getElementById('reelCursor');
+    if (frame && cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var cTick = false, cx = 0, cy = 0;
+      frame.addEventListener('pointerenter', function () { frame.classList.add('cur-on'); });
+      frame.addEventListener('pointerleave', function () { frame.classList.remove('cur-on'); });
+      frame.addEventListener('pointermove', function (e) {
+        var r = frame.getBoundingClientRect();
+        cx = e.clientX - r.left;
+        cy = e.clientY - r.top;
+        if (cTick) return;
+        cTick = true;
+        requestAnimationFrame(function () {
+          cursor.style.setProperty('--cx', cx + 'px');
+          cursor.style.setProperty('--cy', cy + 'px');
+          cTick = false;
+        });
+      });
+    }
+
     facade.addEventListener('click', function () {
       var id = facade.getAttribute('data-yt');
       var f = document.createElement('iframe');
@@ -420,6 +442,9 @@
       facade.replaceWith(f);
       var cap = document.querySelector('.reel-cap');
       if (cap) cap.remove();
+      var cur = document.getElementById('reelCursor');
+      if (cur) cur.remove();
+      if (frame) frame.classList.remove('cur-on');
     });
   }
 })();
