@@ -405,6 +405,30 @@
     drawSteps();
   }
 
+  /* ── knowledge centre tabs ── */
+  var kcTabs = document.querySelectorAll('.kc-tab');
+  if (kcTabs.length) {
+    Array.prototype.forEach.call(kcTabs, function (tab) {
+      tab.addEventListener('click', function () {
+        Array.prototype.forEach.call(kcTabs, function (t) {
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          var on = (t === tab);
+          t.classList.toggle('is-on', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          if (panel) {
+            panel.hidden = !on;
+            /* replay the reveal so the incoming cards animate in rather than
+               appearing already-faded from a stale observer pass */
+            if (on) Array.prototype.forEach.call(panel.querySelectorAll('.rv'), function (el) {
+              el.classList.remove('in');
+              requestAnimationFrame(function () { el.classList.add('in'); });
+            });
+          }
+        });
+      });
+    });
+  }
+
   /* ── showreel: YouTube facade — iframe only loads on click ── */
   var facade = document.getElementById('reelFacade');
   if (facade) {
