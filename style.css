@@ -1032,13 +1032,14 @@ body.admin-bar-showing .nav{top:32px}
    reset is invisible and the loop never shows a seam. */
 .eco{padding:var(--s5) 0 calc(var(--s5) - 4px)}
 .eco-cap{margin-bottom:var(--s3)}
-.marq{position:relative;overflow:hidden;
+.marq{position:relative;overflow:hidden;direction:ltr;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);
           mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
-/* LTR inside the strip on purpose: in an RTL flex line the duplicate lands to the
-   LEFT of the original, so a leftward translate walks away from its own copy and
-   the seam opens instead of closing. */
-.marq-inner{display:flex;direction:ltr;width:max-content;
+/* `direction:ltr` belongs on the CONTAINER, not the strip. On the strip it still
+   left the strip right-anchored by the RTL parent, so translating left dragged its
+   right edge inward and opened a hole on the right. Anchored left, the same
+   translate pulls the next copy in from the right and the line stays solid. */
+.marq-inner{display:flex;width:max-content;
   animation:marq 46s linear infinite;will-change:transform}
 .marq-list{display:flex;gap:12px;padding:0 6px;margin:0;list-style:none}
 .marq:hover .marq-inner{animation-play-state:paused}   /* let people read a name */
