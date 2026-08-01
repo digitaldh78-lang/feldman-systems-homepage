@@ -307,60 +307,58 @@
 
   <div class="eco">
     <p class="eco-cap">מתממשק עם כל האקוסיסטם — בלי לכבול אותך לאף אחד מהם</p>
-    <!-- The list is repeated four times and the strip shifts by exactly one copy.
-         Two copies was not enough: one copy (1479px) is narrower than the viewport,
-         so once it had travelled its own width there was nothing left to cover the
-         right-hand side and a gap opened. Four copies keep the line filled at any
-         screen width, and the shift still lands copy #2 exactly where #1 began. -->
+    <!-- Four copies of the list; the strip shifts by exactly one copy so the loop
+         never opens a gap. Only the first copy is exposed to assistive tech and
+         focusable — the rest are decorative duplicates. -->
     <div class="marq" role="group" aria-label="תקנים ואקוסיסטמים נתמכים">
       <div class="marq-inner">
         <ul class="marq-list">
-          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+          <li class="eco-item eco-ha" data-tip="פלטפורמת בית חכם בקוד פתוח שרצה מקומית על מחשב בבית — מחברת מכשירים מיצרנים שונים לממשק אחד, בלי תלות בענן." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b><span class="sr">פלטפורמת בית חכם בקוד פתוח שרצה מקומית על מחשב בבית — מחברת מכשירים מיצרנים שונים לממשק אחד, בלי תלות בענן.</span></li>
+          <li class="eco-item eco-gh" data-tip="האקוסיסטם של גוגל לשליטה קולית ובאפליקציה, דרך רמקולי Nest ומסכים חכמים." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b><span class="sr">האקוסיסטם של גוגל לשליטה קולית ובאפליקציה, דרך רמקולי Nest ומסכים חכמים.</span></li>
+          <li class="eco-item eco-alexa" data-tip="העוזרת הקולית של אמזון. שליטה בבית בפקודה קולית דרך רמקולי Echo." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b><span class="sr">העוזרת הקולית של אמזון. שליטה בבית בפקודה קולית דרך רמקולי Echo.</span></li>
+          <li class="eco-item eco-hk" data-tip="תקן הבית החכם של אפל. שליטה מאפליקציית Home באייפון, באייפד, בשעון ובסירי." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b><span class="sr">תקן הבית החכם של אפל. שליטה מאפליקציית Home באייפון, באייפד, בשעון ובסירי.</span></li>
+          <li class="eco-item eco-zigbee" data-tip="פרוטוקול אלחוטי בצריכת חשמל נמוכה. המכשירים יוצרים רשת mesh שמחזקת את עצמה — בלי להעמיס על ה-Wi-Fi." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b><span class="sr">פרוטוקול אלחוטי בצריכת חשמל נמוכה. המכשירים יוצרים רשת mesh שמחזקת את עצמה — בלי להעמיס על ה-Wi-Fi.</span></li>
+          <li class="eco-item eco-mqtt" data-tip="פרוטוקול תקשורת קל שבו מכשירים שולחים ומקבלים הודעות דרך שרת מרכזי. עמוד השדרה של מערכות IoT." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b><span class="sr">פרוטוקול תקשורת קל שבו מכשירים שולחים ומקבלים הודעות דרך שרת מרכזי. עמוד השדרה של מערכות IoT.</span></li>
+          <li class="eco-item eco-matter" data-tip="תקן אחיד שפיתחו אפל, גוגל, אמזון וסמסונג יחד — כדי שמכשיר אחד יעבוד בכל המערכות." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b><span class="sr">תקן אחיד שפיתחו אפל, גוגל, אמזון וסמסונג יחד — כדי שמכשיר אחד יעבוד בכל המערכות.</span></li>
+          <li class="eco-item eco-tuya" data-tip="הפלטפורמה שמאחורי אלפי מוצרי בית חכם ממותגים שונים. אצלנו הם רצים מקומית, לא דרך הענן." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b><span class="sr">הפלטפורמה שמאחורי אלפי מוצרי בית חכם ממותגים שונים. אצלנו הם רצים מקומית, לא דרך הענן.</span></li>
+          <li class="eco-item eco-zwave" data-tip="פרוטוקול אלחוטי בתדר נפרד מה-Wi-Fi, ולכן בלי הפרעות. טווח טוב ואמינות גבוהה." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b><span class="sr">פרוטוקול אלחוטי בתדר נפרד מה-Wi-Fi, ולכן בלי הפרעות. טווח טוב ואמינות גבוהה.</span></li>
+          <li class="eco-item eco-thread" data-tip="רשת mesh מודרנית בצריכת חשמל נמוכה — הבסיס של Matter. ממשיכה לעבוד גם כשהראוטר נופל." tabindex="0"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b><span class="sr">רשת mesh מודרנית בצריכת חשמל נמוכה — הבסיס של Matter. ממשיכה לעבוד גם כשהראוטר נופל.</span></li>
         </ul>
         <ul class="marq-list" aria-hidden="true">
-          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+          <li class="eco-item eco-ha" data-tip="פלטפורמת בית חכם בקוד פתוח שרצה מקומית על מחשב בבית — מחברת מכשירים מיצרנים שונים לממשק אחד, בלי תלות בענן."><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh" data-tip="האקוסיסטם של גוגל לשליטה קולית ובאפליקציה, דרך רמקולי Nest ומסכים חכמים."><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa" data-tip="העוזרת הקולית של אמזון. שליטה בבית בפקודה קולית דרך רמקולי Echo."><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk" data-tip="תקן הבית החכם של אפל. שליטה מאפליקציית Home באייפון, באייפד, בשעון ובסירי."><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee" data-tip="פרוטוקול אלחוטי בצריכת חשמל נמוכה. המכשירים יוצרים רשת mesh שמחזקת את עצמה — בלי להעמיס על ה-Wi-Fi."><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt" data-tip="פרוטוקול תקשורת קל שבו מכשירים שולחים ומקבלים הודעות דרך שרת מרכזי. עמוד השדרה של מערכות IoT."><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter" data-tip="תקן אחיד שפיתחו אפל, גוגל, אמזון וסמסונג יחד — כדי שמכשיר אחד יעבוד בכל המערכות."><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya" data-tip="הפלטפורמה שמאחורי אלפי מוצרי בית חכם ממותגים שונים. אצלנו הם רצים מקומית, לא דרך הענן."><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave" data-tip="פרוטוקול אלחוטי בתדר נפרד מה-Wi-Fi, ולכן בלי הפרעות. טווח טוב ואמינות גבוהה."><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread" data-tip="רשת mesh מודרנית בצריכת חשמל נמוכה — הבסיס של Matter. ממשיכה לעבוד גם כשהראוטר נופל."><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
         </ul>
         <ul class="marq-list" aria-hidden="true">
-          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+          <li class="eco-item eco-ha" data-tip="פלטפורמת בית חכם בקוד פתוח שרצה מקומית על מחשב בבית — מחברת מכשירים מיצרנים שונים לממשק אחד, בלי תלות בענן."><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh" data-tip="האקוסיסטם של גוגל לשליטה קולית ובאפליקציה, דרך רמקולי Nest ומסכים חכמים."><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa" data-tip="העוזרת הקולית של אמזון. שליטה בבית בפקודה קולית דרך רמקולי Echo."><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk" data-tip="תקן הבית החכם של אפל. שליטה מאפליקציית Home באייפון, באייפד, בשעון ובסירי."><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee" data-tip="פרוטוקול אלחוטי בצריכת חשמל נמוכה. המכשירים יוצרים רשת mesh שמחזקת את עצמה — בלי להעמיס על ה-Wi-Fi."><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt" data-tip="פרוטוקול תקשורת קל שבו מכשירים שולחים ומקבלים הודעות דרך שרת מרכזי. עמוד השדרה של מערכות IoT."><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter" data-tip="תקן אחיד שפיתחו אפל, גוגל, אמזון וסמסונג יחד — כדי שמכשיר אחד יעבוד בכל המערכות."><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya" data-tip="הפלטפורמה שמאחורי אלפי מוצרי בית חכם ממותגים שונים. אצלנו הם רצים מקומית, לא דרך הענן."><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave" data-tip="פרוטוקול אלחוטי בתדר נפרד מה-Wi-Fi, ולכן בלי הפרעות. טווח טוב ואמינות גבוהה."><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread" data-tip="רשת mesh מודרנית בצריכת חשמל נמוכה — הבסיס של Matter. ממשיכה לעבוד גם כשהראוטר נופל."><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
         </ul>
         <ul class="marq-list" aria-hidden="true">
-          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+          <li class="eco-item eco-ha" data-tip="פלטפורמת בית חכם בקוד פתוח שרצה מקומית על מחשב בבית — מחברת מכשירים מיצרנים שונים לממשק אחד, בלי תלות בענן."><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh" data-tip="האקוסיסטם של גוגל לשליטה קולית ובאפליקציה, דרך רמקולי Nest ומסכים חכמים."><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa" data-tip="העוזרת הקולית של אמזון. שליטה בבית בפקודה קולית דרך רמקולי Echo."><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk" data-tip="תקן הבית החכם של אפל. שליטה מאפליקציית Home באייפון, באייפד, בשעון ובסירי."><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee" data-tip="פרוטוקול אלחוטי בצריכת חשמל נמוכה. המכשירים יוצרים רשת mesh שמחזקת את עצמה — בלי להעמיס על ה-Wi-Fi."><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt" data-tip="פרוטוקול תקשורת קל שבו מכשירים שולחים ומקבלים הודעות דרך שרת מרכזי. עמוד השדרה של מערכות IoT."><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter" data-tip="תקן אחיד שפיתחו אפל, גוגל, אמזון וסמסונג יחד — כדי שמכשיר אחד יעבוד בכל המערכות."><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya" data-tip="הפלטפורמה שמאחורי אלפי מוצרי בית חכם ממותגים שונים. אצלנו הם רצים מקומית, לא דרך הענן."><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave" data-tip="פרוטוקול אלחוטי בתדר נפרד מה-Wi-Fi, ולכן בלי הפרעות. טווח טוב ואמינות גבוהה."><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread" data-tip="רשת mesh מודרנית בצריכת חשמל נמוכה — הבסיס של Matter. ממשיכה לעבוד גם כשהראוטר נופל."><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
         </ul>
       </div>
     </div>
