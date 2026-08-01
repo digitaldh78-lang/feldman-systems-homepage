@@ -1139,3 +1139,29 @@ body.admin-bar-showing .nav{top:32px}
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
 @media(hover:none){.eco-item::before,.eco-item::after{display:none}}
+
+
+/* ═══════ MEGA-MENU PROMO CARD ═══════ */
+/* The card computed a 999px radius, not the 20px it is given: WoodMart forces a
+   pill radius onto links inside its menus. On a 201x415 box that curves the bottom
+   corners so far inward that the CTA line sat outside the visible shape and got
+   clipped — which is why the sentence was unreadable. `!important` here is aimed at
+   a specific theme rule, not used as a general habit. */
+.fsmega a.fsmega-promo{border-radius:20px !important;overflow:hidden}
+.fsmega a.fsmega-promo img{border-radius:0 !important}
+/* the scrim now reaches the very bottom edge and starts fading much higher, so the
+   CTA always has something solid behind it whatever the photo does */
+.fsmega .fsmega-promo-in{
+  padding:20px 18px 22px;
+  background:linear-gradient(0deg,
+    rgba(10,17,40,.97) 0%,
+    rgba(10,17,40,.92) 30%,
+    rgba(10,17,40,.55) 58%,
+    rgba(10,17,40,.12) 80%,
+    transparent 100%)}
+.fsmega .fsmega-promo-in b{font-size:16.5px;line-height:1.3;text-shadow:0 1px 8px rgba(10,17,40,.7)}
+.fsmega .fsmega-promo-in em{color:rgba(226,232,240,.86)}
+.fsmega .fsmega-promo-cta{
+  margin-top:9px;color:#7FE6FF;font-size:13.5px;
+  text-shadow:0 1px 8px rgba(10,17,40,.8)}
+.fsmega a.fsmega-promo:hover .fsmega-promo-cta{color:#FFFFFF}
