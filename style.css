@@ -34,6 +34,7 @@
   --g-10:rgba(15,92,150,.10);   /* soft blue tint for chips on light */
   --g-40:rgba(0,210,255,.40);   /* cyan glow on dark */
   --b-30:rgba(15,92,150,.30);   /* hairline blue border on light */
+  --m-check:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6.5 9.2 17.3 4 12.1"/></svg>');
   --ink-04:rgba(10,17,40,.04);
   --ink-08:rgba(10,17,40,.08);
   --ink-14:rgba(10,17,40,.14);
@@ -530,10 +531,19 @@ body.admin-bar-showing .nav{top:32px}
 .ticks{display:grid;gap:12px;margin-bottom:var(--s4)}
 .ticks li{position:relative;padding-inline-start:34px;font-size:16.5px;color:var(--primary-2);font-weight:500}
 .sec-dark .ticks li{color:var(--lite-70)}
-.ticks li::before{content:"";position:absolute;inset-inline-start:0;top:5px;width:21px;height:21px;border-radius:50%;
+/* The tick used to be two rotated CSS borders. `border-inline-start` resolves to
+   the RIGHT border under RTL, so the shape came out mirrored — it read as a chevron
+   or an arrow, not a check. A real checkmark glyph as a mask has no direction to
+   get wrong, and it sits dead-centre in the ring. */
+.ticks li::before{content:"";position:absolute;inset-inline-start:0;top:4px;width:22px;height:22px;border-radius:50%;
   background:var(--g-10);border:1px solid var(--b-30)}
-.ticks li::after{content:"";position:absolute;inset-inline-start:6.5px;top:10.5px;width:8px;height:5px;
-  border-inline-start:2px solid var(--eye-ink);border-bottom:2px solid var(--eye-ink);transform:rotate(-45deg)}
+.ticks li::after{content:"";position:absolute;inset-inline-start:0;top:4px;width:22px;height:22px;
+  background-color:var(--eye-ink);
+  -webkit-mask:var(--m-check) center/12px 12px no-repeat;
+          mask:var(--m-check) center/12px 12px no-repeat}
+/* on the navy sections the deep blue disappears — the ring and the check both lift */
+.sec-dark .ticks li::before{background:rgba(0,210,255,.12);border-color:rgba(0,210,255,.34)}
+.sec-dark .ticks li::after{background-color:var(--accent-2)}
 
 /* ═══════ PROOF ═══════ */
 .proof{display:grid;grid-template-columns:1.08fr .92fr;gap:20px;margin-bottom:var(--s5)}
