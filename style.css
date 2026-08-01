@@ -1032,13 +1032,18 @@ body.admin-bar-showing .nav{top:32px}
    reset is invisible and the loop never shows a seam. */
 .eco{padding:var(--s5) 0 calc(var(--s5) - 4px)}
 .eco-cap{margin-bottom:var(--s3)}
-.marq{position:relative;display:flex;overflow:hidden;
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
-          mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent)}
-.marq-track{display:flex;flex:0 0 auto;gap:12px;padding-inline-end:12px;margin:0;list-style:none;
-  animation:marq 42s linear infinite;will-change:transform}
-.marq:hover .marq-track{animation-play-state:paused}   /* let people read a name */
-@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.marq{position:relative;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
+/* LTR inside the strip on purpose: in an RTL flex line the duplicate lands to the
+   LEFT of the original, so a leftward translate walks away from its own copy and
+   the seam opens instead of closing. */
+.marq-inner{display:flex;direction:ltr;width:max-content;
+  animation:marq 46s linear infinite;will-change:transform}
+.marq-list{display:flex;gap:12px;padding:0 6px;margin:0;list-style:none}
+.marq:hover .marq-inner{animation-play-state:paused}   /* let people read a name */
+/* one quarter of four copies = exactly one copy */
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-25%)}}
 
 .eco-item{flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r-f);
@@ -1078,6 +1083,6 @@ body.admin-bar-showing .nav{top:32px}
 }
 @media(prefers-reduced-motion:reduce){
   .marq{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
-  .marq-track{animation:none}
-  .marq-track[aria-hidden="true"]{display:none}
+  .marq-inner{animation:none;flex-wrap:wrap;justify-content:center}
+  .marq-list[aria-hidden="true"]{display:none}
 }

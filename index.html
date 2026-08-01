@@ -307,33 +307,62 @@
 
   <div class="eco">
     <p class="eco-cap">מתממשק עם כל האקוסיסטם — בלי לכבול אותך לאף אחד מהם</p>
-    <!-- marquee: the list is rendered twice and the track shifts by exactly one
-         copy width, so the second lands where the first began — seamless loop -->
+    <!-- The list is repeated four times and the strip shifts by exactly one copy.
+         Two copies was not enough: one copy (1479px) is narrower than the viewport,
+         so once it had travelled its own width there was nothing left to cover the
+         right-hand side and a gap opened. Four copies keep the line filled at any
+         screen width, and the shift still lands copy #2 exactly where #1 began. -->
     <div class="marq" role="group" aria-label="תקנים ואקוסיסטמים נתמכים">
-      <ul class="marq-track">
-        <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-        <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-        <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-        <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-        <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-        <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-        <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-        <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-        <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-        <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
-      </ul>
-      <ul class="marq-track" aria-hidden="true">
-        <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
-        <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
-        <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
-        <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
-        <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
-        <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
-        <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
-        <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
-        <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
-        <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
-      </ul>
+      <div class="marq-inner">
+        <ul class="marq-list">
+          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+        </ul>
+        <ul class="marq-list" aria-hidden="true">
+          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+        </ul>
+        <ul class="marq-list" aria-hidden="true">
+          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+        </ul>
+        <ul class="marq-list" aria-hidden="true">
+          <li class="eco-item eco-ha"><i class="eco-ic" aria-hidden="true"></i><b>Home Assistant</b></li>
+          <li class="eco-item eco-gh"><i class="eco-ic" aria-hidden="true"></i><b>Google Home</b></li>
+          <li class="eco-item eco-alexa"><i class="eco-ic" aria-hidden="true"></i><b>Amazon Alexa</b></li>
+          <li class="eco-item eco-hk"><i class="eco-ic" aria-hidden="true"></i><b>Apple HomeKit</b></li>
+          <li class="eco-item eco-zigbee"><i class="eco-ic" aria-hidden="true"></i><b>Zigbee</b></li>
+          <li class="eco-item eco-mqtt"><i class="eco-ic" aria-hidden="true"></i><b>MQTT</b></li>
+          <li class="eco-item eco-matter"><i class="eco-ic" aria-hidden="true"></i><b>Matter</b></li>
+          <li class="eco-item eco-tuya"><i class="eco-ic" aria-hidden="true"></i><b>Tuya</b></li>
+          <li class="eco-item eco-zwave"><i class="eco-ic" aria-hidden="true"></i><b>Z-Wave</b></li>
+          <li class="eco-item eco-thread"><i class="eco-ic" aria-hidden="true"></i><b>Thread</b></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
