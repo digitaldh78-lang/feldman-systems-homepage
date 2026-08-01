@@ -351,11 +351,26 @@ body.admin-bar-showing .nav{top:32px}
   transition:transform .5s var(--e),box-shadow .5s var(--e),border-color .5s var(--e)}
 .cc:hover{transform:translateY(-8px);box-shadow:var(--sh-l);border-color:var(--a-28)}
 .cc-lg{grid-column:span 2;grid-row:span 2;display:flex;align-items:flex-end;overflow:hidden;
-  background:linear-gradient(158deg,var(--primary) 0%,var(--primary-2) 100%);border-color:transparent;min-height:300px}
-/* product shot fills the upper area instead of dead space */
-.cc-hero{position:absolute;inset-inline:0;top:0;height:56%;z-index:0;pointer-events:none}
-.cc-hero img{width:100%;height:100%;object-fit:cover;object-position:center 42%;
-  transition:transform 1.1s var(--e)}
+  background:
+    radial-gradient(120% 90% at 50% 14%,#1B2A52 0%,#101B3A 46%,transparent 78%),
+    linear-gradient(158deg,#0C1530 0%,#070C1E 100%);
+  border-color:transparent;min-height:300px}
+/* A black product on a black card has nowhere to go. It now stands on a lit stage:
+   a cool spotlight behind it, a floor ellipse under it, and the shot itself pushed
+   up in brightness so the chamfers and the LED actually read. */
+.cc-stage{position:absolute;inset-inline:0;top:0;height:56%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(46% 52% at 50% 46%,rgba(0,210,255,.24) 0%,rgba(0,150,220,.10) 45%,transparent 72%),
+    radial-gradient(70% 26% at 50% 84%,rgba(0,210,255,.16) 0%,transparent 70%);
+  transition:opacity .6s var(--e),transform .8s var(--e)}
+.cc-stage::after{content:"";position:absolute;inset-inline:18%;bottom:6%;height:12px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,210,255,.5),transparent 76%);filter:blur(7px)}
+.cc-hero{position:absolute;inset-inline:0;top:0;height:56%;z-index:1;pointer-events:none}
+.cc-hero img{width:100%;height:100%;object-fit:contain;object-position:center 46%;
+  filter:brightness(1.62) contrast(1.1) saturate(1.06)
+         drop-shadow(0 26px 34px rgba(0,0,0,.55))
+         drop-shadow(0 0 26px rgba(0,210,255,.22));
+  transition:transform 1.1s var(--e),filter .6s var(--e)}
 .cc-hero::after{content:"";position:absolute;inset:0;
   background:linear-gradient(to bottom,rgba(10,17,40,.30) 0%,rgba(10,17,40,.66) 42%,rgba(10,17,40,.94) 76%,var(--primary-2) 100%)}
 /* A scrim tied to the copy, not to the image: the product shot is bright metal,
@@ -363,7 +378,11 @@ body.admin-bar-showing .nav{top:32px}
    on a light area. This one follows the text wherever it lands. */
 .cc-lg .cc-body::before{content:"";position:absolute;inset:-40px -30px -34px;z-index:-1;
   background:linear-gradient(to top,var(--primary-2) 22%,rgba(10,17,40,.88) 58%,rgba(10,17,40,.45) 82%,transparent 100%)}
-.cc-lg:hover .cc-hero img{transform:scale(1.06)}
+.cc-lg:hover .cc-hero img{transform:translateY(-10px) scale(1.05);
+  filter:brightness(1.74) contrast(1.12) saturate(1.1)
+         drop-shadow(0 34px 42px rgba(0,0,0,.6))
+         drop-shadow(0 0 40px rgba(0,210,255,.34))}
+.cc-lg:hover .cc-stage{opacity:1;transform:scale(1.06)}
 .cc-lg .cc-body{position:relative;z-index:2}
 .cc-lg h3,.cc-lg p{color:#FFFFFF}
 .cc-lg p{color:var(--lite-70);max-width:52ch}
@@ -1165,3 +1184,30 @@ body.admin-bar-showing .nav{top:32px}
   margin-top:9px;color:#7FE6FF;font-size:13.5px;
   text-shadow:0 1px 8px rgba(10,17,40,.8)}
 .fsmega a.fsmega-promo:hover .fsmega-promo-cta{color:#FFFFFF}
+
+
+/* ═══════ CORE CARD — the satellites answer the hub ═══════ */
+/* Hovering the controller is the moment the section's idea lands: one brain, the
+   rest depend on it. The four surrounding cards recede and tilt toward it, so the
+   hierarchy is felt rather than just written. */
+.core-grid:has(.cc-lg:hover) .cc:not(.cc-lg){
+  transform:scale(.975);opacity:.72;border-color:var(--border)}
+.core-grid:has(.cc-lg:hover) .cc:not(.cc-lg) .ic{transform:scale(.94)}
+.cc:not(.cc-lg){transition:transform .5s var(--e),opacity .5s var(--e),
+  box-shadow .5s var(--e),border-color .5s var(--e)}
+.cc .ic{transition:transform .5s var(--e),background .5s var(--e)}
+
+/* the LED line under the device breathes while the card is idle */
+.cc-lg .cc-stage::after{animation:stagePulse 4.6s var(--e-io) infinite}
+@keyframes stagePulse{0%,100%{opacity:.55;transform:scaleX(.92)}50%{opacity:1;transform:scaleX(1.04)}}
+.cc-lg:hover .cc-stage::after{animation-duration:2.6s}
+
+/* keep the copy anchored while the product moves above it */
+.cc-lg .cc-body{position:relative;z-index:2}
+.cc-lg .mini li{color:rgba(226,232,240,.82)}
+
+@media(prefers-reduced-motion:reduce){
+  .cc-lg .cc-stage::after{animation:none}
+  .core-grid:has(.cc-lg:hover) .cc:not(.cc-lg){transform:none;opacity:1}
+  .cc-lg:hover .cc-hero img{transform:none}
+}
