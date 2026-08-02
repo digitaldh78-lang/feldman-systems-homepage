@@ -503,6 +503,21 @@
    ל-SEO מקומי. עד אז זו הדרך המהירה והבטוחה לעדכן.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
+  /* ── noindex לעמוד הסקיצה ──────────────────────────────────────────────
+     באתר לא מותקן תוסף SEO, אז אין דרך להוסיף את התגית בצד השרת. גוגל כן
+     מריץ JS ומכבד תגית robots שנוספת בזמן רינדור, אז זה עובד — אבל זה אות
+     ברמת הדפדפן ולא ברמת ה-HTML הגולמי. הדרך האטומה היא תוסף SEO או להגדיר
+     את העמוד כמוגן בסיסמה. מוגבל רק לעמוד התצוגה, לא לכל האתר. */
+  if (/%d7%aa%d7%a6%d7%95%d7%92%d7%94-%d7%9c%d7%9c%d7%a7%d7%95%d7%97/i.test(location.pathname) ||
+      /תצוגה-ללקוח/.test(decodeURIComponent(location.pathname))) {
+    if (!document.querySelector('meta[name="robots"]')) {
+      var rb = document.createElement('meta');
+      rb.name = 'robots';
+      rb.content = 'noindex, nofollow, noarchive';
+      document.head.appendChild(rb);
+    }
+  }
+
   /* ה-IIFE הזה נפרד מזה שלמעלה, אז reduce לא בתחום ההכרזה שלו — מגדיר מחדש */
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var WA   = 'https://wa.me/972544777238';

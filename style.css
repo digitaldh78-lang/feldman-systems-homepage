@@ -1557,16 +1557,6 @@ body.admin-bar-showing .nav{top:32px}
   .ft-brand .lg{height:46px;margin:0 auto 14px} /* גדול יותר, ממורכז, גבוה יותר */
   .ft-brand p{margin-inline:auto}
 
-  .ft-c{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
-  .ft-c > svg{flex:0 0 auto;width:17px;height:17px;margin-top:3px;
-    fill:none;stroke:var(--accent-2);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .ft-c b{display:block;font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
-    color:#FFFFFF;margin-bottom:1px}
-  .ft-c a,.ft-c span{display:block;font-size:14.5px;color:var(--lite-70);line-height:1.55}
-  .ft-c a:hover{color:var(--accent-2)}
-  .ft-addr{white-space:nowrap}                  /* "בני ברק, הרב קוק 48" בשורה אחת */
-  .ft-waze{margin-top:3px;font-size:13px;font-weight:700;color:var(--accent-2)!important}
-  .ft-closed{opacity:.72}
 
   .ft-bot{flex-direction:column;align-items:center;text-align:center;gap:10px}
   .ft-legal{justify-content:center}
@@ -1576,3 +1566,39 @@ body.admin-bar-showing .nav{top:32px}
 .ft-credit{font-size:13.5px;color:var(--lite-70)}
 .ft-credit a{color:var(--accent-2);font-weight:700}
 .ft-credit a:hover{text-decoration:underline}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   שורות פרטי הקשר בפוטר — גלובלי, לא רק מובייל.
+   הכללים האלה נכתבו בטעות בתוך media query של מובייל. בדסקטופ ה-svg נשארו בלי
+   width/height והדפדפן צייר אותם בגודל הטבעי שלהם — טלפון ומעטפה בגובה 150px+.
+   הבלוק הזה זהה למה שהיה, רק בלי התנאי.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ft-c{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.ft-c > svg{flex:0 0 auto;width:17px;height:17px;margin-top:3px;
+  fill:none;stroke:var(--accent-2);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ft-c b{display:block;font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
+  color:#FFFFFF;margin-bottom:1px}
+.ft-c a,.ft-c span{display:block;font-size:14.5px;color:var(--lite-70);line-height:1.55}
+.ft-c a:hover{color:var(--accent-2)}
+.ft-addr{white-space:nowrap}          /* "בני ברק, הרב קוק 48" בשורה אחת */
+.ft-waze{margin-top:3px;font-size:13px;font-weight:700;color:var(--accent-2)!important}
+.ft-closed{opacity:.72}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ההדר — זכוכית חלבית גם אחרי גלילה.
+   ההדר כבר היה זכוכית במצב ההתחלתי (--veil הוא לבן ב-82% + blur), אבל ברגע
+   שגללת .nav.on החליף את הרקע ל-var(--surface) שהוא לבן אטום — ולכן בכל צילום
+   מסך שלך הוא נראה כמו גלולה לבנה סגורה. עכשיו הוא נשאר שקוף-חלבי גם בגלילה:
+   התוכן זז מתחתיו ורואים אותו מטושטש, בלי לפגוע בקריאות הלוגו והתפריט.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.nav.on .nav-in{
+  background:rgba(255,255,255,.70);
+  -webkit-backdrop-filter:saturate(190%) blur(26px);
+          backdrop-filter:saturate(190%) blur(26px);
+  border-color:rgba(255,255,255,.55);
+  box-shadow:0 10px 34px -18px rgba(8,14,34,.30),inset 0 1px 0 rgba(255,255,255,.65);
+}
+/* דפדפן בלי backdrop-filter יקבל רקע אטום, אחרת הטקסט לא ייקרא */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .nav-in,.nav.on .nav-in{background:var(--surface)}
+}
