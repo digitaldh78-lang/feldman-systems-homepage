@@ -671,7 +671,7 @@ body.admin-bar-showing .nav{top:32px}
    background — the SVG is transparent, so it sits on the navy directly */
 .ft-brand p{font-size:15.5px;color:var(--lite-70);max-width:46ch}
 .ft-col{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
-.ft-col h4{color:#FFFFFF;margin-bottom:5px;font-size:15px}
+.ft-col h4,.ft-col h3{color:#FFFFFF;margin-bottom:5px;font-size:15px}
 .ft-col a,.ft-col span{font-size:15.5px;color:var(--lite-70);transition:color .3s var(--e)}
 .ft-col a:hover{color:var(--accent)}
 .ft-bot{display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap;
