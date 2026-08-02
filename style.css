@@ -1221,3 +1221,69 @@ body.admin-bar-showing .nav{top:32px}
   .core-grid:has(.cc-lg:hover) .cc:not(.cc-lg){transform:none;opacity:1}
   .cc-lg:hover .cc-hero img{transform:none}
 }
+
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE PASS — driven by real device screenshots (Samsung, 945px wide)
+   The desktop rhythm was simply scaled down before; these are corrections to
+   specific things that were measured as broken on a phone.
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:760px){
+
+  /* ── 1. spacing. 112px between sections is desktop breathing room; on a phone
+        it is dead scrolling. Roughly halved, and the gaps between related
+        sections cut further. ── */
+  .sec{padding:var(--s6) 0}
+  #audience,#about,#process,#know,#says{padding-top:var(--s5)}
+  #contact{padding-top:var(--s6)}
+  .head{margin-bottom:var(--s4)}
+  .head h2{font-size:clamp(25px,7.2vw,33px);line-height:1.22}
+  .head p{font-size:16.5px}
+
+  /* ── 2. the hero shot was pushed below a 300px reserve and ended up mostly
+        off-screen — only a sliver of the monitor was visible. It now sits in a
+        fixed band under the copy, fully in frame. ── */
+  .hero-shot .hero-grid{min-height:0;padding:calc(var(--nav-h) + 28px) 0 clamp(210px,58vw,300px)}
+  .hero-shot::before{
+    left:50%;right:auto;top:auto;bottom:0;transform:translateX(-50%);
+    width:118%;height:clamp(200px,56vw,290px);
+    background-position:center bottom;background-size:contain;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 100%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 100%);
+  }
+  .hero-shot .hero-copy{width:100%}
+  .hero h1{font-size:clamp(30px,8.6vw,40px);line-height:1.16}
+  .hero-copy p{font-size:16.5px}
+  .eco{padding:var(--s4) 0}
+
+  /* ── 3. video: a static, centred, smaller play button. The pointer-following
+        cursor is a desktop idea and there is no pointer here. ── */
+  .reel-play{width:60px;height:60px;
+    inset-inline-start:auto;left:50%;transform:translate(-50%,-50%)}
+  .reel-play svg{width:24px;height:24px;margin-left:3px}
+  .reel-play::after{inset:-9px;border-width:1.2px}
+  .reel-cursor{display:none!important}
+
+  /* ── 4. cards were tall enough that each one needed its own scroll ── */
+  .cc{padding:22px 18px}
+  .cc h3{font-size:19px}
+  .cc p{font-size:15.5px}
+  .cc-lg{min-height:0}
+  .cc-lg .cc-hero,.cc-lg .cc-stage{height:44%}
+  .kc-body{padding:18px 18px 14px}
+  .kc-body b{font-size:18px}
+  .tst{padding:var(--s4) 20px 20px}
+  .ac{padding:24px 20px}
+  .ac-n{font-size:38px;margin-bottom:10px}
+}
+
+/* ── 5. when the phone asks for reduced motion the marquee stops, and the
+      fallback has to stand on its own instead of leaving a near-empty strip ── */
+@media(prefers-reduced-motion:reduce) and (max-width:760px){
+  .marq{overflow-x:auto;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:none;mask-image:none;padding-top:0;margin-top:0}
+  .marq-inner{flex-wrap:nowrap;width:max-content;animation:none}
+  .marq-list[aria-hidden="true"]{display:none}
+  .eco-item{scroll-snap-align:start}
+  .marq-inner{scroll-snap-type:x proximity}
+}
