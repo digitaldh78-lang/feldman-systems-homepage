@@ -1395,35 +1395,51 @@ body.admin-bar-showing .nav{top:32px}
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   PASS 4 — ההירו במובייל. דסקטופ לא נגוע: כל מה שכאן חי בתוך media query.
+   ההירו במובייל — קומפוזיציה מחדש. הדסקטופ לא נגוע: כל שורה כאן חיה בתוך
+   media query, ואף כלל של הדסקטופ לא שונה.
    ═══════════════════════════════════════════════════════════════════════════
 
-   מה באמת היה שבור: תמונת ההירו היא ::before של .hero-shot עם bottom:0.
-   אבל .hero-shot לא מכיל רק את הטקסט — יש בו שלושה ילדים:
-   .hero-bg, .hero-grid (1099px) ו-.eco, שורת האקוסיסטם (175px), שיושבת אחרונה.
-   כלומר "התחתית" של הסקשן היא התחתית של שורת המותגים, לא של הטקסט —
-   והתמונה נצבעה מתחתיה. מתוך 241px של תמונה נשארו 66px גלויים מעליה.
-   זו הסיבה שראית פס דק ומעליו חלל: החלל היה ה-padding ששמרתי לתמונה,
-   והתמונה עצמה הייתה מאחורי שורת המותגים.
+   מה היה לא בסדר, שלושה דברים נפרדים:
 
-   בדסקטופ זה לא קורה כי שם ה-::before ממורכז אנכית (top:50%) בסקשן הרבה
-   יותר גבוה, ולכן אף פעם לא נופל על ה-.eco.
+   1. סדר. הלקוח קיבל כותרת ענקית, פסקה, שני כפתורים ושלושה מספרים — וראה את
+      המוצר רק אחרי ~1,300px של גלילה. במובייל המוצר צריך להיות הדבר הראשון.
 
-   התיקון: במובייל התמונה מפסיקה להיות שכבה מרחפת והופכת לאלמנט בזרימה —
-   ::after של הגריד, כלומר מיד אחרי הטקסט ולפני שורת המותגים. היחס נעול
-   על 1433/800 (היחס האמיתי של הקובץ) כך שאין חיתוך ואין עיוות. */
+   2. הקרופ. הקובץ feldman-hero-wide.jpg נבנה לדסקטופ: המוצר תופס את 7%–53%
+      השמאליים של הפריים והשאר רקע סטודיו ריק, כי בדסקטופ הטקסט יושב בחצי הימני
+      וממלא אותו. במובייל הצגתי את כל הפריים, אז המוצר נדחק שמאלה ומימין נשאר
+      ואקום. הפתרון הוא חלון של 55.8% מרוחב הקובץ (background-size:auto 100%
+      בתוך מסגרת 1:1), ממוקם ב-5% — כך מרכז המוצר נוחת על 49.8% מרוחב החלון.
+      אין קובץ חדש, אין הורדה נוספת: אותה תמונה, חלון אחר.
+
+   3. הנתונים. שלושה פריטי flex עם gap של 64px נשברו ל-2+1 עם חלל ענק באמצע.
+      עכשיו גריד של שלוש עמודות שוות. */
 @media(max-width:760px){
+
   .hero-shot::before{display:none}
-  .hero-shot .hero-grid{padding-bottom:28px}
-  .hero-shot .hero-grid::after{
-    content:"";display:block;
-    width:100%;aspect-ratio:1433/800;margin-top:26px;
-    background:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg") center center/contain no-repeat;
-    /* ריכוך קצוות כדי שהתמונה תישב ברקע ולא תיראה מלבן מודבק */
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),
-                       linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
-            mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),
-                       linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
-    -webkit-mask-composite:source-in;mask-composite:intersect;
+
+  .hero-shot .hero-grid{
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    padding:calc(var(--nav-h) + 16px) 0 28px;
   }
+
+  /* ::before ולא ::after — כך המוצר הוא האלמנט הראשון בגריד, לפני הטקסט */
+  .hero-shot .hero-grid::before{
+    content:"";display:block;order:-1;
+    width:100%;aspect-ratio:1/1;margin:0 0 20px;
+    background:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg") 5% center/auto 100% no-repeat;
+    /* הרקע של הקובץ לבן וזה של הסקשן #F4F7FA — בלי ריכוך נוצר מלבן גלוי */
+    -webkit-mask-image:radial-gradient(112% 112% at 50% 50%,#000 60%,transparent 100%);
+            mask-image:radial-gradient(112% 112% at 50% 50%,#000 60%,transparent 100%);
+  }
+
+  .hero-shot .hero-copy{width:100%;text-align:center}
+  .hero-shot .hero-copy .pill{margin-inline:auto}
+
+  .hero-shot .hero-cta{flex-direction:column;align-items:stretch;gap:11px;margin-bottom:26px}
+  .hero-shot .hero-cta .btn{width:100%;justify-content:center}
+
+  .hero-shot .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+  .hero-shot .kpi div{align-items:center}
+  .hero-shot .kpi dt{font-size:25px}
+  .hero-shot .kpi dd{font-size:11.5px;line-height:1.35;margin-top:3px}
 }
