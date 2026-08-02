@@ -709,3 +709,21 @@
   window.addEventListener('load', sync);
   sync();
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   שלב 01 בפס התהליך — תמונה ייעודית במקום כפילות של ההירו
+   ───────────────────────────────────────────────────────────────────────────
+   הכרטיס טען את feldman-hero-wide, בדיוק אותו קובץ של ההירו, וזה נראה כמו
+   טעות. הוחלף בצילום של שיחת האפיון עצמה. index.html כבר מעודכן; ההחלפה כאן
+   קיימת כי ה-markup החי יושב בעמוד הוורדפרס ולא בקובץ.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  var img = document.querySelector('.step-fig img');
+  if (!img || !/feldman-hero-wide/.test(img.getAttribute('src') || '')) return;
+  var U = '/wp-content/uploads/2026/08/feldman-step1-discovery-plans';
+  img.setAttribute('src', U + '-768x579.jpg');
+  img.setAttribute('srcset', U + '-768x579.jpg 768w, ' + U + '.jpg 1760w');
+  img.setAttribute('width', '1760');
+  img.setAttribute('height', '1328');
+  img.setAttribute('alt', 'יועץ ובעלי נכס מסמנים על תוכניות אדריכליות, לצדם טאבלט עם תרשים המערכת');
+})();
