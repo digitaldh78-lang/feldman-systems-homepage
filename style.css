@@ -1443,3 +1443,65 @@ body.admin-bar-showing .nav{top:32px}
   .hero-shot .kpi dt{font-size:25px}
   .hero-shot .kpi dd{font-size:11.5px;line-height:1.35;margin-top:3px}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   שבעת השלבים במובייל — ציר זמן אנכי. הדסקטופ לא נגוע.
+   ═══════════════════════════════════════════════════════════════════════════
+
+   מה היה: בשורה @media(max-width:1100px) הקוד המקווקו, הקו המתמלא והנקודה
+   הנוסעת כולם מקבלים display:none. כלומר מתחת ל-1100px לא היו שלבים בכלל —
+   היו שבעה עיגולים בשתי עמודות בלי שום דבר שמחבר ביניהם, והלקוח לא יכול היה
+   לדעת שמדובר ברצף.
+
+   מה יש עכשיו: אותו מנגנון של הדסקטופ, מסובב 90 מעלות. טור אחד, מסגרת של
+   48px בצד ימין שבה יושבים המספרים, כותרת והסבר משמאלם, וקו שמחבר כל עיגול
+   לזה שאחריו. הקו מתמלא כלפי מטה לפי אותו --p שה-JS כבר מחשב לדסקטופ —
+   לא נגעתי ב-JS בכלל.
+
+   החישוב: כל מקטע i מקבל --seg = clamp(0, p*7 - 0.55 - i, 1). ה-0.55 מסונכרן
+   עם התנאי שבו ה-JS מדליק כל עיגול (p >= (i+0.55)/7), כך שהקו מגיע לעיגול
+   בדיוק ברגע שהוא נדלק ולא לפני. נמדד בפועל ב-p=0.42: מקטעים 0 ו-1 מלאים,
+   מקטע 2 על 39%, השאר ריקים.
+
+   השלב הנוכחי: העיגול האחרון שנדלק הוא זה שאחריו יש עיגול שעוד לא נדלק —
+   .rs.on:has(+ .rs:not(.on)). בלי JS נוסף, ובלי לשבור כלום אם :has לא נתמך. */
+@media(max-width:760px){
+  .rail{display:grid;grid-template-columns:1fr;gap:0;padding-top:4px}
+  .rail::before,.rail::after,.rail-head{display:none}
+
+  .rs{position:relative;display:grid;grid-template-columns:48px 1fr;gap:2px 16px;
+      text-align:right;padding-bottom:26px;align-items:start}
+  .rs:last-child{padding-bottom:0}
+  .rs-n{grid-column:1;grid-row:1 / span 2;width:48px;height:48px;margin:0;font-size:15px}
+  .rs h3{grid-column:2;grid-row:1;font-size:17px;margin:0 0 3px;
+         min-height:48px;display:flex;align-items:center}
+  .rs p{grid-column:2;grid-row:2;font-size:14.5px;line-height:1.6}
+
+  .rs:nth-child(1){--i:0}.rs:nth-child(2){--i:1}.rs:nth-child(3){--i:2}.rs:nth-child(4){--i:3}
+  .rs:nth-child(5){--i:4}.rs:nth-child(6){--i:5}.rs:nth-child(7){--i:6}
+  .rs{--seg:clamp(0, calc(var(--p,0) * 7 - 0.55 - var(--i)), 1)}
+
+  /* המסלול המקווקו — מתחתית העיגול ועד ראש העיגול הבא */
+  .rs:not(:last-child)::before{content:"";position:absolute;top:52px;bottom:2px;right:23px;width:2px;
+    background-image:linear-gradient(180deg,var(--border) 0 7px,transparent 7px 14px);
+    background-size:2px 14px}
+  /* הקו שמתמלא */
+  .rs:not(:last-child)::after{content:"";position:absolute;top:52px;right:22px;width:4px;border-radius:4px;
+    height:calc((100% - 54px) * var(--seg));
+    background:linear-gradient(180deg,var(--btn),var(--accent));
+    box-shadow:0 0 16px var(--btn-45)}
+
+  /* השלב שאתה עליו עכשיו — טבעת פועמת סביב העיגול */
+  .rs.on:has(+ .rs:not(.on)) .rs-n,
+  .rs.on:last-child .rs-n{transform:scale(1.1)}
+  .rs.on:has(+ .rs:not(.on)) .rs-n::after,
+  .rs.on:last-child .rs-n::after{content:"";position:absolute;inset:-10px;border-radius:50%;
+    border:2px solid var(--btn);animation:stepPulse 1.9s ease-in-out infinite}
+}
+@keyframes stepPulse{0%{transform:scale(.86);opacity:.75}70%{transform:scale(1.3);opacity:0}100%{opacity:0}}
+
+/* הפחתת אנימציות: ה-JS לא רץ ולכן --p נשאר 0. הקו נצבע מלא, בלי פעימה. */
+@media(prefers-reduced-motion:reduce) and (max-width:760px){
+  .rs{--seg:1}
+  .rs .rs-n::after{animation:none}
+}
