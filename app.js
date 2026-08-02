@@ -727,3 +727,23 @@
   img.setAttribute('height', '1328');
   img.setAttribute('alt', 'יועץ ובעלי נכס מסמנים על תוכניות אדריכליות, לצדם טאבלט עם תרשים המערכת');
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   סקשן אודות — תמונת קובי החדשה
+   ───────────────────────────────────────────────────────────────────────────
+   הישנה (feldman-kobi-portrait) צולמה בחניון עם רכב ברקע ולא התאימה לסקשן.
+   הוחלפה בתמונה של קובי מול וילה מוארת עם דשבורד קריא על הטאבלט.
+   index.html כבר מעודכן; ההחלפה כאן קיימת כי ה-markup החי יושב בעמוד
+   הוורדפרס ולא בקובץ.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  var img = document.querySelector('#about .fig img');
+  if (!img || !/feldman-kobi-portrait/.test(img.getAttribute('src') || '')) return;
+  var U = '/wp-content/uploads/2026/08/kobi-about-new';
+  img.setAttribute('src', U + '.jpg');
+  img.setAttribute('srcset', U + '-768x576.jpg 768w, ' + U + '.jpg 1448w');
+  img.setAttribute('sizes', '(max-width:760px) 92vw, 44vw');
+  img.setAttribute('width', '1448');
+  img.setAttribute('height', '1086');
+  img.setAttribute('alt', 'קובי ניסן פלדמן, מייסד פלדמן מערכות, מחזיק טאבלט עם דשבורד בית חכם מול וילה מוארת');
+})();
