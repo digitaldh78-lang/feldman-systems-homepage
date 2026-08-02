@@ -1505,3 +1505,74 @@ body.admin-bar-showing .nav{top:32px}
   .rs{--seg:1}
   .rs .rs-n::after{animation:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   הדר, סרגל תחתון ופוטר — מובייל. הדסקטופ לא נגוע.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* הסרגל התחתון לא קיים כלל בדסקטופ */
+.tabbar{display:none}
+
+@media(max-width:760px){
+
+  /* ── הדר ──────────────────────────────────────────────────────────────
+     היה: הלוגו מימין עם מרווח, וכפתור התפריט נדבק לקצה השמאלי בלי מרווח.
+     עכשיו: row-reverse מעביר את הלוגו שמאלה ואת התפריט ימינה כפי שביקשת,
+     space-between דוחף אותם לשני הקצוות, ו-padding-inline זהה נותן להם
+     בדיוק אותו מרווח מהקצה משני הצדדים. שניהם גם הוקטנו מעט. */
+  .nav-in{flex-direction:row-reverse;justify-content:space-between;
+          gap:12px;padding-inline:18px}
+  .nav-in .brand{margin:0}
+  .nav .lg{height:27px}
+  .burger{width:40px;height:40px;gap:4.5px}
+  .burger span{width:19px}
+
+  /* ── סרגל תחתון ─────────────────────────────────────────────────────── */
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);
+    position:fixed;inset-inline:0;bottom:0;z-index:145;
+    background:rgba(255,255,255,.94);
+    -webkit-backdrop-filter:blur(16px) saturate(1.25);backdrop-filter:blur(16px) saturate(1.25);
+    border-top:1px solid var(--border);
+    box-shadow:0 -6px 24px -14px rgba(8,14,34,.28);
+    padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tabbar a,.tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:4px;min-height:58px;padding:9px 3px 8px;background:none;border:0;cursor:pointer;
+    font-family:'Heebo',sans-serif;font-size:11px;font-weight:700;color:var(--primary);
+    transition:color .25s var(--e),background .25s var(--e)}
+  .tabbar a:active,.tabbar button:active{background:var(--g-10)}
+  .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round}
+  .tabbar svg.fill{fill:currentColor;stroke:none}
+  /* הוואטסאפ נשאר בכחול המותג — אין ירוק באתר הזה */
+  .tabbar a[href*="wa.me"]{color:var(--btn)}
+
+  /* הכפתור הצף מתאחד לתוך הסרגל, אחרת שניהם נלחמים על אותה פינה */
+  .wa{display:none}
+  /* מקום לסרגל כדי שלא יכסה את סוף הפוטר */
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+
+  /* ── פוטר ───────────────────────────────────────────────────────────── */
+  .ft{padding-top:var(--s5)}                    /* היה חלל מת מעל הלוגו */
+  .ft-brand{text-align:center}
+  .ft-brand .lg{height:46px;margin:0 auto 14px} /* גדול יותר, ממורכז, גבוה יותר */
+  .ft-brand p{margin-inline:auto}
+
+  .ft-c{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+  .ft-c > svg{flex:0 0 auto;width:17px;height:17px;margin-top:3px;
+    fill:none;stroke:var(--accent-2);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .ft-c b{display:block;font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
+    color:#FFFFFF;margin-bottom:1px}
+  .ft-c a,.ft-c span{display:block;font-size:14.5px;color:var(--lite-70);line-height:1.55}
+  .ft-c a:hover{color:var(--accent-2)}
+  .ft-addr{white-space:nowrap}                  /* "בני ברק, הרב קוק 48" בשורה אחת */
+  .ft-waze{margin-top:3px;font-size:13px;font-weight:700;color:var(--accent-2)!important}
+  .ft-closed{opacity:.72}
+
+  .ft-bot{flex-direction:column;align-items:center;text-align:center;gap:10px}
+  .ft-legal{justify-content:center}
+}
+
+/* הקרדיט מוצג בשני הגדלים */
+.ft-credit{font-size:13.5px;color:var(--lite-70)}
+.ft-credit a{color:var(--accent-2);font-weight:700}
+.ft-credit a:hover{text-decoration:underline}

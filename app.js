@@ -493,3 +493,95 @@
     });
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   סרגל תחתון במובייל + פרטי הפוטר
+   ───────────────────────────────────────────────────────────────────────────
+   נבנה כאן ולא ב-HTML כי סימן ה-markup של העמוד יושב בוורדפרס, ואילו הקובץ
+   הזה נטען מ-GitHub Pages ומתעדכן בפריסה אחת. כשעיצוב המובייל יינעל כדאי
+   להעביר את הבלוקים האלה ל-HTML של העמוד עצמו — במיוחד את הכתובת, שחשובה
+   ל-SEO מקומי. עד אז זו הדרך המהירה והבטוחה לעדכן.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  /* ה-IIFE הזה נפרד מזה שלמעלה, אז reduce לא בתחום ההכרזה שלו — מגדיר מחדש */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WA   = 'https://wa.me/972544777238';
+  var WAZE = 'https://waze.com/ul?q=' + encodeURIComponent('הרב קוק 48 בני ברק') + '&navigate=yes';
+  var ic = {
+    shop : '<path d="M3 8l1.8-4h14.4L21 8M4 8v12h16V8M9.5 20v-6h5v6"/>',
+    cart : '<path d="M6.5 6H21l-1.6 8H8L6.5 6zM6.5 6 5.6 3H2.5"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="18" cy="19" r="1.4"/>',
+    heart: '<path d="M12 20.2s-7.2-4.6-7.2-9.7A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7.2 2.5c0 5.1-7.2 9.7-7.2 9.7z"/>',
+    menu : '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+    mail : '<path d="M4 5h16v14H4zM4 6.2l8 6 8-6"/>',
+    pin  : '<path d="M12 22s7-6.2 7-11.2a7 7 0 1 0-14 0C5 15.8 12 22 12 22z"/><circle cx="12" cy="10.5" r="2.3"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.2 2"/>'
+  };
+  var waPath = '<path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-1-2.2c-.2-.6-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4-.9.9-1.1 2-.8 3.2.4 1.4 1.3 2.7 1.5 2.9.2.2 2.5 3.9 6.1 5.3 2.2.9 3.1.9 4.2.8.7-.1 2-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/>';
+  var svg = function (p, filled) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"' + (filled ? ' class="fill"' : '') + '>' + p + '</svg>';
+  };
+
+  /* ── 1. הסרגל התחתון ── */
+  if (!document.querySelector('.tabbar')) {
+    var bar = document.createElement('nav');
+    bar.className = 'tabbar';
+    bar.setAttribute('aria-label', 'ניווט מהיר');
+    bar.innerHTML =
+      '<a href="/shop/">'     + svg(ic.shop)  + '<span>חנות</span></a>' +
+      '<a href="/cart/">'     + svg(ic.cart)  + '<span>עגלה</span></a>' +
+      '<a href="/wishlist/">' + svg(ic.heart) + '<span>מועדפים</span></a>' +
+      '<a href="' + WA + '" target="_blank" rel="noopener">' + svg(waPath, true) + '<span>וואטסאפ</span></a>' +
+      '<button type="button" class="tb-menu" aria-label="פתיחת תפריט">' + svg(ic.menu) + '<span>תפריט</span></button>';
+    document.body.appendChild(bar);
+
+    /* כפתור התפריט מפעיל את אותו burger שכבר קיים — מקור אמת אחד למצב פתוח/סגור */
+    var burger = document.getElementById('burger');
+    var tbMenu = bar.querySelector('.tb-menu');
+    if (burger && tbMenu) {
+      tbMenu.addEventListener('click', function () {
+        burger.click();
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    }
+  }
+
+  /* ── 2. פרטי הקשר בפוטר — אייקונים, כתובת אחת שלא נשברת, וניווט ── */
+  var cols = document.querySelectorAll('.ft-col');
+  var contact = cols.length ? cols[cols.length - 1] : null;
+  if (contact && !contact.querySelector('.ft-c')) {
+    contact.innerHTML =
+      '<h4>יצירת קשר</h4>' +
+      '<div class="ft-c">' + svg(ic.phone) +
+        '<div><b>טלפון</b><a href="tel:0544777238" dir="ltr">054-477-7238</a></div></div>' +
+      '<div class="ft-c">' + svg(ic.mail) +
+        '<div><b>דוא״ל</b><a href="mailto:info@feldman-systems.co.il">info@feldman-systems.co.il</a></div></div>' +
+      '<div class="ft-c">' + svg(ic.pin) +
+        '<div><b>כתובת</b><span class="ft-addr">בני ברק, הרב קוק 48</span>' +
+        '<a class="ft-waze" href="' + WAZE + '" target="_blank" rel="noopener">ניווט עם Waze ←</a></div></div>' +
+      '<div class="ft-c">' + svg(ic.clock) +
+        '<div><b>שעות פעילות</b><span>א׳–ה׳ · 09:00–18:00</span>' +
+        '<span class="ft-closed">שישי ושבת — סגור</span></div></div>';
+  }
+
+  /* ── 3. הקישורים המשפטיים + קרדיט ── */
+  var legal = document.querySelector('.ft-legal');
+  if (legal) {
+    var urls = {
+      'מדיניות פרטיות': '/מדיניות-פרטיות-2/',
+      'תנאי שימוש'    : '/תנאי-שימוש-2/',
+      'הצהרת נגישות'  : '/הצהרת-נגישות-2/'
+    };
+    legal.querySelectorAll('a').forEach(function (a) {
+      var u = urls[a.textContent.trim()];
+      if (u) a.setAttribute('href', u);
+    });
+  }
+  var bot = document.querySelector('.ft-bot');
+  if (bot && !bot.querySelector('.ft-credit')) {
+    var cr = document.createElement('span');
+    cr.className = 'ft-credit';
+    cr.innerHTML = 'נבנה והוצב על ידי <a href="https://dhdidital.co.il" target="_blank" rel="noopener">DH&nbsp;Digital</a>';
+    bot.appendChild(cr);
+  }
+})();
