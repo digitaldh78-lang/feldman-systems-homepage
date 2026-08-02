@@ -1686,3 +1686,77 @@ body.admin-bar-showing .nav{top:32px}
 @media(max-width:1440px){
   .nav-links .fsmega{width:min(680px,86vw)}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   מגה־מניו "מרכז ידע" — מאמרים | סקירות + פס יצירת קשר
+   ───────────────────────────────────────────────────────────────────────────
+   מבנה: שתי עמודות שוות — מאמרים בימין, סקירות בשמאל, מופרדות בקו דק —
+   כל פריט עם תמונה ממוזערת 56px, כותרת ושורת מטא. בתחתית כל עמודה כפתור
+   "לכל ה…", ומתחת לשתיהן פס full-bleed עם שם החברה, טלפון וכפתור וואטסאפ.
+   הפס יוצא מהריפוד של הפאנל (margin שלילי 26px) ולכן מקבל את רדיוס הפינות
+   הפנימי: 36px מסגרת פחות 1px גבול = 35px.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.fsmega-know .fsmega-in{grid-template-columns:1fr 1fr;gap:0 24px;align-items:start}
+.fsmega-know .km-col{display:flex;flex-direction:column;min-width:0}
+.fsmega-know .km-col + .km-col{border-inline-start:1px solid var(--border);padding-inline-start:24px}
+
+.fsmega-know .km-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.fsmega-know .km-head .fsmega-h{margin:0}
+.fsmega-know .km-sub{font-size:11.5px;color:var(--text);opacity:.72;white-space:nowrap}
+
+.fsmega-know .km-item{display:flex;align-items:center;gap:12px;padding:8px;border-radius:var(--r-s);
+  transition:background .28s var(--e-io)}
+.fsmega-know .km-item:hover{background:var(--a-08)}
+.fsmega-know .km-th{flex:0 0 auto;width:56px;height:56px;border-radius:12px;overflow:hidden;
+  background:var(--bg);box-shadow:inset 0 0 0 1px var(--ink-08)}
+.fsmega-know .km-th img{display:block;width:100%;height:100%;object-fit:cover;
+  transition:transform .55s var(--e)}
+.fsmega-know .km-item:hover .km-th img{transform:scale(1.08)}
+.fsmega-know .km-tx{min-width:0}
+.fsmega-know .km-tx b{display:block;font-family:'Heebo',sans-serif;font-size:14.5px;font-weight:700;
+  line-height:1.35;color:var(--primary)}
+.fsmega-know .km-tx em{display:block;font-style:normal;font-size:12px;line-height:1.4;
+  color:var(--text);opacity:.8;margin-top:3px}
+
+.fsmega-know .km-all{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:12px;padding:11px 18px;border-radius:var(--r-f);
+  border:1px solid var(--border);background:var(--surface);
+  font-family:'Heebo',sans-serif;font-size:13.5px;font-weight:700;color:var(--primary);
+  transition:border-color .28s var(--e-io),background .28s var(--e-io),box-shadow .28s var(--e-io)}
+.fsmega-know .km-all svg{width:14px;height:14px;transition:transform .3s var(--e)}
+.fsmega-know .km-all:hover{border-color:var(--a-28);background:var(--a-08);box-shadow:0 6px 18px -12px var(--btn-45)}
+.fsmega-know .km-all:hover svg{transform:translateX(-3px)}
+
+/* פס תחתון */
+.fsmega-know .km-foot{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;
+  margin:22px -26px -26px;padding:15px 28px;
+  border-top:1px solid var(--border);background:var(--bg);
+  border-end-start-radius:35px;border-end-end-radius:35px}
+.fsmega-know .km-brand{display:flex;align-items:center;gap:12px;min-width:0}
+.fsmega-know .km-brand-mark{flex:0 0 auto;width:38px;height:38px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Heebo',sans-serif;font-size:17px;font-weight:800;color:#FFFFFF;
+  background:linear-gradient(140deg,var(--btn),var(--primary));
+  box-shadow:0 8px 18px -10px var(--btn-45)}
+.fsmega-know .km-brand-tx b{display:block;font-family:'Heebo',sans-serif;font-size:14px;font-weight:800;
+  color:var(--primary);line-height:1.3}
+.fsmega-know .km-brand-tx em{display:block;font-style:normal;font-size:12px;color:var(--text);
+  opacity:.8;margin-top:2px}
+
+.fsmega-know .km-acts{display:flex;align-items:center;gap:10px}
+.fsmega-know .km-tel,.fsmega-know .km-wa{display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:var(--r-f);
+  font-family:'Heebo',sans-serif;font-size:13.5px;font-weight:700;
+  transition:background .28s var(--e-io),border-color .28s var(--e-io),
+             color .28s var(--e-io),transform .28s var(--e),box-shadow .28s var(--e-io)}
+.fsmega-know .km-tel svg,.fsmega-know .km-wa svg{width:16px;height:16px;flex:0 0 auto}
+
+.fsmega-know .km-tel{border:1px solid var(--border);background:var(--surface);color:var(--primary)}
+.fsmega-know .km-tel svg{fill:none;stroke:var(--eye-ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fsmega-know .km-tel:hover{border-color:var(--a-28);background:var(--a-08)}
+
+.fsmega-know .km-wa{border:1px solid transparent;background:var(--btn);color:#FFFFFF}
+.fsmega-know .km-wa svg{fill:#FFFFFF}
+.fsmega-know .km-wa:hover{transform:translateY(-2px);box-shadow:var(--sh-a)}
