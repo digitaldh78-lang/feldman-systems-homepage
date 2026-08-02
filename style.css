@@ -1763,3 +1763,20 @@ body.admin-bar-showing .nav{top:32px}
 .fsmega-know .km-wa{border:1px solid transparent;background:var(--btn);color:#FFFFFF}
 .fsmega-know .km-wa svg{fill:#FFFFFF}
 .fsmega-know .km-wa:hover{transform:translateY(-2px);box-shadow:var(--sh-a)}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   כפתור וואטסאפ צף — צד שמאל + ירוק מותג
+   ───────────────────────────────────────────────────────────────────────────
+   היה inset-inline-start:22px, שבעמוד RTL מתורגם ל-right ולכן הכפתור ישב
+   בימין. כאן קובעים מיקום פיזי (left) כדי שלא יתהפך עם כיוון הכתיבה.
+   הצבע הוא היוצא-דופן היחיד ממערכת הצבעים: #25D366 הוא צבע המותג של
+   וואטסאפ, וזיהוי מיידי שלו שווה יותר מהאחידות. הכפתור עצמו בולט היטב
+   מול רקע העמוד (#F4F7FA), והלוגו הפנימי פטור מדרישת הניגודיות כסמל מותג.
+   במובייל הכפתור ממילא מוסתר — שם הוואטסאפ יושב בסרגל התחתון.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.wa{inset-inline-start:auto;inset-inline-end:auto;left:22px;right:auto;
+  background:#25D366;
+  box-shadow:0 12px 32px -8px rgba(37,211,102,.48),0 0 0 4px rgba(37,211,102,.12)}
+.wa::after{border-color:#25D366}
+.wa:hover{background:#1FB855;
+  box-shadow:0 16px 38px -10px rgba(37,211,102,.55),0 0 0 5px rgba(37,211,102,.16)}
