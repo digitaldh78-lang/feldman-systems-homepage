@@ -600,3 +600,112 @@
     bot.appendChild(cr);
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   שורת החנות — גלילה אופקית נעוצה (מובייל בלבד)
+   ───────────────────────────────────────────────────────────────────────────
+   מגיעים לסקשן, הוא נעצר, וכשממשיכים לגלול הכרטיסים נעים מימין לשמאל עד
+   האחרון — ואז הגלילה ממשיכה רגיל.
+
+   שתי החלטות שמונעות את התחושה ש"הדף תקוע", וזה הסיכון האמיתי של האפקט הזה
+   במובייל:
+
+   1. אני מזיז scrollLeft ולא transform. המשמעות: המחווה הטבעית של החלקה
+      באצבע ממשיכה לעבוד בדיוק כמו קודם, כי זו אותה גלילה. ברגע שהמשתמש נוגע —
+      אני משחרר את ההגה ולא נלחם בו יותר.
+   2. מרחק הנעיצה מקוצר לכחצי מהמרחק האופקי ומוגבל לגובה מסך אחד. בלי זה
+      היו נדרשים ~1,500px של גלילה אנכית כדי לעבור שישה כרטיסים.
+
+   ה-RTL כאן לא טריוויאלי: בכיוון ימין-לשמאל scrollLeft מתחיל ב-0 ויורד
+   לערכים שליליים. במקום להניח, אני מודד את הקצה בזמן ריצה.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  var grid = document.querySelector('#shop .prod-grid');
+  if (!grid) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mq     = window.matchMedia('(max-width: 760px)');
+  var pin = null, inner = null, fill = null, driving = true, ticking = false;
+
+  /* קצה הגלילה האופקית — חיובי ב-LTR, שלילי ב-RTL. נמדד, לא מונח. */
+  function edge(el) {
+    var keep = el.scrollLeft;
+    el.scrollLeft = -99999; var lo = el.scrollLeft;
+    el.scrollLeft =  99999; var hi = el.scrollLeft;
+    el.scrollLeft = keep;
+    return lo < 0 ? lo : hi;
+  }
+
+  function build() {
+    if (pin) return;
+    pin   = document.createElement('div'); pin.className = 'hpin';
+    inner = document.createElement('div'); inner.className = 'hpin-in';
+    var bar = document.createElement('div'); bar.className = 'hpin-bar';
+    fill = document.createElement('i');
+    bar.appendChild(fill);
+
+    grid.parentNode.insertBefore(pin, grid);
+    inner.appendChild(grid);
+    inner.appendChild(bar);
+    pin.appendChild(inner);
+
+    /* הרגע שבו המשתמש לוקח שליטה — מפסיקים לנהוג */
+    grid.addEventListener('touchstart', function () { driving = false; }, { passive: true });
+    grid.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch' || e.pointerType === 'pen') driving = false;
+    }, { passive: true });
+
+    measure();
+  }
+
+  function teardown() {
+    if (!pin) return;
+    pin.parentNode.insertBefore(grid, pin);
+    pin.remove();
+    pin = null; inner = null; fill = null; driving = true;
+    grid.style.removeProperty('scroll-snap-type');
+  }
+
+  function measure() {
+    if (!pin) return;
+    var hDist = grid.scrollWidth - grid.clientWidth;
+    if (hDist < 40) { pin.style.height = 'auto'; return; }
+    var travel = Math.min(hDist * 0.5, window.innerHeight * 0.9);
+    pin.style.height = (inner.offsetHeight + travel) + 'px';
+    draw();
+  }
+
+  function draw() {
+    ticking = false;
+    if (!pin) return;
+    var r = pin.getBoundingClientRect();
+    var travel = pin.offsetHeight - inner.offsetHeight;
+    if (travel <= 0) return;
+
+    var p = Math.max(0, Math.min(1, -r.top / travel));
+    if (fill) fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+
+    if (driving && !reduce) {
+      /* snap כופה נלחם בהצבה ידנית של scrollLeft — מכבים אותו כל עוד אנחנו נוהגים */
+      if (grid.style.scrollSnapType !== 'none') grid.style.scrollSnapType = 'none';
+      grid.scrollLeft = p * edgeCache;
+    } else if (grid.style.scrollSnapType === 'none') {
+      grid.style.removeProperty('scroll-snap-type');
+    }
+  }
+
+  var edgeCache = 0;
+  function sync() {
+    if (mq.matches) { build(); edgeCache = edge(grid); measure(); }
+    else            { teardown(); }
+  }
+
+  window.addEventListener('scroll', function () {
+    if (ticking || !pin) return;
+    ticking = true; requestAnimationFrame(draw);
+  }, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  window.addEventListener('load', sync);
+  sync();
+})();

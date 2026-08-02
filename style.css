@@ -1602,3 +1602,41 @@ body.admin-bar-showing .nav{top:32px}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .nav-in,.nav.on .nav-in{background:var(--surface)}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   הידוק רווחים + הגלילה האופקית הנעוצה — מובייל בלבד
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media(max-width:760px){
+
+  /* ── רווחים: 52px → 36px, ועוד יידוק בכותרות וברווחים הפנימיים ──────── */
+  .sec{padding:36px 0}
+  #audience,#about,#process,#know,#says{padding-top:30px}
+  #contact{padding-top:40px}
+  .head{margin-bottom:22px}
+  .head p{margin-top:8px}
+  .ft{padding-top:34px}
+  .eco{padding:24px 0}
+  .hero-shot .hero-grid{padding-bottom:20px}
+  .prod-head{margin-bottom:18px}
+  .kc-tabs{margin-bottom:18px}
+  .trust{margin-top:22px}
+
+  /* ── הגלילה האופקית הנעוצה ────────────────────────────────────────────
+     .hpin הוא המסלול הגבוה; .hpin-in נעוץ בתוכו ומחזיק את שורת הכרטיסים.
+     גובה המסלול נקבע ב-JS לפי המרחק האופקי בפועל. */
+  .hpin{position:relative}
+  .hpin-in{position:sticky;top:calc(var(--nav-h) + 26px)}
+
+  /* פס התקדמות — בלי זה נעיצה מרגישה כמו תקלה ולא כמו אפקט */
+  .hpin-bar{position:relative;height:3px;margin:14px auto 0;width:64%;
+    border-radius:3px;background:var(--g-10);overflow:hidden}
+  .hpin-bar i{position:absolute;inset:0;transform-origin:right center;transform:scaleX(0);
+    border-radius:3px;background:linear-gradient(90deg,var(--btn),var(--accent-2))}
+}
+
+/* מי שביקש פחות תנועה מקבל את הקרוסלה הרגילה, בלי נעיצה ובלי פס */
+@media(prefers-reduced-motion:reduce) and (max-width:760px){
+  .hpin{height:auto!important}
+  .hpin-in{position:static}
+  .hpin-bar{display:none}
+}
