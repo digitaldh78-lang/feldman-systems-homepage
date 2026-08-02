@@ -1640,3 +1640,49 @@ body.admin-bar-showing .nav{top:32px}
   .hpin-in{position:static}
   .hpin-bar{display:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   מגה־מניו — הסרת הפיל האפור + שפיץ שמצביע על הפריט
+   ───────────────────────────────────────────────────────────────────────────
+   שלושת פריטי המגה בנויים כ-<button>, וה-reset שלנו (button{background:none})
+   נדרס ע"י CSS של ערכת הנושא שנטענת אחרינו — לכן הם קיבלו רקע #F3F3F3 עם
+   פינות מלאות ונראו כמו כפתורים מודגשים בלי סיבה. כאן מאפסים במפורש;
+   סימון ה-hover נשאר רק הקו הטורקיז התחתון שכבר קיים בקוד.
+
+   בנוסף: הרווח בין ההדר לפאנל גדל ל-30px (היו 12px בפועל מתחתית סרגל
+   ההדר — לא מספיק לשפיץ), ונוסף משולש חד ממורכז מתחת לפריט הפעיל.
+   הפאנל כבר ממורכז מדויק על ה-trigger (נמדד: סטייה 0px בשלושתם), ולכן
+   left:50% על השפיץ מצביע בדיוק על מרכז הפריט.
+   רצועת גישור שקופה מכסה את הרווח כדי שהתפריט לא ייסגר במעבר העכבר.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.nav-links .fsmega-trig,
+.nav-links .fsmega-trig:hover,
+.nav-links .fsmega-trig:focus,
+.nav-links .fsmega-trig:active,
+.nav-links .fsmega-trig[aria-expanded="true"]{
+  background:transparent;background-color:transparent;
+  border:0;box-shadow:none;-webkit-appearance:none;appearance:none}
+.nav-links .fsmega-trig:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.nav-links .fsmega{top:calc(100% + 30px)}
+
+/* גשר שקוף על הרווח — פעיל רק כשהפאנל פתוח (pointer-events מגיע מהפאנל) */
+.nav-links .fsmega::before{content:"";position:absolute;top:-30px;left:0;right:0;height:30px}
+
+/* השפיץ — ריבוע 11px מסובב 45°, רק שתי הצלעות העליונות מקבלות קו גבול,
+   כך שהקו של מסגרת הפאנל ממשיך ברצף אל תוך המשולש */
+.nav-links .fsmega::after{content:"";position:absolute;top:-6px;left:50%;
+  width:11px;height:11px;margin-left:-5.5px;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-left:1px solid var(--border);
+  border-top-left-radius:2px;
+  transform:rotate(45deg)}
+
+/* מסכי דסקטופ צרים — פאנל "בית חכם" הוא הימני ביותר ולכן הראשון שגולש מהמסך.
+   נמדד: ברוחב 1130px (הצר ביותר לפני שהמגה נעלם) הרוחב הבטוח המרבי הוא 695px,
+   וברוחב 1200px — 714px. 680px עומד בשניהם. פאנל החנות רחב יותר אבל יושב
+   שמאלה ולכן נשאר בטוח ב-940px (רוחב בטוח 1089px ב-1130). */
+@media(max-width:1440px){
+  .nav-links .fsmega{width:min(680px,86vw)}
+}
