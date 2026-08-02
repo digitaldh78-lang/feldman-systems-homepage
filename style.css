@@ -1370,3 +1370,26 @@ body.admin-bar-showing .nav{top:32px}
   .prod-grid,.tst-grid{scroll-snap-type:none}
   .core-grid .cc:not(.cc-lg){position:static;box-shadow:var(--sh-s)}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PASS 3 — from the second batch of device screenshots (bottom of the page)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* האקורדיון: הפאנל מתכווץ ל-0fr כמו שצריך, אבל לפסקה שבתוכו נשאר
+   margin-bottom של 20px — ומרג'ין תופס מקום גם כשהמסלול עצמו אפס. התוצאה:
+   כל שאלה סגורה יושבת על רצועה ריקה של 20px, שש פעמים. הריווח כשפתוח מגיע
+   מה-padding ב-.ai.open, אז אין מה לאבד כאן. (באג בדסקטופ גם, לא רק במובייל.) */
+.ap>p{margin:0}
+
+/* הלוגו בפוטר — הגנה מפורשת: לבן על נייבי, בלי משטח לבן מאחוריו */
+.ft-brand{background:transparent}
+.ft-brand .lg{color:#FFFFFF;background:transparent}
+
+@media(max-width:760px){
+  /* הפוטר תפס 906px — שלוש עמודות שנערמות עם רווח של 64px ביניהן.
+     המותג נשאר ברוחב מלא, ושתי עמודות הקישורים יושבות זו לצד זו. */
+  .ft-grid{grid-template-columns:1fr 1fr;gap:var(--s4) var(--s3);margin-bottom:var(--s4)}
+  .ft-brand{grid-column:1 / -1}
+  .ft-col{gap:9px}
+  .ft-col a,.ft-col span{font-size:15px}
+}
