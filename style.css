@@ -1883,3 +1883,36 @@ body.admin-bar-showing .nav{top:32px}
 @media(prefers-reduced-motion:reduce){
   .cc::before,.ac::before,.pc::before,.kc::before,.tst::before{transition:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   אייקוני כרטיסי הליבה — אריח גרדיאנט מותג + אייקון לבן
+   ───────────────────────────────────────────────────────────────────────────
+   האריח היה תכלת שקוף עם אייקון כהה — נקי אבל חיוור, וזהה בכל חמשת
+   הכרטיסים. כאן הוא נהיה משטח גרדיאנט מלא (טורקיז→כחול) עם אייקון לבן,
+   צל צבעוני והדגשה עליונה שמדמה אור. צבעוני ובולט, אבל אותה צורה בכולם.
+
+   נבדקו קודם שני מסלולים אחרים ונפסלו על סמך מדידה בגודל האמיתי (52px):
+   אייקוני מאגר — חמש צורות וחמישה צבעים שונים; אייקוני AI — קו דק שנמרח
+   ללא קריאוּת, או צורה עבה שנראתה כתג אפליקציה גנרי.
+
+   הגיאומטריה עצמה הוחלפה ל-index.html: כל אייקון מתאר עכשיו את הנושא שלו
+   (קופסת בקרה, בית עם שבב, מודול DIN, גלי רשת, שעון טריגר) במקום
+   צורות מופשטות שהתאימו לכל דבר.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.cc .ic{
+  background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
+  border:0;
+  box-shadow:0 10px 22px -10px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.45);
+  transition:transform .5s var(--e),box-shadow .5s var(--e),filter .5s var(--e)}
+.cc .ic svg{width:25px;height:25px;stroke:#FFFFFF;stroke-width:1.85;color:#FFFFFF}
+.cc:hover .ic{
+  transform:scale(1.07) rotate(-4deg);
+  box-shadow:0 16px 30px -10px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.55);
+  filter:saturate(1.12)}
+
+/* בכרטיס הכהה הצל הצבעוני נבלע ברקע — שם ההפרדה מגיעה מטבעת בהירה דקה */
+.cc-lg .ic{
+  background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.16),0 10px 26px -12px rgba(0,0,0,.6),
+             inset 0 1px 0 rgba(255,255,255,.45)}
+.cc-lg .ic svg{stroke:#FFFFFF}
