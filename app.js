@@ -581,7 +581,7 @@
   if (bot && !bot.querySelector('.ft-credit')) {
     var cr = document.createElement('span');
     cr.className = 'ft-credit';
-    cr.innerHTML = 'נבנה והוצב על ידי <a href="https://dhdidital.co.il" target="_blank" rel="noopener">DH&nbsp;Digital</a>';
+    cr.innerHTML = 'נבנה והוצב על ידי <a href="https://dhdigital.co.il" target="_blank" rel="noopener">DH&nbsp;Digital</a>';
     bot.appendChild(cr);
   }
 })();
