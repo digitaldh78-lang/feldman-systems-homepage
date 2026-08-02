@@ -114,8 +114,12 @@ body.admin-bar-showing .nav{top:32px}
   border:1px solid var(--border);border-radius:var(--r-f);padding-inline:22px 10px;box-shadow:var(--sh-s);
   transition:box-shadow .4s var(--e),background .4s var(--e),border-color .4s var(--e)}
 .nav.on .nav-in{box-shadow:var(--sh-m);background:var(--surface);border-color:var(--a-28)}
-.brand{flex:0 0 auto;display:flex;align-items:center}
-.brand img{height:36px;width:auto}
+/* The logo is one inlined SVG symbol reused in both places. Its wordmark is set to
+   `currentColor`, so the same asset serves the white header and the navy footer by
+   changing `color` — no second file, no swapping src, and the multi-colour brand
+   mark stays exactly as supplied. */
+.brand{flex:0 0 auto;display:flex;align-items:center;color:#063049}
+.lg{display:block;height:34px;width:auto;aspect-ratio:1069.703/145.19}
 .nav-links{display:flex;gap:2px;flex:1 1 auto;justify-content:center}
 .nav-links a{position:relative;padding:9px 15px;border-radius:var(--r-f);font-size:15.5px;font-weight:600;
   font-family:'Heebo',sans-serif;color:var(--primary);transition:color .3s var(--e-io)}
@@ -662,8 +666,9 @@ body.admin-bar-showing .nav{top:32px}
   background:radial-gradient(700px 400px at 88% 0%,var(--a-08),transparent 60%)}
 .ft>*{position:relative;z-index:1}
 .ft-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:var(--s6);margin-bottom:var(--s7)}
-.ft-brand img{height:38px;width:auto;margin-bottom:18px;
-  background:#FFFFFF;padding:8px 12px;border-radius:var(--r-s)}
+.ft-brand .lg{height:36px;width:auto;margin-bottom:18px;color:#FFFFFF}
+/* the white plate existed only because the old logo was a JPG with a white
+   background — the SVG is transparent, so it sits on the navy directly */
 .ft-brand p{font-size:15.5px;color:var(--lite-70);max-width:46ch}
 .ft-col{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
 .ft-col h4{color:#FFFFFF;margin-bottom:5px;font-size:15px}
