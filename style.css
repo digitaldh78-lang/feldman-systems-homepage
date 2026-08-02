@@ -1393,3 +1393,37 @@ body.admin-bar-showing .nav{top:32px}
   .ft-col{gap:9px}
   .ft-col a,.ft-col span{font-size:15px}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PASS 4 — ההירו במובייל. דסקטופ לא נגוע: כל מה שכאן חי בתוך media query.
+   ═══════════════════════════════════════════════════════════════════════════
+
+   מה באמת היה שבור: תמונת ההירו היא ::before של .hero-shot עם bottom:0.
+   אבל .hero-shot לא מכיל רק את הטקסט — יש בו שלושה ילדים:
+   .hero-bg, .hero-grid (1099px) ו-.eco, שורת האקוסיסטם (175px), שיושבת אחרונה.
+   כלומר "התחתית" של הסקשן היא התחתית של שורת המותגים, לא של הטקסט —
+   והתמונה נצבעה מתחתיה. מתוך 241px של תמונה נשארו 66px גלויים מעליה.
+   זו הסיבה שראית פס דק ומעליו חלל: החלל היה ה-padding ששמרתי לתמונה,
+   והתמונה עצמה הייתה מאחורי שורת המותגים.
+
+   בדסקטופ זה לא קורה כי שם ה-::before ממורכז אנכית (top:50%) בסקשן הרבה
+   יותר גבוה, ולכן אף פעם לא נופל על ה-.eco.
+
+   התיקון: במובייל התמונה מפסיקה להיות שכבה מרחפת והופכת לאלמנט בזרימה —
+   ::after של הגריד, כלומר מיד אחרי הטקסט ולפני שורת המותגים. היחס נעול
+   על 1433/800 (היחס האמיתי של הקובץ) כך שאין חיתוך ואין עיוות. */
+@media(max-width:760px){
+  .hero-shot::before{display:none}
+  .hero-shot .hero-grid{padding-bottom:28px}
+  .hero-shot .hero-grid::after{
+    content:"";display:block;
+    width:100%;aspect-ratio:1433/800;margin-top:26px;
+    background:url("https://organized-blue-owl.64-204-250-78.cpanel.site/wp-content/uploads/2026/07/feldman-hero-wide.jpg") center center/contain no-repeat;
+    /* ריכוך קצוות כדי שהתמונה תישב ברקע ולא תיראה מלבן מודבק */
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),
+                       linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),
+                       linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+    -webkit-mask-composite:source-in;mask-composite:intersect;
+  }
+}
