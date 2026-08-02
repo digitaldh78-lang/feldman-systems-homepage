@@ -1287,3 +1287,86 @@ body.admin-bar-showing .nav{top:32px}
   .eco-item{scroll-snap-align:start}
   .marq-inner{scroll-snap-type:x proximity}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE PASS 2 — measured at 430×932, real device screenshots from Daniel
+   Baseline before this block: document height 21,118px (desktop is 15,817).
+   Three offenders carried most of it: #shop 3,835 · #know 2,012 · #says 1,326
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media(max-width:760px){
+
+  /* ── A. חנות — קרוסלה במקום מגדל.
+        שישה כרטיסי מוצר בטור אנכי = 3,835px, כמעט חמישה מסכים מלאים רק כדי
+        לעבור על החנות. בשורה נגללת הם תופסים גובה של כרטיס אחד. הכרטיס הבא
+        מציץ מהצד ~80px, וזה הרמז שאומר "אפשר להחליק" בלי חיצים ובלי הסבר. ── */
+  .prod-grid{
+    display:flex;gap:14px;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px 4px 16px;margin-inline:-4px;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .prod-grid::-webkit-scrollbar{display:none}
+  .prod-grid .pc{flex:0 0 78vw;max-width:308px;scroll-snap-align:start}
+  .pc-media{aspect-ratio:16/11}
+  .pc-body{padding:16px 16px 18px;gap:8px}
+  .pc-body h3{font-size:16px;line-height:1.32}
+  .pc-body p{font-size:13.5px}
+  .pc:hover{transform:none}
+
+  /* ── B. המלצות — אותו היגיון, שלושה כרטיסים של 334px ── */
+  .tst-grid{
+    display:flex;gap:14px;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px 4px 16px;margin-inline:-4px;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .tst-grid::-webkit-scrollbar{display:none}
+  .tst-grid .tst{flex:0 0 84vw;max-width:340px;scroll-snap-align:start}
+
+  /* ── C. כרטיסי הליבה — אנימציית ההערמה שביקשת.
+        הכרטיס הראשון (מחשב הבקרה) נשאר במקומו; ארבעת הכרטיסים שאחריו נעוצים
+        בזה אחר זה, כל אחד עולה על קודמו ומשאיר סרט של 14px שמראה שהוא שם.
+        אחרי הרביעי הערימה משתחררת והגלילה ממשיכה לסקשן הבא.
+        ה-top המדורג הוא מה שיוצר את הסרט; ה-z-index העולה הוא מה שקובע
+        שהחדש מכסה את הישן ולא להפך. ── */
+  .core-grid{display:block}
+  .core-grid .cc{margin-bottom:16px}
+  .core-grid .cc:last-child{margin-bottom:0}
+  .core-grid .cc:not(.cc-lg){
+    position:sticky;
+    opacity:1;transform:none;
+    box-shadow:0 -18px 44px -24px rgba(8,14,34,.55),0 16px 36px -26px rgba(8,14,34,.30);
+  }
+  .core-grid .cc:nth-child(2){z-index:2;top:calc(var(--nav-h) + 12px)}
+  .core-grid .cc:nth-child(3){z-index:3;top:calc(var(--nav-h) + 26px)}
+  .core-grid .cc:nth-child(4){z-index:4;top:calc(var(--nav-h) + 40px)}
+  .core-grid .cc:nth-child(5){z-index:5;top:calc(var(--nav-h) + 54px)}
+  .core-grid .cc:not(.cc-lg):hover{transform:none;box-shadow:0 -18px 44px -24px rgba(8,14,34,.55),0 16px 36px -26px rgba(8,14,34,.30)}
+
+  /* ── D. מחשב הבקרה — שחור על שחור, ובמסך קטן המוצר עצמו קטן יותר ולכן
+        נבלע. הכרטיס מקבל גובה אמיתי, הבמה גדלה, וההבהרה חזקה יותר מהדסקטופ.
+        זה עדיין טריק של mix-blend-mode — צילום עם רקע שקוף יפתור את זה נכון. ── */
+  .cc-lg{min-height:430px}
+  .cc-lg .cc-hero,.cc-lg .cc-stage{height:50%}
+  .cc-lg .cc-stage{opacity:1}
+  .cc-lg .cc-hero img{
+    filter:brightness(2.2) contrast(1.12) saturate(1.06)
+           drop-shadow(0 0 26px rgba(0,210,255,.30));
+  }
+
+  /* ── E. קיצוצים נקודתיים בגובה ── */
+  .sec{padding:52px 0}
+  .kc-img{aspect-ratio:16/10}
+  .kc-body{padding:16px 16px 14px}
+  .steps-media{aspect-ratio:16/9}
+  .step-pane p{margin-bottom:var(--s2)}
+  #shop .head{margin-bottom:var(--s3)}
+}
+
+/* מי שביקש פחות תנועה מקבל רשימה נגללת רגילה, בלי snap כופה */
+@media(prefers-reduced-motion:reduce) and (max-width:760px){
+  .prod-grid,.tst-grid{scroll-snap-type:none}
+  .core-grid .cc:not(.cc-lg){position:static;box-shadow:var(--sh-s)}
+}
