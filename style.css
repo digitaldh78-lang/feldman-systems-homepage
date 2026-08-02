@@ -1830,3 +1830,56 @@ body.admin-bar-showing .nav{top:32px}
     display:inline-flex;align-items:center;min-height:40px}
   .ft-col li{margin-bottom:0}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   שדרוגי חומר — גרעין, מסגרות תמונה, טבעת גרדיאנט
+   ───────────────────────────────────────────────────────────────────────────
+   העמוד כבר עשיר בתנועה (חשיפה עם blur, פרלקסה, כרטיסים נערמים, קו זמן).
+   מה שחסר לא היה עוד אנימציה אלא איכות חומר — שלושת אלה עובדים על זה,
+   כולם CSS בלבד, בלי שינוי מבנה ובלי תלות חדשה.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. גרעין על משטחים כהים
+   נייבי שטוח נראה כמו מילוי. שכבת רעש של ~3.5% במיזוג overlay גורמת לו
+   להיראות כמו חומר מודפס. ה-::before כבר תפוס בגרדיאנטים הרדיאליים, ולכן
+   הגרעין יושב ב-::after — מעל הרקע, מתחת לתוכן (שיושב ב-z-index:1). */
+.sec-dark::after,.cta::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  background-size:160px 160px}
+.cta>*{position:relative;z-index:1}
+
+/* 2. מסגרות תמונה עם עומק
+   היה: גבול 1px + צל. נוסף קו הדגשה בהיר בקצה העליון — האור שנתפס בשפה —
+   וטבעת חיצונית דקה מתחת לצל. התמונה נקראת כמונחת, לא כמודבקת. */
+.fig{box-shadow:0 0 0 1px var(--ink-04),0 2px 6px -2px var(--ink-08),var(--sh-l)}
+.fig-fr{box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.5),
+  inset 0 0 0 1px var(--a-28),
+  inset 0 -70px 90px -60px var(--a-45)}
+.fig-d .fig-fr{box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.18),
+  inset 0 0 0 1px var(--a-28),
+  inset 0 -70px 90px -60px var(--a-45)}
+
+/* 3. טבעת גרדיאנט ב-hover לכרטיסים
+   עד היום כל סוגי הכרטיסים קיבלו בדיוק אותו גבול אפור שהופך לתכלת אחיד.
+   כאן הגבול עצמו נהיה גרדיאנט שדועך — מבדיל בין הכרטיסים ונותן עומק.
+   הטכניקה דורשת mask-composite; בלעדיו הפסאודו היה נצבע כבלוק מלא,
+   ולכן הכל עטוף ב-@supports ופשוט לא קיים בדפדפן שלא תומך. */
+@supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+  .cc,.ac,.pc,.kc,.tst{position:relative}
+  .cc::before,.ac::before,.pc::before,.kc::before,.tst::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+    background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 45%,transparent 80%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+            mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    opacity:0;transition:opacity .45s var(--e-io);pointer-events:none;z-index:3}
+  .cc:hover::before,.ac:hover::before,.pc:hover::before,
+  .kc:hover::before,.tst:hover::before{opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .cc::before,.ac::before,.pc::before,.kc::before,.tst::before{transition:none}
+}
