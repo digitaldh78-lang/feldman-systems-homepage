@@ -1100,10 +1100,34 @@
     if (shown) btn.style.setProperty('--sp', Math.min(1, top / max).toFixed(3));
   }
 
+  /* טוויין ידני ולא scroll-behavior:smooth — הגלילה החלקה של הדפדפן
+     נקטעת בעמוד הזה ע"י בקרי הנעיצה (הרכזת, הגלריה, גלילת החנות),
+     והכפתור היה עוצר באמצע. פריים-אחר-פריים תמיד מנצח.               */
+  var anim = null;
+
+  function stop() { if (anim) { cancelAnimationFrame(anim); anim = null; } }
+
   btn.addEventListener('click', function () {
-    if (reduce) { document.documentElement.scrollTop = 0; window.scrollTo(0, 0); return; }
-    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    catch (e) { window.scrollTo(0, 0); }
+    var from = y();
+    if (reduce || from < 40) { stop(); window.scrollTo(0, 0); return; }
+    stop();
+    var t0 = 0;
+    var dur = Math.min(900, 320 + from * 0.16);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur);
+      /* easeInOutCubic — יציאה רכה, נחיתה רכה */
+      var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      window.scrollTo(0, Math.round(from * (1 - e)));
+      if (k < 1) { anim = requestAnimationFrame(step); }
+      else { anim = null; window.scrollTo(0, 0); }
+    }
+    anim = requestAnimationFrame(step);
+  });
+
+  /* נגיעה של המשתמש עוצרת את הטוויין — לא כולאים אותו באנימציה */
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, stop, { passive: true });
   });
 
   window.addEventListener('scroll', function () {
