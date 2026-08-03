@@ -18,6 +18,9 @@
 .hub-stage{
   position:relative;width:100%;max-width:1180px;margin-inline:auto;
   aspect-ratio:16/10;
+  /* הכותרת נעוצה יחד עם הבמה, ולכן הבמה חייבת להשאיר לה מקום —
+     בלי התקרה הזו שורת הכרטיסים העליונה נחתכה מתחת להדר. */
+  max-height:calc(100vh - var(--nav-h) - 232px);
   --p:0;                       /* התקדמות הגלילה, 0→1, נכתב מ-JS */
 }
 
@@ -62,15 +65,16 @@
 
 /* ── טבעת 1: צמתי פלטפורמה ── */
 .hub-plat{
-  width:96px;height:96px;border-radius:28px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  width:88px;height:88px;border-radius:26px;
+  display:flex;align-items:center;justify-content:center;
   background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
   box-shadow:0 16px 30px -14px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.45);
   transition:transform .35s var(--e),box-shadow .35s var(--e)}
-.hub-plat svg{width:28px;height:28px;fill:none;stroke:#FFFFFF;stroke-width:1.85;
+.hub-plat svg{width:32px;height:32px;fill:none;stroke:#FFFFFF;stroke-width:1.85;
   stroke-linecap:round;stroke-linejoin:round;color:#FFFFFF}
-.hub-plat b{font-family:'Heebo',sans-serif;font-size:10.5px;font-weight:800;color:#FFFFFF;
-  line-height:1.1;text-align:center;padding-inline:6px}
+.hub-plat b{position:absolute;top:calc(100% + 11px);left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:'Heebo',sans-serif;font-size:13px;font-weight:800;
+  color:var(--primary);line-height:1.2}
 .hub-plat:hover{transform:translate(-50%,-50%) scale(1.06);
   box-shadow:0 22px 38px -14px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.55)}
 
@@ -94,14 +98,16 @@
   color:var(--text);opacity:.82;margin-top:5px}
 
 /* ── מד התקדמות דק מתחת לבמה ── */
-.hub-bar{position:relative;height:3px;width:200px;margin:26px auto 0;
+.hub-bar{position:relative;height:3px;width:200px;margin:18px auto 0;
   border-radius:3px;background:var(--g-10);overflow:hidden}
 .hub-bar i{position:absolute;inset:0;transform-origin:left center;
   transform:scaleX(var(--p,0));border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--btn))}
 
 /* ── הכותרת של הסקשן נשארת מעל הבמה ── */
-.hub-head{max-width:720px;margin:0 auto 34px;text-align:center}
+.hub-head{max-width:720px;margin:0 auto 26px;text-align:center}
+.hub-pin .hub-head h2{font-size:clamp(26px,2.4vw,38px);line-height:1.18;margin-bottom:8px}
+.hub-pin .hub-head p{font-size:16px}
 
 /* ═══════════════ מובייל — אותו סיפור, שדרה אנכית ═══════════════
    גרף רדיאלי ב-390px מתפרק, ולכן במובייל הבמה מוחלפת בעץ אנכי:

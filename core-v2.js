@@ -123,7 +123,10 @@
   var head   = wrapEl.querySelector('.head');
   var grid   = wrapEl.querySelector('.core-grid');
   if (grid) grid.remove();
-  if (head) head.classList.add('hub-head');
+  if (head) {
+    head.classList.add('hub-head');
+    pin.insertBefore(head, stage);   /* בתוך הנעיצה — אחרת נעלמת בגלילה */
+  }
   wrapEl.appendChild(wrap);
 
   /* ── גיאומטריית הקווים ──
