@@ -1916,3 +1916,153 @@ body.admin-bar-showing .nav{top:32px}
   box-shadow:0 0 0 1px rgba(255,255,255,.16),0 10px 26px -12px rgba(0,0,0,.6),
              inset 0 1px 0 rgba(255,255,255,.45)}
 .cc-lg .ic svg{stroke:#FFFFFF}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   רכזת מחשב הבקרה — סקשן #core
+   ───────────────────────────────────────────────────────────────────────────
+   נבנה תחילה כשכבה מבודדת בעמוד ניסיוני, אושר, והוטמע כאן. מחליף את רשת
+   חמשת הכרטיסים הישנה שסתרה את המסר של הסקשן ("מוח אחד לנכס") בפריסה
+   של רכזת עם קווים מתחברים — שהיא המסר עצמו.
+
+   המבנה: ליבה במרכז (מחשב הבקרה עם לוגו פלדמן) → ארבעה צמתי פלטפורמה
+   בטבעת הראשונה → שישה כרטיסי מכשיר בטבעת השנייה. הקווים מצוירים ב-SVG
+   אחד שפרוס על כל הבמה, והגלילה הנעוצה מציירת אותם שכבה אחר שכבה.
+
+   כל המיקומים באחוזים מתוך במה ביחס קבוע (16:10), כך שהכל מתכווץ יחד
+   ולא נשבר בין 1120px ל-1920px.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hub-wrap{position:relative}
+.hub-pin{position:sticky;top:calc(var(--nav-h) + 18px)}
+
+.hub-stage{
+  position:relative;width:100%;max-width:1180px;margin-inline:auto;
+  aspect-ratio:16/10;
+  /* הכותרת נעוצה יחד עם הבמה, ולכן הבמה חייבת להשאיר לה מקום —
+     בלי התקרה הזו שורת הכרטיסים העליונה נחתכה מתחת להדר. */
+  max-height:calc(100vh - var(--nav-h) - 268px);
+  --p:0;                       /* התקדמות הגלילה, 0→1, נכתב מ-JS */
+}
+
+/* ── הקווים ── */
+.hub-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.hub-svg path{
+  fill:none;stroke:url(#hubLine);stroke-width:1.6;stroke-linecap:round;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+
+/* ── בסיס לכל צומת ── */
+.hub-node{
+  position:absolute;transform:translate(-50%,-50%);
+  inset-inline-start:auto;   /* מיקום פיזי בלבד — הבמה לא מתהפכת ב-RTL */
+  opacity:0}
+
+/* ── הליבה ── */
+.hub-core{
+  width:150px;height:150px;border-radius:34px;
+  display:grid;place-items:center;
+  background:linear-gradient(155deg,#132447 0%,var(--primary) 55%,#050B1C 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.10),
+    0 0 0 10px rgba(0,210,255,.05),
+    0 30px 60px -26px rgba(0,0,0,.75),
+    inset 0 1px 0 rgba(255,255,255,.16);
+  opacity:1}
+.hub-core::before{
+  content:"";position:absolute;inset:-26px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,var(--a-14) 0%,transparent 68%)}
+.hub-core::after{
+  content:"";position:absolute;inset:-4px;border-radius:38px;pointer-events:none;
+  border:1px solid var(--a-28);opacity:.55;
+  animation:hubBreathe 3.6s var(--e-io) infinite}
+@keyframes hubBreathe{
+  0%,100%{transform:scale(1);opacity:.5}
+  50%{transform:scale(1.045);opacity:.16}}
+.hub-core .lg{width:96px;height:auto;color:#FFFFFF;position:relative;z-index:1}
+.hub-core-cap{
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:'Heebo',sans-serif;font-size:12px;font-weight:800;
+  letter-spacing:.08em;color:var(--eye-ink)}
+
+/* ── טבעת 1: צמתי פלטפורמה ── */
+.hub-plat{
+  width:88px;height:88px;border-radius:26px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
+  box-shadow:0 16px 30px -14px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.45);
+  transition:transform .35s var(--e),box-shadow .35s var(--e)}
+.hub-plat svg{width:32px;height:32px;fill:none;stroke:#FFFFFF;stroke-width:1.85;
+  stroke-linecap:round;stroke-linejoin:round;color:#FFFFFF}
+.hub-plat b{position:absolute;top:calc(100% + 11px);left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:'Heebo',sans-serif;font-size:13px;font-weight:800;
+  color:var(--primary);line-height:1.2}
+.hub-plat:hover{transform:translate(-50%,-50%) scale(1.06);
+  box-shadow:0 22px 38px -14px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.55)}
+
+/* ── טבעת 2: כרטיסי מכשיר ── */
+.hub-dev{
+  width:186px;padding:12px 14px;border-radius:18px;text-align:right;
+  background:var(--surface);border:1px solid var(--border);
+  box-shadow:0 8px 20px -12px var(--ink-14),0 2px 5px -3px var(--ink-08);
+  transition:transform .35s var(--e),box-shadow .35s var(--e),border-color .35s var(--e)}
+.hub-dev:hover{
+  transform:translate(-50%,-50%) translateY(-3px);
+  box-shadow:0 16px 30px -14px var(--ink-14);border-color:var(--a-28)}
+.hub-dev-top{display:flex;align-items:center;gap:9px;flex-direction:row-reverse;justify-content:flex-end}
+.hub-dev-ic{flex:0 0 auto;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;
+  background:var(--a-08);border:1px solid var(--a-14)}
+.hub-dev-ic svg{width:16px;height:16px;fill:none;stroke:var(--eye-ink);stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;color:var(--eye-ink)}
+.hub-dev b{font-family:'Heebo',sans-serif;font-size:13.5px;font-weight:700;color:var(--primary);
+  line-height:1.25;display:block}
+.hub-dev em{display:block;font-style:normal;font-size:11.5px;line-height:1.45;
+  color:var(--text);opacity:.82;margin-top:5px}
+
+/* ── מד התקדמות דק מתחת לבמה ── */
+.hub-bar{position:relative;height:3px;width:200px;margin:18px auto 0;
+  border-radius:3px;background:var(--g-10);overflow:hidden}
+.hub-bar i{position:absolute;inset:0;transform-origin:left center;
+  transform:scaleX(var(--p,0));border-radius:3px;
+  background:linear-gradient(90deg,var(--accent),var(--btn))}
+
+/* ── הכותרת של הסקשן נשארת מעל הבמה ── */
+.hub-head{max-width:720px;margin:0 auto 26px;text-align:center}
+.hub-pin .hub-head h2{font-size:clamp(26px,2.4vw,38px);line-height:1.18;margin-bottom:8px}
+.hub-pin .hub-head p{font-size:16px}
+
+/* ═══════════════ מובייל — אותו סיפור, שדרה אנכית ═══════════════
+   גרף רדיאלי ב-390px מתפרק, ולכן במובייל הבמה מוחלפת בעץ אנכי:
+   הליבה למעלה, ומתחתיה הצמתים והמכשירים בטור אחד עם קו שמתמלא בגלילה. */
+@media(max-width:1023px){
+  .hub-pin{position:static}
+  .hub-stage{aspect-ratio:auto;display:flex;flex-direction:column;align-items:center;gap:0}
+  .hub-svg{display:none}
+  .hub-node{position:static;transform:none;opacity:1}
+
+  .hub-core{width:128px;height:128px;border-radius:30px;margin-bottom:38px}
+  .hub-core .lg{width:82px}
+  .hub-core-cap{position:static;transform:none;margin-top:10px}
+
+  .hub-mline{position:relative;width:100%;max-width:420px}
+  .hub-mline::before{content:"";position:absolute;top:0;bottom:0;right:47px;width:2px;
+    background-image:linear-gradient(180deg,var(--border) 0 7px,transparent 7px 14px);
+    background-size:2px 14px}
+  .hub-mline::after{content:"";position:absolute;top:0;right:46px;width:4px;border-radius:4px;
+    height:calc(100% * var(--p,0));
+    background:linear-gradient(180deg,var(--btn),var(--accent));box-shadow:0 0 16px var(--btn-45)}
+
+  .hub-mrow{position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;
+    align-items:start;padding-bottom:26px}
+  .hub-mrow .hub-plat{width:96px;height:96px;position:relative;transform:none}
+  .hub-mrow .hub-plat:hover{transform:scale(1.04)}
+  .hub-mdevs{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .hub-mdevs .hub-dev{width:auto;transform:none}
+  .hub-mdevs .hub-dev:hover{transform:translateY(-2px)}
+  .hub-bar{display:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hub-core::after{animation:none}
+  .hub-svg path{stroke-dashoffset:0 !important}
+  .hub-node{opacity:1 !important}
+}
