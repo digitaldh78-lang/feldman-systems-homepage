@@ -218,12 +218,19 @@
   var mq = window.matchMedia('(min-width:1024px)');
   var ticking = false, travel = 0;
 
+  /* המרחק שבו הפין "נדבק" מלמעלה. בלי להוסיף אותו לגובה המכל,
+     הפין נגמר לפני שהכוריאוגרפיה מסתיימת והוא נשמט למעלה —
+     בדיוק מה שקרה: נמדד pinTop=15 במקום 92 בסוף המסלול.          */
+  function stickyTop() {
+    return parseFloat(window.getComputedStyle(pin).top) || 0;
+  }
+
   function measure() {
     if (!mq.matches) { wrap.style.height = ''; return; }
     /* אורך המסלול: מספיק כדי שהכוריאוגרפיה תרגיש רגועה, אבל לא
        יותר משני מסכים — מעבר לזה זה מרגיש כמו שהעמוד נתקע.        */
     travel = Math.min(1500, window.innerHeight * 1.6);
-    wrap.style.height = (pin.offsetHeight + travel) + 'px';
+    wrap.style.height = (pin.offsetHeight + travel + stickyTop()) + 'px';
     buildPaths();
     onScroll();
   }
@@ -237,7 +244,8 @@
       return;
     }
     var rect = wrap.getBoundingClientRect();
-    var p = -rect.top / travel;
+    /* p=0 ברגע שהפין נדבק, לא ברגע שהמכל נוגע בקצה המסך */
+    var p = (stickyTop() - rect.top) / travel;
     draw(Math.max(0, Math.min(1, p)));
   }
 
