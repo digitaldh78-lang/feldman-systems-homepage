@@ -1961,7 +1961,14 @@ body.admin-bar-showing .nav{top:32px}
 .hub-core{
   width:150px;height:150px;border-radius:34px;
   display:grid;place-items:center;
-  background:linear-gradient(155deg,#132447 0%,var(--primary) 55%,#050B1C 100%);
+  /* שכבות שהופכות את הריבוע ליחידת חומרה: פס אור עליון שמדמה את
+     הפאה העליונה של המארז, ונורית סטטוס טורקיז לרוחב התחתית —
+     בלי אלה זה נקרא כריבוע כהה עם לוגו, ולא כמחשב.               */
+  background:
+    linear-gradient(90deg,transparent 22%,var(--accent) 22% 78%,transparent 78%)
+      no-repeat center 79%/100% 2px,
+    linear-gradient(180deg,rgba(255,255,255,.09) 0 30%,transparent 30%),
+    linear-gradient(155deg,#132447 0%,var(--primary) 55%,#050B1C 100%);
   box-shadow:
     0 0 0 1px rgba(255,255,255,.10),
     0 0 0 10px rgba(0,210,255,.05),
@@ -2030,40 +2037,56 @@ body.admin-bar-showing .nav{top:32px}
 .hub-pin .hub-head h2{font-size:clamp(26px,2.4vw,38px);line-height:1.18;margin-bottom:8px}
 .hub-pin .hub-head p{font-size:16px}
 
-/* ═══════════════ מובייל — אותו סיפור, שדרה אנכית ═══════════════
-   גרף רדיאלי ב-390px מתפרק, ולכן במובייל הבמה מוחלפת בעץ אנכי:
-   הליבה למעלה, ומתחתיה הצמתים והמכשירים בטור אחד עם קו שמתמלא בגלילה. */
+/* ═══════════════ מובייל — שדרה אנכית ═══════════════
+   הגרסה הראשונה הייתה גריד דו-טורי עם אריחי 96px וקו כחול עבה, וזה
+   נקרא כסרגל צד ולא כעץ. כאן כל שורה היא בלוק ברוחב מלא: כותרת
+   פלטפורמה (אריח קטן + שם באותה שורה) ומתחתיה כרטיסי המכשיר שלה,
+   עם קו דק שמתמלא לצד כולם.                                        */
 @media(max-width:1023px){
   .hub-pin{position:static}
-  .hub-stage{aspect-ratio:auto;display:flex;flex-direction:column;align-items:center;gap:0}
+  .hub-stage{aspect-ratio:auto;max-height:none;display:block;width:100%;max-width:480px;
+    margin-inline:auto}
   .hub-svg{display:none}
   /* left/top נכתבים inline לצורך הפריסה הרדיאלית — כאן הם חייבים ליפול */
   .hub-node{position:static;transform:none;opacity:1;left:auto !important;top:auto !important}
 
-  .hub-core{width:128px;height:128px;border-radius:30px;margin-bottom:38px}
-  .hub-core .lg{width:82px}
-  .hub-core-cap{position:static;transform:none;margin-top:10px}
+  .hub-core{width:132px;height:132px;border-radius:30px;margin:0 auto 34px;display:grid}
+  .hub-core::after{inset:-4px;border-radius:34px}
+  .hub-core .lg{width:84px}
+  .hub-core-cap{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);margin:0}
 
-  .hub-mline{position:relative;width:100%;max-width:420px}
-  .hub-mline::before{content:"";position:absolute;top:0;bottom:0;right:47px;width:2px;
-    background-image:linear-gradient(180deg,var(--border) 0 7px,transparent 7px 14px);
-    background-size:2px 14px}
-  .hub-mline::after{content:"";position:absolute;top:0;right:46px;width:4px;border-radius:4px;
-    height:calc(100% * var(--p,0));
-    background:linear-gradient(180deg,var(--btn),var(--accent));box-shadow:0 0 16px var(--btn-45)}
+  .hub-mline{position:relative;padding-inline-end:22px}
+  .hub-mline::before{content:"";position:absolute;top:6px;bottom:34px;inset-inline-end:7px;width:2px;
+    background-image:linear-gradient(180deg,var(--border) 0 6px,transparent 6px 13px);
+    background-size:2px 13px}
+  .hub-mline::after{content:"";position:absolute;top:6px;inset-inline-end:6px;width:4px;border-radius:4px;
+    height:calc((100% - 40px) * var(--p,0));
+    background:linear-gradient(180deg,var(--btn),var(--accent));box-shadow:0 0 14px var(--btn-45)}
 
-  .hub-mrow{position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;
-    align-items:start;padding-bottom:46px}
-  .hub-mrow .hub-plat{width:96px;height:96px;position:relative;transform:none}
-  .hub-mrow .hub-plat:hover{transform:scale(1.04)}
-  /* התווית מוחלטת מתחת לאריח. בדסקטופ nowrap בסדר כי יש מקום; במובייל
-     "סצנות ואוטומציות" בשורה אחת רחב מהאריח וגלש 53px מחוץ למסך.
-     כאן היא נכלאת לרוחב האריח ומותר לה לרדת שורה.                      */
-  .hub-mrow .hub-plat b{white-space:normal;width:96px;text-align:center;
-    top:calc(100% + 8px);font-size:11.5px;line-height:1.25}
-  .hub-mdevs{display:flex;flex-direction:column;gap:10px;min-width:0}
-  .hub-mdevs .hub-dev{width:auto;transform:none}
-  .hub-mdevs .hub-dev:hover{transform:translateY(-2px)}
+  .hub-mrow{position:relative;padding-bottom:26px}
+  .hub-mrow::before{content:"";position:absolute;top:26px;inset-inline-end:-15px;width:15px;height:2px;
+    background:var(--border)}
+
+  /* כותרת הפלטפורמה — אריח קטן ושם באותה שורה, לא אריח ענק בטור נפרד */
+  .hub-mrow .hub-plat{width:auto;height:auto;background:none;box-shadow:none;
+    display:flex;align-items:center;gap:11px;flex-direction:row-reverse;
+    justify-content:flex-end;margin-bottom:11px;padding:0}
+  .hub-mrow .hub-plat::before{content:"";position:absolute;inset:0}
+  .hub-mrow .hub-plat:hover{transform:none}
+  .hub-mrow .hub-plat svg{width:22px;height:22px;flex:0 0 auto;
+    padding:11px;box-sizing:content-box;border-radius:14px;
+    background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
+    box-shadow:0 8px 16px -8px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.45)}
+  .hub-mrow .hub-plat b{position:static;transform:none;white-space:normal;width:auto;
+    text-align:right;font-size:16px;font-weight:800;color:var(--primary);line-height:1.25}
+
+  .hub-mdevs{display:flex;flex-direction:column;gap:9px;padding-inline-end:55px}
+  .hub-mdevs .hub-dev{width:auto;transform:none;padding:11px 13px;border-radius:16px}
+  .hub-mdevs .hub-dev:hover{transform:none}
+  .hub-mdevs .hub-dev-ic{width:28px;height:28px;border-radius:9px}
+  .hub-mdevs .hub-dev-ic svg{width:15px;height:15px}
+  .hub-mdevs .hub-dev b{font-size:14px}
+  .hub-mdevs .hub-dev em{font-size:12px;margin-top:3px}
   .hub-bar{display:none}
 }
 
