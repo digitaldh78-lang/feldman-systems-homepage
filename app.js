@@ -752,11 +752,14 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    רכזת מחשב הבקרה — בנייה + כוריאוגרפיית גלילה
    ───────────────────────────────────────────────────────────────────────────
-   מחליף את תוכן #core בבמה רדיאלית.
+   מחליף את תוכן #core בבמה רדיאלית, בדסקטופ ובמובייל כאחד.
 
-   למה הכל נבנה מ-JS ולא ב-HTML: הקווים חייבים להיות מחושבים בין מרכזי
-   הצמתים בפועל, אחרי שהדפדפן פרס אותם. גיאומטריה שנכתבת ידנית נשברת
-   בכל שינוי גודל.
+   למה הכל נבנה מ-JS: הקווים חייבים להיות מחושבים בין מרכזי הצמתים בפועל,
+   אחרי שהדפדפן פרס אותם. גיאומטריה שנכתבת ידנית נשברת בכל שינוי גודל.
+
+   ההבדל בין המצבים הוא רק בטבלת המיקומים ובשאלה איפה יושבים כרטיסי
+   המכשיר — לא בשני עצים נפרדים. במובייל שלוש טבעות לא נכנסות ל-345px,
+   ולכן המכשירים יורדים לרשת דו-טורית מתחת לרכזת ונחשפים בסוף האנימציה.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -765,8 +768,8 @@
   if (!core || document.querySelector('.hub-stage')) return;
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mq     = window.matchMedia('(min-width:1024px)');
 
-  /* ── אייקונים (זהים לשפה שכבר בעמוד) ── */
   var I = {
     ha:    '<path d="M3.5 10.4 12 3.4l8.5 7v9.2a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1z"/><rect x="9.3" y="11.4" width="5.4" height="5.4" rx="1.4"/>',
     parts: '<rect x="4.5" y="3.5" width="15" height="17" rx="3"/><path d="M8.5 8.6h7M8.5 15.4h7"/><circle cx="15" cy="8.6" r="1.6" fill="currentColor" stroke="none"/><circle cx="9" cy="15.4" r="1.6" fill="currentColor" stroke="none"/>',
@@ -779,42 +782,32 @@
     cam:   '<path d="M3 7.5h11v9H3z"/><path d="M14 11l7-3.5v9L14 13z"/>',
     lock:  '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>'
   };
-  function svg(d) {
-    return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>';
-  }
+  function svg(d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; }
 
-  /* ── המפה: מיקומים באחוזים מתוך הבמה (16:10) ──
-     x/y הם מרכז האלמנט. סודרו כך שאף כרטיס לא חופף לשכנו
-     ושהקווים אף פעם לא חוצים צומת אחר.                          */
-  var CORE = { x: 50, y: 50 };
-
+  /* x/y = מיקום המרכז באחוזי הבמה. d* = דסקטופ, m* = מובייל.
+     במובייל הבמה ריבועית והצמתים קטנים, ולכן הרדיוס שונה.        */
   var PLATFORMS = [
-    { id:'ha',    x:29,   y:26.5, icon:I.ha,    label:'Home&nbsp;Assistant' },
-    { id:'parts', x:71,   y:26.5, icon:I.parts, label:'בקרים ורכיבים' },
-    { id:'net',   x:24.5, y:73,   icon:I.net,   label:'רשת ותקשורת' },
-    { id:'scene', x:75.5, y:73,   icon:I.scene, label:'סצנות ואוטומציות' }
+    { id:'ha',    dx:29,   dy:26.5, mx:23, my:23, icon:I.ha,    label:'Home&nbsp;Assistant' },
+    { id:'parts', dx:71,   dy:26.5, mx:77, my:23, icon:I.parts, label:'בקרים ורכיבים' },
+    { id:'net',   dx:24.5, dy:73,   mx:23, my:77, icon:I.net,   label:'רשת ותקשורת' },
+    { id:'scene', dx:75.5, dy:73,   mx:77, my:77, icon:I.scene, label:'סצנות ואוטומציות' }
   ];
 
   var DEVICES = [
-    { p:'ha',    x:9.5,  y:11,   icon:I.bulb,   t:'תאורה אדריכלית',   d:'עמעום וגוני לבן לפי שעה' },
-    { p:'parts', x:90.5, y:11,   icon:I.blind,  t:'תריסים וּוילונות',  d:'נסגרים בשיא החום' },
-    { p:'parts', x:93,   y:41,   icon:I.clima,  t:'אקלים ומיזוג',      d:'מגיב לנוכחות בחדר' },
-    { p:'net',   x:8,    y:44,   icon:I.motion, t:'חיישני נוכחות',     d:'זיהוי מקומי, בלי ענן' },
-    { p:'net',   x:11,   y:90,   icon:I.cam,    t:'מצלמות IP',         d:'הקלטה בנכס, בלי מנוי' },
-    { p:'scene', x:89,   y:90,   icon:I.lock,   t:'בקרת כניסה',        d:'קוד לאורח, יומן כניסות' }
+    { p:'ha',    dx:9.5,  dy:11, icon:I.bulb,   t:'תאורה אדריכלית',  d:'עמעום וגוני לבן לפי שעה' },
+    { p:'parts', dx:90.5, dy:11, icon:I.blind,  t:'תריסים וּוילונות', d:'נסגרים בשיא החום' },
+    { p:'parts', dx:93,   dy:41, icon:I.clima,  t:'אקלים ומיזוג',     d:'מגיב לנוכחות בחדר' },
+    { p:'net',   dx:8,    dy:44, icon:I.motion, t:'חיישני נוכחות',    d:'זיהוי מקומי, בלי ענן' },
+    { p:'net',   dx:11,   dy:90, icon:I.cam,    t:'מצלמות IP',        d:'הקלטה בנכס, בלי מנוי' },
+    { p:'scene', dx:89,   dy:90, icon:I.lock,   t:'בקרת כניסה',       d:'קוד לאורח, יומן כניסות' }
   ];
 
-  /* ── בניית ה-DOM ── */
-  var wrap = document.createElement('div');
-  wrap.className = 'hub-wrap';
+  /* ── DOM ── */
+  var wrap  = document.createElement('div'); wrap.className = 'hub-wrap';
+  var pin   = document.createElement('div'); pin.className  = 'hub-pin';
+  var stage = document.createElement('div'); stage.className = 'hub-stage';
+  var grid  = document.createElement('div'); grid.className  = 'hub-grid';
 
-  var pin = document.createElement('div');
-  pin.className = 'hub-pin';
-
-  var stage = document.createElement('div');
-  stage.className = 'hub-stage';
-
-  /* קווים */
   var NS = 'http://www.w3.org/2000/svg';
   var s = document.createElementNS(NS, 'svg');
   s.setAttribute('class', 'hub-svg');
@@ -826,38 +819,29 @@
     '</linearGradient></defs>';
   stage.appendChild(s);
 
-  /* ליבה */
   var coreEl = document.createElement('div');
   coreEl.className = 'hub-node hub-core';
-  coreEl.style.left = CORE.x + '%';
-  coreEl.style.top  = CORE.y + '%';
+  coreEl.style.left = '50%';
+  coreEl.style.top  = '50%';
   coreEl.innerHTML =
     '<svg class="lg" viewBox="0 0 1069.703 145.19" role="img" aria-label="פלדמן מערכות"><use href="#fs-logo"></use></svg>' +
     '<span class="hub-core-cap">מחשב הבקרה</span>';
   stage.appendChild(coreEl);
 
-  /* צמתי פלטפורמה */
   PLATFORMS.forEach(function (p) {
     var el = document.createElement('div');
     el.className = 'hub-node hub-plat';
-    el.dataset.id = p.id;
-    el.style.left = p.x + '%';
-    el.style.top  = p.y + '%';
     el.innerHTML = svg(p.icon) + '<b>' + p.label + '</b>';
     stage.appendChild(el);
     p.el = el;
   });
 
-  /* כרטיסי מכשיר */
   DEVICES.forEach(function (d) {
     var el = document.createElement('div');
     el.className = 'hub-node hub-dev';
-    el.style.left = d.x + '%';
-    el.style.top  = d.y + '%';
     el.innerHTML =
       '<span class="hub-dev-top"><span class="hub-dev-ic">' + svg(d.icon) + '</span>' +
       '<b>' + d.t + '</b></span><em>' + d.d + '</em>';
-    stage.appendChild(el);
     d.el = el;
   });
 
@@ -866,65 +850,85 @@
   bar.innerHTML = '<i></i>';
 
   pin.appendChild(stage);
+  pin.appendChild(grid);
   pin.appendChild(bar);
   wrap.appendChild(pin);
 
-  /* ── החלפת התוכן של #core, בשמירה על הכותרת ── */
   var wrapEl = core.querySelector('.wrap') || core;
   var head   = wrapEl.querySelector('.head');
-  var grid   = wrapEl.querySelector('.core-grid');
-  if (grid) grid.remove();
-  if (head) {
-    head.classList.add('hub-head');
-    pin.insertBefore(head, stage);   /* בתוך הנעיצה — אחרת נעלמת בגלילה */
-  }
+  var oldGrid = wrapEl.querySelector('.core-grid');
+  if (oldGrid) oldGrid.remove();
+  if (head) { head.classList.add('hub-head'); pin.insertBefore(head, stage); }
   wrapEl.appendChild(wrap);
 
-  /* ── גיאומטריית הקווים ──
-     מחושבת ממרכזי האלמנטים בפועל, בקואורדינטות הבמה. עקומה ריבועית
-     שנקודת הבקרה שלה מוסטת בניצב לקו — זה מה שנותן את הקשת העדינה
-     במקום קו ישר טכני.                                                */
-  var paths = [];
+  /* ── מיקום הצמתים לפי המצב ── */
+  var isDesk = null;
+  function place() {
+    var desk = mq.matches;
+    if (desk === isDesk) return false;
+    isDesk = desk;
 
+    PLATFORMS.forEach(function (p) {
+      p.el.style.left = (desk ? p.dx : p.mx) + '%';
+      p.el.style.top  = (desk ? p.dy : p.my) + '%';
+    });
+
+    DEVICES.forEach(function (d) {
+      if (desk) {
+        d.el.style.left = d.dx + '%';
+        d.el.style.top  = d.dy + '%';
+        stage.appendChild(d.el);
+      } else {
+        /* ברשת הן זורמות — הקואורדינטות הרדיאליות חייבות ליפול,
+           אחרת position:static + left:9% הופך להיסט אמיתי.        */
+        d.el.style.left = '';
+        d.el.style.top  = '';
+        grid.appendChild(d.el);
+      }
+    });
+    return true;
+  }
+
+  /* ── גיאומטריית הקווים ── */
+  var paths = [];
   function centerOf(el, box) {
     var r = el.getBoundingClientRect();
     return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
   }
-
   function curve(a, b, bend) {
     var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
     var dx = b.x - a.x, dy = b.y - a.y;
     var len = Math.sqrt(dx * dx + dy * dy) || 1;
-    var nx = -dy / len, ny = dx / len;              /* ניצב לקו */
-    return 'M' + a.x + ' ' + a.y + ' Q' + (mx + nx * bend) + ' ' + (my + ny * bend) +
+    return 'M' + a.x + ' ' + a.y +
+           ' Q' + (mx + (-dy / len) * bend) + ' ' + (my + (dx / len) * bend) +
            ' ' + b.x + ' ' + b.y;
   }
 
   function buildPaths() {
-    paths.forEach(function (p) { p.node.remove(); });
+    paths.forEach(function (o) { o.node.remove(); });
     paths = [];
     var box = stage.getBoundingClientRect();
     if (!box.width) return;
     s.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
-
     var c = centerOf(coreEl, box);
+    var desk = mq.matches;
 
     PLATFORMS.forEach(function (p, i) {
-      var pt = centerOf(p.el, box);
       var d = document.createElementNS(NS, 'path');
-      d.setAttribute('d', curve(c, pt, i % 2 ? 26 : -26));
+      d.setAttribute('d', curve(c, centerOf(p.el, box), (i % 2 ? 1 : -1) * (desk ? 26 : 16)));
       s.appendChild(d);
       var L = d.getTotalLength();
       d.style.setProperty('--len', L);
       paths.push({ node: d, len: L, tier: 1, order: i });
     });
 
+    if (!desk) return;   /* במובייל אין טבעת שנייה בבמה */
+
     DEVICES.forEach(function (dv, i) {
       var host = PLATFORMS.filter(function (p) { return p.id === dv.p; })[0];
       if (!host) return;
-      var a = centerOf(host.el, box), b = centerOf(dv.el, box);
       var d = document.createElementNS(NS, 'path');
-      d.setAttribute('d', curve(a, b, i % 2 ? 18 : -18));
+      d.setAttribute('d', curve(centerOf(host.el, box), centerOf(dv.el, box), (i % 2 ? 18 : -18)));
       d.setAttribute('stroke-width', '1.3');
       s.appendChild(d);
       var L = d.getTotalLength();
@@ -933,23 +937,16 @@
     });
   }
 
-  /* ── כוריאוגרפיה ──
-     0.00–0.10  הליבה לבדה, נושמת
-     0.10–0.45  ארבעת הקווים נמתחים והצמתים נכנסים, במדורג
-     0.45–0.85  ששת הקווים המשניים והכרטיסים
-     0.85–1.00  החזקה — הכל מחובר                                     */
-  function seg(p, from, to) {
-    return Math.max(0, Math.min(1, (p - from) / (to - from)));
-  }
+  /* ── כוריאוגרפיה ── */
+  function seg(p, a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
 
   function draw(p) {
     stage.style.setProperty('--p', p);
+    var desk = mq.matches;
 
     paths.forEach(function (o) {
-      var a, b;
-      if (o.tier === 1) { a = 0.10 + o.order * 0.055; b = a + 0.13; }
-      else              { a = 0.45 + o.order * 0.055; b = a + 0.13; }
-      o.node.style.strokeDashoffset = o.len * (1 - seg(p, a, b));
+      var a = o.tier === 1 ? 0.10 + o.order * 0.055 : 0.45 + o.order * 0.055;
+      o.node.style.strokeDashoffset = o.len * (1 - seg(p, a, a + 0.13));
     });
 
     PLATFORMS.forEach(function (pl, i) {
@@ -959,86 +956,40 @@
     });
 
     DEVICES.forEach(function (dv, i) {
-      var t = seg(p, 0.51 + i * 0.055, 0.51 + i * 0.055 + 0.12);
+      var t = seg(p, (desk ? 0.51 : 0.55) + i * 0.05, (desk ? 0.51 : 0.55) + i * 0.05 + 0.12);
       dv.el.style.opacity = t;
-      dv.el.style.transform = 'translate(-50%,-50%) translateY(' + (14 - 14 * t) + 'px)';
+      dv.el.style.transform = desk
+        ? 'translate(-50%,-50%) translateY(' + (14 - 14 * t) + 'px)'
+        : 'translateY(' + (12 - 12 * t) + 'px)';
     });
   }
 
-  /* ── בקר הגלילה הנעוצה ── */
-  var mq = window.matchMedia('(min-width:1024px)');
+  /* ── בקר הגלילה הנעוצה (בשני המצבים — ההבדל הוא אורך המסלול) ── */
   var ticking = false, travel = 0;
-
-  /* המרחק שבו הפין "נדבק" מלמעלה. בלי להוסיף אותו לגובה המכל,
-     הפין נגמר לפני שהכוריאוגרפיה מסתיימת והוא נשמט למעלה —
-     בדיוק מה שקרה: נמדד pinTop=15 במקום 92 בסוף המסלול.          */
-  function stickyTop() {
-    return parseFloat(window.getComputedStyle(pin).top) || 0;
-  }
+  function stickyTop() { return parseFloat(window.getComputedStyle(pin).top) || 0; }
 
   function measure() {
-    if (!mq.matches) { wrap.style.height = ''; return; }
-    /* אורך המסלול: מספיק כדי שהכוריאוגרפיה תרגיש רגועה, אבל לא
-       יותר משני מסכים — מעבר לזה זה מרגיש כמו שהעמוד נתקע.        */
-    travel = Math.min(1500, window.innerHeight * 1.6);
+    /* במובייל מסלול קצר יותר: אצבע עוברת פחות מרחק ממגלגלת עכבר,
+       ומסלול ארוך מרגיש כאילו העמוד נתקע.                          */
+    travel = mq.matches
+      ? Math.min(1500, window.innerHeight * 1.6)
+      : Math.min(760,  window.innerHeight * 0.95);
     wrap.style.height = (pin.offsetHeight + travel + stickyTop()) + 'px';
     buildPaths();
     onScroll();
   }
 
   function onScroll() {
-    if (!mq.matches) {
-      /* מובייל: הקו האנכי מתמלא לפי כמה מהעץ כבר נראה */
-      var r = wrap.getBoundingClientRect();
-      var vis = (window.innerHeight - r.top) / (r.height + window.innerHeight * .2);
-      stage.style.setProperty('--p', Math.max(0, Math.min(1, vis)));
-      return;
-    }
     var rect = wrap.getBoundingClientRect();
-    /* p=0 ברגע שהפין נדבק, לא ברגע שהמכל נוגע בקצה המסך */
-    var p = (stickyTop() - rect.top) / travel;
-    draw(Math.max(0, Math.min(1, p)));
+    draw(Math.max(0, Math.min(1, (stickyTop() - rect.top) / travel)));
   }
 
-  /* ── מובייל: אותו תוכן, שדרה אנכית ── */
-  var mobileBuilt = false;
-  function buildMobile() {
-    if (mobileBuilt) return;
-    mobileBuilt = true;
-    var line = document.createElement('div');
-    line.className = 'hub-mline';
-    PLATFORMS.forEach(function (p) {
-      var row = document.createElement('div');
-      row.className = 'hub-mrow';
-      row.appendChild(p.el);
-      var devs = document.createElement('div');
-      devs.className = 'hub-mdevs';
-      DEVICES.filter(function (d) { return d.p === p.id; })
-             .forEach(function (d) { devs.appendChild(d.el); });
-      row.appendChild(devs);
-      line.appendChild(row);
-    });
-    stage.appendChild(line);
-  }
-
-  function sync() {
-    if (mq.matches) {
-      measure();
-    } else {
-      buildMobile();
-      /* חובה לנקות גם את left/top: הם נכתבו כאחוזים לצורך הפריסה
-         הרדיאלית, ובמובייל האלמנט הוא position:relative — כך שאותם
-         אחוזים הפכו להיסט אמיתי ודחפו את הצמתים אל מחוץ למסך. */
-      PLATFORMS.concat(DEVICES).forEach(function (n) {
-        n.el.style.opacity = ''; n.el.style.transform = '';
-        n.el.style.left = ''; n.el.style.top = '';
-      });
-      wrap.style.height = '';
-    }
-  }
+  function sync() { place(); measure(); }
 
   if (reduce) {
-    buildMobile();
+    place();
+    buildPaths();
+    draw(1);
   } else {
     window.addEventListener('scroll', function () {
       if (ticking) return;
