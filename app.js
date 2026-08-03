@@ -1066,3 +1066,52 @@
     sync();
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BACK TO TOP — כפתור צף לחזרה לראש העמוד
+   מופיע אחרי גלילה של מסך אחד, טבעת סביבו מראה כמה מהעמוד נגלל,
+   ולחיצה מחזירה לראש בגלילה חלקה (או מיידית אם המשתמש ביקש פחות תנועה).
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  if (document.querySelector('.fs-top')) return;
+
+  var btn = document.createElement('button');
+  btn.className = 'fs-top';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'חזרה לראש העמוד');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+                  '<path d="M12 19.5V5"/><path d="M5.2 11.8L12 5l6.8 6.8"/></svg>';
+  document.body.appendChild(btn);
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tick = false, shown = false;
+
+  /* documentElement ולא window: לעמוד יש overflow-x:clip על ה-root,
+     ובמצב הזה scrollTop של ה-root הוא המקור האמין בכל הדפדפנים. */
+  function y() {
+    return window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+
+  function update() {
+    var top = y();
+    var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    var want = top > Math.max(500, window.innerHeight * 0.8);
+    if (want !== shown) { shown = want; btn.classList.toggle('on', shown); }
+    if (shown) btn.style.setProperty('--sp', Math.min(1, top / max).toFixed(3));
+  }
+
+  btn.addEventListener('click', function () {
+    if (reduce) { document.documentElement.scrollTop = 0; window.scrollTo(0, 0); return; }
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    catch (e) { window.scrollTo(0, 0); }
+  });
+
+  window.addEventListener('scroll', function () {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function () { update(); tick = false; });
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  window.addEventListener('load', update);
+  update();
+})();
