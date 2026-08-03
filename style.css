@@ -338,7 +338,11 @@ body.admin-bar-showing .nav{top:32px}
 .head p{font-size:18.5px}
 
 /* ═══════ SECTION DARK ═══════ */
-.sec-dark{background:var(--primary);position:relative;overflow:hidden}
+.sec-dark{background:var(--primary);position:relative;
+  /* clip ולא hidden: hidden הופך את הסקשן ל-scroll container ומבטל
+     position:sticky של כל צאצא — בדיוק מה ששבר את נעיצת הגלריה
+     במובייל. clip חותך אותו דבר בלי ליצור scroll container.       */
+  overflow:clip}
 .sec-dark::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(760px 520px at 84% 6%,var(--a-14),transparent 62%),
              radial-gradient(680px 500px at 8% 84%,var(--g-10),transparent 62%)}
