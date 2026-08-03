@@ -1106,7 +1106,9 @@
      כפתור שלא מזיז כלום. 'instant' עוקף את זה, והריכוך נעשה כאן. */
   var anim = null;
 
-  function jump(v) { window.scrollTo({ top: v, behavior: 'instant' }); }
+  /* update() ישירות אחרי כל קפיצה — אירוע ה-scroll מגיע באיחור ובחניקת
+     rAF, והכפתור נשאר גלוי אחרי שכבר חזרנו לראש העמוד. */
+  function jump(v) { window.scrollTo({ top: v, behavior: 'instant' }); update(); }
   function stop() { if (anim) { cancelAnimationFrame(anim); anim = null; } }
 
   btn.addEventListener('click', function () {
