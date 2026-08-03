@@ -503,9 +503,18 @@ body.admin-bar-showing .nav{top:32px}
 .gp-more svg{width:14px;height:14px}
 
 @media(max-width:900px){
-  .gal{flex-direction:column;height:auto;gap:10px}
-  .gp{height:96px;flex:none;transition:height .6s var(--e)}
-  .gp.is-open{height:330px}
+  /* הגלריה ננעצת ומתחלפת בגלילה, ולכן כל שש השורות חייבות להיכנס
+     למסך יחד. 5 סגורות (72) + פתוחה (296) + מרווחים = 696px —
+     נכנס בנוחות ב-844 של אייפון אחרי ההדר. הגבהים הישנים
+     (96/330) הגיעו ל-860 ולא היו נעצים בכלל.                     */
+  .gal{flex-direction:column;height:auto;gap:8px}
+  .gp{height:72px;flex:none;transition:height .6s var(--e)}
+  .gp.is-open{height:296px}
+  .gal-pin{position:sticky;top:calc(var(--nav-h) + 10px)}
+  .gal-steps{position:relative;display:flex;gap:5px;justify-content:center;margin-top:14px}
+  .gal-steps i{width:16px;height:3px;border-radius:3px;background:var(--lite-16);
+    transition:background .35s var(--e-io),width .35s var(--e-io)}
+  .gal-steps i.on{width:26px;background:var(--accent)}
   /* stacked cards on small screens: horizontal label, reset the desktop centring */
   .gp-lab{writing-mode:horizontal-tb;transform:none;left:auto;right:auto;
     inset-inline-start:auto;inset-inline-end:88px;bottom:auto;top:26px;font-size:19px;padding:9px 16px}

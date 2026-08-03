@@ -276,6 +276,70 @@
         }
       });
     });
+
+    /* ── מובייל: הגלריה ננעצת והכרטיסים מתחלפים בגלילה ──
+       מגיעים לאזור — הראשון כבר פתוח. כל גלילה סוגרת אחד ופותחת
+       את הבא, עד האחרון, ואז הסקשן משחרר וממשיכים הלאה.
+       בדסקטופ לא נוגעים: שם ההתנהגות נשארת hover.                 */
+    var gmq = window.matchMedia('(max-width:900px)');
+    var gReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!gReduce) {
+      var gWrap = document.createElement('div');
+      var gPin  = document.createElement('div');
+      gPin.className = 'gal-pin';
+      gal.parentNode.insertBefore(gWrap, gal);
+      gWrap.appendChild(gPin);
+      gPin.appendChild(gal);
+
+      var steps = document.createElement('div');
+      steps.className = 'gal-steps';
+      panels.forEach(function () { steps.appendChild(document.createElement('i')); });
+      gPin.appendChild(steps);
+
+      var gTravel = 0, gTick = false, gLockUntil = 0, gLast = -1;
+
+      /* נגיעה ידנית מנצחת לרגע — אחרת הכרטיס שהמשתמש פתח היה
+         "קופץ" חזרה בפריים הבא והתחושה שבורה. */
+      panels.forEach(function (p) {
+        p.addEventListener('click', function () { gLockUntil = Date.now() + 1600; });
+      });
+
+      function gStickyTop() {
+        return parseFloat(window.getComputedStyle(gPin).top) || 0;
+      }
+
+      function gMeasure() {
+        if (!gmq.matches) { gWrap.style.height = ''; return; }
+        gTravel = panels.length * 170;          /* ~תנועת אגודל אחת לכל כרטיס */
+        gWrap.style.height = (gPin.offsetHeight + gTravel + gStickyTop()) + 'px';
+        gScroll();
+      }
+
+      function gScroll() {
+        if (!gmq.matches) return;
+        if (Date.now() < gLockUntil) return;
+        var r = gWrap.getBoundingClientRect();
+        var p = Math.max(0, Math.min(1, (gStickyTop() - r.top) / gTravel));
+        var i = Math.min(panels.length - 1, Math.floor(p * panels.length));
+        if (i === gLast) return;
+        gLast = i;
+        openPanel(panels[i]);
+        Array.prototype.forEach.call(steps.children, function (dot, k) {
+          dot.classList.toggle('on', k === i);
+        });
+      }
+
+      window.addEventListener('scroll', function () {
+        if (gTick) return;
+        gTick = true;
+        requestAnimationFrame(function () { gScroll(); gTick = false; });
+      }, { passive: true });
+      window.addEventListener('resize', gMeasure, { passive: true });
+      if (gmq.addEventListener) gmq.addEventListener('change', function () { gLast = -1; gMeasure(); });
+      window.addEventListener('load', gMeasure);
+      gMeasure();
+    }
   }
 
   /* ── accordion (single-open) ── */
