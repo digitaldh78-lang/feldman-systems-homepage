@@ -2037,7 +2037,8 @@ body.admin-bar-showing .nav{top:32px}
   .hub-pin{position:static}
   .hub-stage{aspect-ratio:auto;display:flex;flex-direction:column;align-items:center;gap:0}
   .hub-svg{display:none}
-  .hub-node{position:static;transform:none;opacity:1}
+  /* left/top נכתבים inline לצורך הפריסה הרדיאלית — כאן הם חייבים ליפול */
+  .hub-node{position:static;transform:none;opacity:1;left:auto !important;top:auto !important}
 
   .hub-core{width:128px;height:128px;border-radius:30px;margin-bottom:38px}
   .hub-core .lg{width:82px}
@@ -2052,9 +2053,14 @@ body.admin-bar-showing .nav{top:32px}
     background:linear-gradient(180deg,var(--btn),var(--accent));box-shadow:0 0 16px var(--btn-45)}
 
   .hub-mrow{position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;
-    align-items:start;padding-bottom:26px}
+    align-items:start;padding-bottom:46px}
   .hub-mrow .hub-plat{width:96px;height:96px;position:relative;transform:none}
   .hub-mrow .hub-plat:hover{transform:scale(1.04)}
+  /* התווית מוחלטת מתחת לאריח. בדסקטופ nowrap בסדר כי יש מקום; במובייל
+     "סצנות ואוטומציות" בשורה אחת רחב מהאריח וגלש 53px מחוץ למסך.
+     כאן היא נכלאת לרוחב האריח ומותר לה לרדת שורה.                      */
+  .hub-mrow .hub-plat b{white-space:normal;width:96px;text-align:center;
+    top:calc(100% + 8px);font-size:11.5px;line-height:1.25}
   .hub-mdevs{display:flex;flex-direction:column;gap:10px;min-width:0}
   .hub-mdevs .hub-dev{width:auto;transform:none}
   .hub-mdevs .hub-dev:hover{transform:translateY(-2px)}

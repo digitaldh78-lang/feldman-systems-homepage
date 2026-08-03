@@ -1026,8 +1026,12 @@
       measure();
     } else {
       buildMobile();
+      /* חובה לנקות גם את left/top: הם נכתבו כאחוזים לצורך הפריסה
+         הרדיאלית, ובמובייל האלמנט הוא position:relative — כך שאותם
+         אחוזים הפכו להיסט אמיתי ודחפו את הצמתים אל מחוץ למסך. */
       PLATFORMS.concat(DEVICES).forEach(function (n) {
         n.el.style.opacity = ''; n.el.style.transform = '';
+        n.el.style.left = ''; n.el.style.top = '';
       });
       wrap.style.height = '';
     }
