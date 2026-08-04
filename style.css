@@ -2279,9 +2279,12 @@ body.admin-bar-showing .nav{top:32px}
 .audx-stage{position:relative;width:100%;flex:1;overflow:hidden}
 .audx-rail{display:flex;height:100%;will-change:transform}
 
+/* grid-template-rows:1fr ולא ברירת המחדל auto — שורה אוטומטית נמדדת לפי
+   התוכן, והתמונה (שגובהה 100% מהשורה) נכנסת ללולאה ומסתיימת נמוכה מהפאנל.
+   שורה של 1fr נותנת לה גובה מוחלט לנשען עליו. */
 .ap{flex:0 0 100%;height:100%;display:grid;grid-template-columns:1.05fr .95fr;
-  align-items:stretch;position:relative}
-.ap-copy{display:flex;flex-direction:column;justify-content:center;
+  grid-template-rows:1fr;align-items:stretch;position:relative}
+.ap-copy{display:flex;flex-direction:column;justify-content:center;min-height:0;
   padding:0 clamp(28px,6vw,110px);position:relative;z-index:1}
 .ap-eye{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
   font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
@@ -2303,7 +2306,7 @@ body.admin-bar-showing .nav{top:32px}
   width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
 .ap-copy .btn{align-self:flex-start}
 
-.ap-ph{position:relative;margin:0;overflow:hidden}
+.ap-ph{position:relative;margin:0;overflow:hidden;min-height:0;height:100%}
 .ap-ph img{width:100%;height:100%;object-fit:cover;display:block;
   transform:scale(1.08);will-change:transform}
 /* מעבר רך אל הצד הכהה — בלי זה נוצר קו חיתוך חד באמצע הפאנל */
@@ -2322,7 +2325,7 @@ body.admin-bar-showing .nav{top:32px}
 
 @media(max-width:1023px){
   .ap{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
-  .ap-ph{order:-1;min-height:0}
+  .ap-ph{order:-1;min-height:0;height:100%}
   .ap-ph::after{background:linear-gradient(0deg,var(--primary) 2%,rgba(10,17,40,.7) 26%,rgba(10,17,40,0) 62%)}
   .ap-copy{padding:0 24px 22px;justify-content:flex-start;margin-top:-56px}
   .ap-n{font-size:56px}
