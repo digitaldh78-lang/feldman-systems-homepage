@@ -2178,3 +2178,87 @@ body.admin-bar-showing .nav{top:32px}
   .fs-top.on{transition-delay:0s}
   .fs-top:hover svg{transform:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DIY — מסלול התקנה עצמית
+   כרטיסים כהים על רקע בהיר: הסקשן שלפניו והאחריו כבר תופסים את שני
+   המצבים, ולכן ניגוד ברמת הכרטיס במקום ברמת הסקשן — אחרת שני סקשנים
+   כהים היו נדבקים זה לזה ומאבדים את מקצב העמוד.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.diy{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:var(--s6)}
+
+.diy-c{position:relative;display:flex;flex-direction:column;overflow:hidden;
+  border-radius:var(--r-l);
+  background:linear-gradient(168deg,#132447 0%,var(--primary) 58%,#050B1C 100%);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 24px 56px -30px rgba(8,14,34,.55),0 3px 8px -4px var(--ink-08);
+  transition:transform .5s var(--e),box-shadow .5s var(--e)}
+.diy-c:hover{transform:translateY(-6px);
+  box-shadow:0 36px 74px -30px rgba(8,14,34,.62),0 0 0 1px var(--a-28)}
+
+.diy-ph{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden}
+.diy-ph img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .9s var(--e)}
+.diy-c:hover .diy-ph img{transform:scale(1.045)}
+/* הדרגתי אל צבע הכרטיס — בלי זה נוצר קו חיתוך חד בין התמונה לגוף */
+.diy-ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,17,40,0) 38%,rgba(10,17,40,.62) 78%,#0A1128 100%)}
+
+.diy-b{position:relative;flex:1;padding:20px 24px 26px;display:flex;flex-direction:column}
+.diy-n{position:absolute;top:-34px;inset-inline-end:24px;z-index:2;
+  font-family:'Heebo',sans-serif;font-size:38px;font-weight:900;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(0,210,255,.55)}
+.diy-b h3{color:#FFFFFF;font-size:20px;font-weight:800;line-height:1.25;margin-bottom:9px}
+.diy-b>p{color:var(--lite-70);font-size:15px;line-height:1.65;margin:0}
+
+.diy-l{list-style:none;padding:0;margin:15px 0 0;display:grid;gap:9px}
+.diy-l li{position:relative;padding-inline-start:19px;
+  font-size:13.5px;line-height:1.5;color:var(--lite-70);font-weight:500}
+.diy-l li::before{content:"";position:absolute;inset-inline-start:1px;top:.52em;
+  width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* פס הסיכום — מסביר את ההבדל מול ערכה מהמדף, ונושא את שתי הפעולות */
+.diy-note{margin-top:var(--s5);border-radius:var(--r-l);padding:26px 30px;
+  background:var(--surface);border:1px solid var(--border);
+  box-shadow:0 10px 26px -18px var(--ink-14);
+  display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap}
+.diy-note-t{display:flex;align-items:flex-start;gap:16px;flex:1 1 460px}
+.diy-note-ic{flex:0 0 auto;width:46px;height:46px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--accent) 0%,var(--btn) 100%);
+  box-shadow:0 12px 22px -12px var(--btn-45)}
+.diy-note-ic svg{width:23px;height:23px;fill:none;stroke:#FFFFFF;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round}
+.diy-note h3{font-size:17.5px;font-weight:800;color:var(--primary);margin-bottom:5px;line-height:1.3}
+.diy-note p{font-size:14.5px;line-height:1.65;color:var(--text);margin:0}
+.diy-cta{display:flex;gap:12px;flex-wrap:wrap;flex:0 0 auto}
+.diy-cta .btn{white-space:nowrap}
+
+@media(max-width:1023px){
+  .diy{grid-template-columns:1fr 1fr;gap:18px}
+  .diy-c:last-child{grid-column:1 / -1}
+  .diy-c:last-child .diy-ph{aspect-ratio:21/9}
+}
+
+@media(max-width:760px){
+  .diy{grid-template-columns:1fr;gap:16px;margin-top:var(--s5)}
+  .diy-c:last-child{grid-column:auto}
+  .diy-c:last-child .diy-ph{aspect-ratio:16/10}
+  .diy-c:hover{transform:none}
+  .diy-b{padding:18px 20px 22px}
+  .diy-n{font-size:32px;top:-28px;inset-inline-end:20px}
+  .diy-b h3{font-size:18.5px}
+  .diy-b>p{font-size:14.5px}
+
+  .diy-note{padding:22px 20px;gap:18px;flex-direction:column;align-items:stretch}
+  .diy-note-t{flex:1 1 auto;gap:13px}
+  .diy-note-ic{width:40px;height:40px;border-radius:13px}
+  .diy-note-ic svg{width:20px;height:20px}
+  .diy-cta{flex-direction:column}
+  .diy-cta .btn{width:100%;justify-content:center;white-space:normal}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .diy-c,.diy-ph img{transition:none}
+  .diy-c:hover{transform:none}
+  .diy-c:hover .diy-ph img{transform:none}
+}
