@@ -2001,15 +2001,17 @@ body.admin-bar-showing .nav{top:32px}
    ה-HA יושב כאן ולא כצומת חיצוני כי הוא לא מכשיר שמתחבר לרכזת —
    הוא התוכנה שרצה עליה, וזה ההבדל שכל הסקשן מנסה להסביר. */
 .hub-core-in{position:relative;z-index:1;display:flex;flex-direction:column;
-  align-items:center;gap:11px;padding-inline:14px}
-.hub-core .lg{width:118px;height:auto;color:#FFFFFF}
-.hub-core-rule{width:64px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--a-28) 22% 78%,transparent)}
-.hub-core-ha{display:flex;align-items:center;gap:7px}
-.hub-core-ha svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:1.7;
+  align-items:center;gap:12px;padding-inline:14px;margin-top:-6px}
+.hub-core .lg{width:122px;height:auto;color:#FFFFFF}
+.hub-core-rule{width:74px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--a-28) 18% 82%,transparent)}
+/* direction:ltr על העטיפה — צמד אייקון+שם מוצר לועזי נקרא משמאל
+   לימין, ובלי זה האייקון נחת מימין למילים ונראה מנותק. */
+.hub-core-ha{display:flex;align-items:center;gap:8px;direction:ltr}
+.hub-core-ha svg{width:23px;height:23px;fill:none;stroke:var(--accent);stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round;color:var(--accent);flex:0 0 auto}
-.hub-core-ha b{font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
-  color:#FFFFFF;letter-spacing:.01em;white-space:nowrap;direction:ltr}
+.hub-core-ha b{font-family:'Heebo',sans-serif;font-size:14.5px;font-weight:700;
+  color:#FFFFFF;letter-spacing:.01em;white-space:nowrap}
 /* הכיתוב מעוגן לליבה עצמה. בגרסה הקודמת הליבה איבדה position במובייל,
    העיגון "ברח" לאב הקדמון הקרוב, והכיתוב נחת בתחתית כל העץ.            */
 .hub-core-cap{
@@ -2080,11 +2082,12 @@ body.admin-bar-showing .nav{top:32px}
   .hub-core{width:126px;height:126px;border-radius:30px}
   .hub-core::after{inset:-3px;border-radius:33px}
   .hub-core::before{inset:-18px}
-  .hub-core-in{gap:7px;padding-inline:8px}
-  .hub-core .lg{width:78px}
-  .hub-core-rule{width:44px}
-  .hub-core-ha svg{width:14px;height:14px}
-  .hub-core-ha b{font-size:9.5px}
+  .hub-core-in{gap:8px;padding-inline:8px;margin-top:-4px}
+  .hub-core .lg{width:80px}
+  .hub-core-rule{width:50px}
+  .hub-core-ha{gap:5px}
+  .hub-core-ha svg{width:15px;height:15px}
+  .hub-core-ha b{font-size:10px}
   .hub-core-cap{bottom:-22px;font-size:10.5px;letter-spacing:.06em}
 
   /* שישה צמתים במשושה על במה של 345px — הריבוע קטן מ-60 כדי
