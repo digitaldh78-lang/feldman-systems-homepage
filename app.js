@@ -809,7 +809,7 @@
   img.setAttribute('sizes', '(max-width:760px) 92vw, 44vw');
   img.setAttribute('width', '1448');
   img.setAttribute('height', '1086');
-  img.setAttribute('alt', 'קובי ניסן פלדמן, מייסד פלדמן מערכות, מחזיק טאבלט עם דשבורד בית חכם מול וילה מוארת');
+  img.setAttribute('alt', 'קובי פלדמן, מייסד פלדמן מערכות, מחזיק טאבלט עם דשבורד בית חכם מול וילה מוארת');
 })();
 
 
