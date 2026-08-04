@@ -2365,3 +2365,86 @@ body.admin-bar-showing .nav{top:32px}
   .ap-copy .btn{width:100%;justify-content:center}
   .audx-dots{display:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ABOUT — עמוד אודות. משתמש בשפה של עמוד הבית ומוסיף רק את מה שחסר.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ab-hero{padding-top:calc(var(--nav-h) + var(--s7))}
+.ab-h1{font-size:clamp(30px,4vw,52px);font-weight:900;line-height:1.12;margin-bottom:var(--s3)}
+.ab-lead{font-size:clamp(16.5px,1.35vw,20px);line-height:1.7;color:var(--primary-2);
+  font-weight:600;margin-bottom:var(--s3)}
+
+.ab-stats{display:flex;gap:clamp(20px,3vw,44px);flex-wrap:wrap;margin:var(--s4) 0 var(--s4)}
+.ab-stats div{display:flex;flex-direction:column;gap:2px}
+.ab-stats b{font-family:'Heebo',sans-serif;font-size:clamp(26px,2.6vw,36px);font-weight:900;
+  color:var(--primary);line-height:1}
+.ab-stats span{font-size:13.5px;color:var(--text)}
+.ab-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ── הדרך: ארבעה שלבים על רקע כהה ── */
+.ab-path{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:var(--s6)}
+.ab-step{position:relative;padding:26px 24px 28px;border-radius:var(--r-l);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  transition:transform .45s var(--e),border-color .45s var(--e),background .45s var(--e)}
+.ab-step:hover{transform:translateY(-6px);border-color:var(--a-28);background:rgba(255,255,255,.06)}
+.ab-step-n{display:block;font-family:'Heebo',sans-serif;font-size:34px;font-weight:900;
+  line-height:1;color:transparent;-webkit-text-stroke:1px var(--a-28);margin-bottom:14px}
+.ab-step h3{color:#FFFFFF;font-size:18px;font-weight:800;margin-bottom:8px;line-height:1.25}
+.ab-step p{color:var(--lite-70);font-size:14.5px;line-height:1.65;margin:0}
+
+/* ── למה זה משנה ── */
+.ab-why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.ab-why .ac{padding:26px 24px}
+.ab-why .ac h3{font-size:18px;font-weight:800;color:var(--primary);margin-bottom:8px;line-height:1.25}
+.ab-why .ac p{font-size:14.5px;line-height:1.65;color:var(--text);margin:0}
+
+/* ── ציטוט ── */
+.ab-quote{position:relative;padding:clamp(30px,4vw,52px);border-radius:var(--r-xl);
+  background:linear-gradient(160deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 100%);
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;flex-direction:column;justify-content:center}
+.ab-quote-mark{font-family:'Heebo',sans-serif;font-size:86px;line-height:.6;color:var(--accent);
+  opacity:.5;margin-bottom:14px}
+.ab-quote p{color:#FFFFFF;font-size:clamp(17px,1.6vw,22px);line-height:1.6;font-weight:600;
+  margin-bottom:20px}
+.ab-quote b{color:var(--accent);font-family:'Heebo',sans-serif;font-size:15px;font-weight:800}
+.ab-quote>span:last-child{color:var(--lite-40);font-size:13px}
+
+/* ── מה נכנס למערכת ── */
+.ab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ab-item{padding:20px 22px;border-radius:var(--r-m,18px);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  transition:border-color .4s var(--e),background .4s var(--e)}
+.ab-item:hover{border-color:var(--a-28);background:rgba(255,255,255,.07)}
+.ab-item b{display:block;color:#FFFFFF;font-family:'Heebo',sans-serif;font-size:15.5px;
+  font-weight:800;margin-bottom:5px;line-height:1.3}
+.ab-item span{display:block;color:var(--lite-70);font-size:13.5px;line-height:1.5}
+
+/* ── תהליך ── */
+.ab-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.ab-fl{position:relative;padding:26px 24px 28px;border-radius:var(--r-l);
+  background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh-s);
+  transition:transform .45s var(--e),box-shadow .45s var(--e)}
+.ab-fl:hover{transform:translateY(-6px);box-shadow:var(--sh-l)}
+.ab-fl>span{display:block;font-family:'Heebo',sans-serif;font-size:15px;font-weight:900;
+  color:var(--btn);margin-bottom:10px;letter-spacing:.06em}
+.ab-fl h3{font-size:17.5px;font-weight:800;color:var(--primary);margin-bottom:7px;line-height:1.25}
+.ab-fl p{font-size:14.5px;line-height:1.65;color:var(--text);margin:0}
+
+.ab-end .ab-cta{justify-content:center;margin-top:var(--s4)}
+.ab-end p{max-width:60ch;margin-inline:auto}
+
+@media(max-width:1023px){
+  .ab-path,.ab-why,.ab-flow{grid-template-columns:1fr 1fr}
+  .ab-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .ab-hero{padding-top:calc(var(--nav-h) + var(--s5))}
+  .ab-path,.ab-why,.ab-flow,.ab-grid{grid-template-columns:1fr;gap:14px}
+  .ab-stats{gap:20px}
+  .ab-cta{flex-direction:column}
+  .ab-cta .btn{width:100%;justify-content:center}
+  .ab-quote{padding:26px 22px}
+  .ab-quote-mark{font-size:60px}
+  .ab-step:hover,.ab-fl:hover{transform:none}
+}
