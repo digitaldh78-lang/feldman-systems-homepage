@@ -2285,40 +2285,40 @@ body.admin-bar-showing .nav{top:32px}
 /* הכרטיס צר מהמסך בכוונה: כך שניים נראים במקביל, והקודם נשאר מציץ
    בקצה בזמן שהבא נכנס. כרטיס ברוחב מסך מלא נקרא כמו החלפת שקופיות
    ומאבד את תחושת ההיערמות.                                          */
-.ap{flex:0 0 clamp(440px,54vw,780px);height:100%;
-  display:grid;grid-template-columns:1fr .92fr;
+.ap{flex:0 0 clamp(560px,60vw,900px);height:100%;
+  display:grid;grid-template-columns:1.2fr .8fr;
   grid-template-rows:1fr;align-items:stretch;position:relative;
   border-inline-start:1px solid rgba(255,255,255,.07);
   transition:opacity .5s var(--e-io)}
-.ap.dim{opacity:.42}
+.ap.dim{opacity:.68}
 .ap-copy{display:flex;flex-direction:column;justify-content:center;min-height:0;
-  padding:0 clamp(28px,6vw,110px);position:relative;z-index:1}
+  padding:0 clamp(24px,3vw,54px);position:relative;z-index:1}
 .ap-eye{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
   font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
   letter-spacing:.16em;color:var(--accent);margin-bottom:18px}
 .ap-eye::before{content:"";width:7px;height:7px;background:var(--accent);
   transform:rotate(45deg);flex:0 0 auto}
-.ap-n{font-family:'Heebo',sans-serif;font-size:clamp(64px,7vw,104px);font-weight:900;
+.ap-n{font-family:'Heebo',sans-serif;font-size:clamp(50px,4.4vw,76px);font-weight:900;
   line-height:.9;color:#FFFFFF;opacity:.16;margin-bottom:6px}
-.ap h3{color:#FFFFFF;font-size:clamp(28px,3.4vw,46px);font-weight:900;
+.ap h3{color:#FFFFFF;font-size:clamp(24px,2.3vw,36px);font-weight:900;
   line-height:1.1;margin-bottom:10px}
-.ap-sub{color:var(--accent);font-size:clamp(15px,1.5vw,19px);font-weight:700;
+.ap-sub{color:var(--accent);font-size:clamp(14.5px,1.1vw,17px);font-weight:700;
   margin-bottom:14px}
-.ap-copy>p:not(.ap-sub){color:var(--lite-70);font-size:clamp(15px,1.35vw,17.5px);
-  line-height:1.7;max-width:46ch;margin-bottom:20px}
-.ap-l{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:10px}
-.ap-l li{position:relative;padding-inline-start:22px;color:var(--lite-70);
-  font-size:15px;line-height:1.5;font-weight:500}
+.ap-copy>p:not(.ap-sub){color:var(--lite-70);font-size:clamp(14.5px,1.02vw,16px);
+  line-height:1.65;max-width:38ch;margin-bottom:18px}
+.ap-l{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px}
+.ap-l li{position:relative;padding-inline-start:20px;color:var(--lite-70);
+  font-size:14px;line-height:1.45;font-weight:500}
 .ap-l li::before{content:"";position:absolute;inset-inline-start:0;top:.5em;
   width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
 .ap-copy .btn{align-self:flex-start}
 
 .ap-intro{grid-template-columns:1fr}
 .ap-intro .ap-copy{padding-inline:clamp(28px,5vw,84px)}
-.ap-intro h2{color:#FFFFFF;font-size:clamp(30px,3.6vw,50px);font-weight:900;
+.ap-intro h2{color:#FFFFFF;font-size:clamp(28px,2.9vw,42px);font-weight:900;
   line-height:1.12;margin-bottom:16px}
-.ap-intro p{color:var(--lite-70);font-size:clamp(15px,1.4vw,18px);line-height:1.7;
-  max-width:40ch;margin-bottom:26px}
+.ap-intro p{color:var(--lite-70);font-size:clamp(14.5px,1.05vw,16.5px);line-height:1.68;
+  max-width:36ch;margin-bottom:24px}
 .ap-hint{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
   font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
   letter-spacing:.06em;color:var(--accent)}
