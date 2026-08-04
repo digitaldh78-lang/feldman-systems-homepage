@@ -469,6 +469,65 @@
     drawSteps();
   }
 
+  /* ── פאנלי "למי זה מיועד": מסלול אופקי נעוץ ──
+     גובה המסלול נקבע מ-JS ולא מ-CSS: הוא חייב להיגזר ממספר הפאנלים
+     בפועל, אחרת הוספת פאנל רביעי תשבור את הקצב בלי שאף אחד ישים לב. */
+  var audTrack = document.getElementById('audTrack');
+  var audRail  = document.getElementById('audRail');
+  if (audTrack && audRail) {
+    unclipAncestors(audTrack);
+    var aPanels = Array.prototype.slice.call(audRail.querySelectorAll('.ap'));
+    var aDots   = Array.prototype.slice.call(document.querySelectorAll('#audDots li'));
+    var aImgs   = Array.prototype.slice.call(audRail.querySelectorAll('.ap-ph img'));
+    var aMq     = window.matchMedia('(min-width:761px)');
+    var aTick   = false, aCur = -1;
+
+    function audMeasure() {
+      if (!aMq.matches) { audTrack.style.height = ''; audRail.style.transform = ''; return; }
+      /* מסך אחד לכל מעבר, ועוד מסך אחד שבו הפאנל האחרון עומד במקום */
+      audTrack.style.height = (aPanels.length * 100) + 'vh';
+    }
+
+    function audDraw() {
+      aTick = false;
+      if (!aMq.matches) return;
+
+      var r = audTrack.getBoundingClientRect();
+      var scrollable = r.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      var p = Math.max(0, Math.min(1, -r.top / scrollable));
+
+      /* חיובי ב-RTL: הפאנל הראשון מימין, השאר גולשים שמאלה */
+      var stage = audRail.parentElement.clientWidth;
+      var span  = (aPanels.length - 1) * stage;
+      audRail.style.transform = 'translateX(' + (p * span).toFixed(2) + 'px)';
+
+      /* פרלקסה קלה בתמונות — נעות נגד כיוון המסילה וקונות עומק */
+      var idxF = p * (aPanels.length - 1);
+      aImgs.forEach(function (img, i) {
+        var d = Math.max(-1, Math.min(1, idxF - i));
+        img.style.transform = 'scale(1.08) translateX(' + (d * -4.5).toFixed(2) + '%)';
+      });
+
+      var idx = Math.round(idxF);
+      if (idx !== aCur) {
+        aCur = idx;
+        aDots.forEach(function (d, i) { d.classList.toggle('on', i === idx); });
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      if (aTick) return;
+      aTick = true;
+      requestAnimationFrame(audDraw);
+    }, { passive: true });
+    window.addEventListener('resize', function () { audMeasure(); audDraw(); }, { passive: true });
+    if (aMq.addEventListener) aMq.addEventListener('change', function () { audMeasure(); audDraw(); });
+    window.addEventListener('load', function () { audMeasure(); audDraw(); });
+    audMeasure();
+    audDraw();
+  }
+
   /* ── knowledge centre tabs ── */
   var kcTabs = document.querySelectorAll('.kc-tab');
   if (kcTabs.length) {
