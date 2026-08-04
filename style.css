@@ -2282,8 +2282,15 @@ body.admin-bar-showing .nav{top:32px}
 /* grid-template-rows:1fr ולא ברירת המחדל auto — שורה אוטומטית נמדדת לפי
    התוכן, והתמונה (שגובהה 100% מהשורה) נכנסת ללולאה ומסתיימת נמוכה מהפאנל.
    שורה של 1fr נותנת לה גובה מוחלט לנשען עליו. */
-.ap{flex:0 0 100%;height:100%;display:grid;grid-template-columns:1.05fr .95fr;
-  grid-template-rows:1fr;align-items:stretch;position:relative}
+/* הכרטיס צר מהמסך בכוונה: כך שניים נראים במקביל, והקודם נשאר מציץ
+   בקצה בזמן שהבא נכנס. כרטיס ברוחב מסך מלא נקרא כמו החלפת שקופיות
+   ומאבד את תחושת ההיערמות.                                          */
+.ap{flex:0 0 clamp(440px,54vw,780px);height:100%;
+  display:grid;grid-template-columns:1fr .92fr;
+  grid-template-rows:1fr;align-items:stretch;position:relative;
+  border-inline-start:1px solid rgba(255,255,255,.07);
+  transition:opacity .5s var(--e-io)}
+.ap.dim{opacity:.42}
 .ap-copy{display:flex;flex-direction:column;justify-content:center;min-height:0;
   padding:0 clamp(28px,6vw,110px);position:relative;z-index:1}
 .ap-eye{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
@@ -2305,6 +2312,17 @@ body.admin-bar-showing .nav{top:32px}
 .ap-l li::before{content:"";position:absolute;inset-inline-start:0;top:.5em;
   width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
 .ap-copy .btn{align-self:flex-start}
+
+.ap-intro{grid-template-columns:1fr}
+.ap-intro .ap-copy{padding-inline:clamp(28px,5vw,84px)}
+.ap-intro h2{color:#FFFFFF;font-size:clamp(30px,3.6vw,50px);font-weight:900;
+  line-height:1.12;margin-bottom:16px}
+.ap-intro p{color:var(--lite-70);font-size:clamp(15px,1.4vw,18px);line-height:1.7;
+  max-width:40ch;margin-bottom:26px}
+.ap-hint{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+  font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
+  letter-spacing:.06em;color:var(--accent)}
+.ap-hint::after{content:"";width:34px;height:1px;background:var(--accent);opacity:.6}
 
 .ap-ph{position:relative;margin:0;overflow:hidden;min-height:0;height:100%}
 .ap-ph img{width:100%;height:100%;object-fit:cover;display:block;
@@ -2339,11 +2357,17 @@ body.admin-bar-showing .nav{top:32px}
   .audx-pin{position:static;height:auto;overflow:visible;background:transparent}
   .audx-stage{overflow:visible}
   .audx-rail{display:grid;gap:16px;height:auto;transform:none !important}
-  .ap{flex:none;height:auto;border-radius:var(--r-l);overflow:hidden;
+  .ap{flex:none;height:auto;border-radius:var(--r-l);overflow:hidden;border-inline-start:0;
+    opacity:1 !important;
     background:linear-gradient(168deg,#132447 0%,var(--primary) 60%,#050B1C 100%);
     border:1px solid rgba(255,255,255,.09);
     box-shadow:0 20px 46px -26px rgba(8,14,34,.5);
     grid-template-columns:1fr;grid-template-rows:auto auto}
+  .ap-intro{background:none;border:0;box-shadow:none;padding:0 4px 4px}
+  .ap-intro .ap-copy{padding:0;margin-top:0;text-align:center}
+  .ap-intro h2{font-size:26px}
+  .ap-intro p{font-size:14.5px;margin-inline:auto;margin-bottom:0}
+  .ap-hint{display:none}
   .ap-ph{aspect-ratio:16/10}
   .ap-ph img{transform:none}
   .ap-ph::after{background:linear-gradient(0deg,#0A1128 2%,rgba(10,17,40,.55) 40%,rgba(10,17,40,0) 78%)}

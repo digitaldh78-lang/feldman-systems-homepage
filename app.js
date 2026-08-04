@@ -483,9 +483,18 @@
     var aTick   = false, aCur = -1;
 
     function audMeasure() {
-      if (!aMq.matches) { audTrack.style.height = ''; audRail.style.transform = ''; return; }
-      /* מסך אחד לכל מעבר, ועוד מסך אחד שבו הפאנל האחרון עומד במקום */
-      audTrack.style.height = (aPanels.length * 100) + 'vh';
+      if (!aMq.matches) {
+        audTrack.style.height = '';
+        audRail.style.transform = '';
+        aPanels.forEach(function (el) { el.classList.remove('dim'); });
+        return;
+      }
+      /* אורך המסלול נגזר ממה שבאמת צריך לגלול לרוחב, ועוד מסך אחד
+         לעצירה בסוף. יחס 1:1 בין פיקסל גלילה לפיקסל תזוזה מרגיש טבעי;
+         נוסחה שמבוססת על מספר הכרטיסים נשברת ברגע שרוחבם משתנה. */
+      var stage = audRail.parentElement.clientWidth || window.innerWidth;
+      var span  = Math.max(0, audRail.scrollWidth - stage);
+      audTrack.style.height = (window.innerHeight + span) + 'px';
     }
 
     function audDraw() {
@@ -497,22 +506,33 @@
       if (scrollable <= 0) return;
       var p = Math.max(0, Math.min(1, -r.top / scrollable));
 
-      /* חיובי ב-RTL: הפאנל הראשון מימין, השאר גולשים שמאלה */
+      /* המרחק נגזר מרוחב המסילה בפועל ולא ממספר הפאנלים: הכרטיסים צרים
+         מהמסך, ולכן "מסך לכל כרטיס" היה מגלגל הרבה יותר מדי.
+         חיובי ב-RTL — הכרטיס הראשון מימין, הבאים נכנסים משמאל. */
       var stage = audRail.parentElement.clientWidth;
-      var span  = (aPanels.length - 1) * stage;
+      var span  = Math.max(0, audRail.scrollWidth - stage);
       audRail.style.transform = 'translateX(' + (p * span).toFixed(2) + 'px)';
 
+      /* מי הכרטיס שנמצא כרגע במרכז הבמה */
+      var seen = 0, centre = p * span + stage / 2, idx = 0;
+      for (var i = 0; i < aPanels.length; i++) {
+        var w = aPanels[i].offsetWidth;
+        if (centre >= seen && centre < seen + w) { idx = i; break; }
+        seen += w;
+        idx = i;
+      }
+
       /* פרלקסה קלה בתמונות — נעות נגד כיוון המסילה וקונות עומק */
-      var idxF = p * (aPanels.length - 1);
       aImgs.forEach(function (img, i) {
-        var d = Math.max(-1, Math.min(1, idxF - i));
-        img.style.transform = 'scale(1.08) translateX(' + (d * -4.5).toFixed(2) + '%)';
+        var d = Math.max(-1, Math.min(1, (idx - (i + 1))));
+        img.style.transform = 'scale(1.08) translateX(' + (d * -4).toFixed(2) + '%)';
       });
 
-      var idx = Math.round(idxF);
       if (idx !== aCur) {
         aCur = idx;
-        aDots.forEach(function (d, i) { d.classList.toggle('on', i === idx); });
+        aPanels.forEach(function (el, i) { el.classList.toggle('dim', i !== idx); });
+        /* כרטיס הפתיחה אינו קהל — האינדיקטור מתחיל ממנו והלאה */
+        aDots.forEach(function (d, i) { d.classList.toggle('on', i === idx - 1); });
       }
     }
 
