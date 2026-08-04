@@ -2205,7 +2205,9 @@ body.admin-bar-showing .nav{top:32px}
   background:linear-gradient(180deg,rgba(10,17,40,0) 38%,rgba(10,17,40,.62) 78%,#0A1128 100%)}
 
 .diy-b{position:relative;flex:1;padding:20px 24px 26px;display:flex;flex-direction:column}
-.diy-n{position:absolute;top:-34px;inset-inline-end:24px;z-index:2;
+/* inline-start ולא end: בעברית המספר צריך להוביל מימין, כמו בכרטיסי
+   "למי זה מיועד" — אחרת הוא נוחת בצד ההפוך לכיוון הקריאה. */
+.diy-n{position:absolute;top:-34px;inset-inline-start:24px;z-index:2;
   font-family:'Heebo',sans-serif;font-size:38px;font-weight:900;line-height:1;
   color:transparent;-webkit-text-stroke:1px rgba(0,210,255,.55)}
 .diy-b h3{color:#FFFFFF;font-size:20px;font-weight:800;line-height:1.25;margin-bottom:9px}
@@ -2245,7 +2247,7 @@ body.admin-bar-showing .nav{top:32px}
   .diy-c:last-child .diy-ph{aspect-ratio:16/10}
   .diy-c:hover{transform:none}
   .diy-b{padding:18px 20px 22px}
-  .diy-n{font-size:32px;top:-28px;inset-inline-end:20px}
+  .diy-n{font-size:32px;top:-28px;inset-inline-start:20px}
   .diy-b h3{font-size:18.5px}
   .diy-b>p{font-size:14.5px}
 
