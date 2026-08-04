@@ -2266,122 +2266,103 @@ body.admin-bar-showing .nav{top:32px}
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   AUDIENCE — פאנלים נעוצים שנעים לרוחב
-   הסקשן נעוץ בזמן שהמסילה מחליקה הצידה. ב-RTL הפאנל הראשון יושב מימין
-   והשאר גולשים שמאלה מחוץ לבמה, ולכן ההזזה חיובית — הפוך מאתר LTR.
+   AUDIENCE — כרטיסים שנערמים בגלילה
+   כל כרטיס יושב באותה מסגרת בדיוק ונכנס מצד שמאל אל מעל הקודם, עם
+   עצירה בסופו. זו לא מסילה שנעה: מסילה נקראת כמו החלפת שקופיות, ומה
+   שנדרש כאן הוא חפיסה שנבנית — ולכן כל כרטיס absolute באותו מקום,
+   ה-z-index עולה, והקודמים נשארים מתחת ומציצים בקצה.
    ═══════════════════════════════════════════════════════════════════════════ */
-.aud-sec{padding-bottom:var(--s7)}
-.audx{position:relative;margin-top:var(--s5)}
-.audx-pin{position:sticky;top:0;height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
-  overflow:hidden;background:var(--primary)}
-/* אין תקרה של max-width: הבמה נושמת לרוחב המסך המלא, כמו בהפניה */
-.audx-stage{position:relative;width:100%;flex:1;overflow:hidden}
-.audx-rail{display:flex;height:100%;will-change:transform}
+.aud-sec{padding:0}
+.audx{position:relative}
+.audx-pin{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-/* grid-template-rows:1fr ולא ברירת המחדל auto — שורה אוטומטית נמדדת לפי
-   התוכן, והתמונה (שגובהה 100% מהשורה) נכנסת ללולאה ומסתיימת נמוכה מהפאנל.
-   שורה של 1fr נותנת לה גובה מוחלט לנשען עליו. */
-/* הכרטיס צר מהמסך בכוונה: כך שניים נראים במקביל, והקודם נשאר מציץ
-   בקצה בזמן שהבא נכנס. כרטיס ברוחב מסך מלא נקרא כמו החלפת שקופיות
-   ומאבד את תחושת ההיערמות.                                          */
-.ap{flex:0 0 clamp(560px,60vw,900px);height:100%;
-  display:grid;grid-template-columns:1.2fr .8fr;
-  grid-template-rows:1fr;align-items:stretch;position:relative;
-  border-inline-start:1px solid rgba(255,255,255,.07);
-  transition:opacity .5s var(--e-io)}
-.ap.dim{opacity:.68}
+.audx-stage{position:relative;width:min(1240px,92vw);height:min(660px,72vh)}
+.audx-rail{position:absolute;inset:0}
+
+.ap{position:absolute;inset:0;overflow:hidden;border-radius:30px;
+  display:grid;grid-template-columns:1.02fr .98fr;grid-template-rows:1fr;
+  background:linear-gradient(165deg,#132447 0%,var(--primary) 58%,#050B1C 100%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 40px 90px -40px rgba(8,14,34,.75);
+  will-change:transform;transform:translate3d(-108%,0,0)}
+
 .ap-copy{display:flex;flex-direction:column;justify-content:center;min-height:0;
-  padding:0 clamp(24px,3vw,54px);position:relative;z-index:1}
+  padding:0 clamp(28px,4vw,64px);position:relative;z-index:1}
 .ap-eye{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
-  font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:800;
-  letter-spacing:.16em;color:var(--accent);margin-bottom:18px}
+  font-family:'Heebo',sans-serif;font-size:12px;font-weight:800;
+  letter-spacing:.16em;color:var(--accent);margin-bottom:14px}
 .ap-eye::before{content:"";width:7px;height:7px;background:var(--accent);
   transform:rotate(45deg);flex:0 0 auto}
-.ap-n{font-family:'Heebo',sans-serif;font-size:clamp(50px,4.4vw,76px);font-weight:900;
-  line-height:.9;color:#FFFFFF;opacity:.16;margin-bottom:6px}
-.ap h3{color:#FFFFFF;font-size:clamp(24px,2.3vw,36px);font-weight:900;
-  line-height:1.1;margin-bottom:10px}
-.ap-sub{color:var(--accent);font-size:clamp(14.5px,1.1vw,17px);font-weight:700;
+.ap-n{font-family:'Heebo',sans-serif;font-size:clamp(44px,4vw,68px);font-weight:900;
+  line-height:.9;color:#FFFFFF;opacity:.14;margin-bottom:4px}
+.ap h3{color:#FFFFFF;font-size:clamp(24px,2.4vw,38px);font-weight:900;
+  line-height:1.12;margin-bottom:8px}
+.ap-sub{color:var(--accent);font-size:clamp(14.5px,1.15vw,17.5px);font-weight:700;
   margin-bottom:14px}
-.ap-copy>p:not(.ap-sub){color:var(--lite-70);font-size:clamp(14.5px,1.02vw,16px);
-  line-height:1.65;max-width:38ch;margin-bottom:18px}
-.ap-l{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px}
+.ap-copy>p:not(.ap-sub){color:var(--lite-70);font-size:clamp(14.5px,1.05vw,16.5px);
+  line-height:1.68;max-width:40ch;margin-bottom:18px}
+.ap-l{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:9px}
 .ap-l li{position:relative;padding-inline-start:20px;color:var(--lite-70);
-  font-size:14px;line-height:1.45;font-weight:500}
+  font-size:14.5px;line-height:1.45;font-weight:500}
 .ap-l li::before{content:"";position:absolute;inset-inline-start:0;top:.5em;
   width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
 .ap-copy .btn{align-self:flex-start}
 
+/* התמונה נקייה: ריכוך רק בקצה שנוגע בטקסט, ולא שכבת כהות על כל השטח —
+   בגרסה הקודמת האפלה בלעה את התמונה ולא נשאר מה לראות. */
+.ap-ph{position:relative;margin:0;overflow:hidden;min-height:0;height:100%}
+.ap-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ap-ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(270deg,rgba(10,17,40,0) 74%,rgba(10,17,40,.5) 94%,rgba(10,17,40,.78) 100%)}
+
 .ap-intro{grid-template-columns:1fr}
-.ap-intro .ap-copy{padding-inline:clamp(28px,5vw,84px)}
-.ap-intro h2{color:#FFFFFF;font-size:clamp(28px,2.9vw,42px);font-weight:900;
+.ap-intro .ap-copy{padding-inline:clamp(32px,6vw,110px);align-items:flex-start}
+.ap-intro h2{color:#FFFFFF;font-size:clamp(30px,3.2vw,48px);font-weight:900;
   line-height:1.12;margin-bottom:16px}
-.ap-intro p{color:var(--lite-70);font-size:clamp(14.5px,1.05vw,16.5px);line-height:1.68;
-  max-width:36ch;margin-bottom:24px}
-.ap-hint{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+.ap-intro p{color:var(--lite-70);font-size:clamp(15px,1.15vw,18px);line-height:1.68;
+  max-width:44ch;margin-bottom:26px}
+.ap-hint{display:inline-flex;align-items:center;gap:10px;
   font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
   letter-spacing:.06em;color:var(--accent)}
 .ap-hint::after{content:"";width:34px;height:1px;background:var(--accent);opacity:.6}
 
-.ap-ph{position:relative;margin:0;overflow:hidden;min-height:0;height:100%}
-.ap-ph img{width:100%;height:100%;object-fit:cover;display:block;
-  transform:scale(1.08);will-change:transform}
-/* מעבר רך אל הצד הכהה — בלי זה נוצר קו חיתוך חד באמצע הפאנל */
-.ap-ph::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(270deg,rgba(10,17,40,0) 55%,rgba(10,17,40,.75) 88%,var(--primary) 100%)}
-
 .audx-dots{list-style:none;display:flex;gap:26px;justify-content:center;
-  padding:0 20px 26px;margin:0;flex:0 0 auto}
+  padding:0;margin:24px 0 0}
 .audx-dots li{display:flex;align-items:center;gap:9px;
   font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
-  color:var(--lite-40);transition:color .4s var(--e-io)}
-.audx-dots li i{width:26px;height:2px;border-radius:2px;background:var(--lite-16);
+  color:var(--g-40);transition:color .4s var(--e-io)}
+.audx-dots li i{width:26px;height:2px;border-radius:2px;background:var(--g-10);
   transition:background .4s var(--e-io),width .4s var(--e)}
-.audx-dots li.on{color:#FFFFFF}
-.audx-dots li.on i{width:44px;background:var(--accent)}
+.audx-dots li.on{color:var(--primary)}
+.audx-dots li.on i{width:44px;background:var(--btn)}
 
 @media(max-width:1023px){
-  .ap{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
-  .ap-ph{order:-1;min-height:0;height:100%}
-  .ap-ph::after{background:linear-gradient(0deg,var(--primary) 2%,rgba(10,17,40,.7) 26%,rgba(10,17,40,0) 62%)}
-  .ap-copy{padding:0 24px 22px;justify-content:flex-start;margin-top:-56px}
-  .ap-n{font-size:56px}
-  .ap-l{margin-bottom:20px}
+  .audx-stage{width:94vw;height:min(600px,70vh)}
+  .ap{grid-template-columns:1fr;grid-template-rows:38% 62%;border-radius:24px}
+  .ap-ph{order:-1}
+  .ap-ph::after{background:linear-gradient(0deg,rgba(10,17,40,.92) 2%,rgba(10,17,40,.3) 42%,rgba(10,17,40,0) 74%)}
+  .ap-copy{padding:16px clamp(20px,4vw,34px) 0;justify-content:flex-start;margin-top:-30px}
+  .ap-intro{grid-template-rows:1fr}
+  .ap-intro .ap-copy{margin-top:0;justify-content:center;padding-inline:26px}
+  .ap-n{font-size:40px}
 }
 
-/* מתחת ל-760px אין נעיצה: מסלול אופקי באצבע על מסך קטן נלחם בגלילה
-   האנכית של העמוד. הפאנלים נערמים אנכית ונקראים כרגיל.            */
+/* במובייל אין נעיצה: חפיסה שנערמת באצבע נלחמת בגלילה האנכית של העמוד */
 @media(max-width:760px){
-  .audx{margin-top:var(--s4)}
-  .audx-pin{position:static;height:auto;overflow:visible;background:transparent}
-  .audx-stage{overflow:visible}
-  .audx-rail{display:grid;gap:16px;height:auto;transform:none !important}
-  .ap{flex:none;height:auto;border-radius:var(--r-l);overflow:hidden;border-inline-start:0;
-    opacity:1 !important;
-    background:linear-gradient(168deg,#132447 0%,var(--primary) 60%,#050B1C 100%);
-    border:1px solid rgba(255,255,255,.09);
-    box-shadow:0 20px 46px -26px rgba(8,14,34,.5);
-    grid-template-columns:1fr;grid-template-rows:auto auto}
-  .ap-intro{background:none;border:0;box-shadow:none;padding:0 4px 4px}
-  .ap-intro .ap-copy{padding:0;margin-top:0;text-align:center}
-  .ap-intro h2{font-size:26px}
-  .ap-intro p{font-size:14.5px;margin-inline:auto;margin-bottom:0}
-  .ap-hint{display:none}
-  .ap-ph{aspect-ratio:16/10}
-  .ap-ph img{transform:none}
-  .ap-ph::after{background:linear-gradient(0deg,#0A1128 2%,rgba(10,17,40,.55) 40%,rgba(10,17,40,0) 78%)}
+  .audx-pin{position:static;height:auto;overflow:visible;background:transparent;display:block}
+  .audx-stage{position:static;width:auto;height:auto}
+  .audx-rail{position:static;display:grid;gap:16px}
+  .ap{position:static;transform:none !important;grid-template-rows:auto auto;
+    border-radius:var(--r-l);box-shadow:0 20px 46px -26px rgba(8,14,34,.5)}
+  .ap-ph{aspect-ratio:16/10;height:auto}
   .ap-copy{padding:0 20px 24px;margin-top:-40px}
-  .ap-n{font-size:44px;margin-bottom:2px}
-  .ap h3{font-size:24px}
-  .ap-sub{font-size:15px}
-  .ap-copy>p:not(.ap-sub){font-size:14.5px;margin-bottom:16px}
-  .ap-l li{font-size:14px}
+  .ap-intro{background:none;border:0;box-shadow:none}
+  .ap-intro .ap-copy{padding:0 4px;margin-top:0;text-align:center;align-items:center}
+  .ap-intro h2{font-size:26px}
+  .ap-intro p{font-size:14.5px;margin-bottom:0}
+  .ap-hint{display:none}
+  .ap h3{font-size:22px}
   .ap-copy .btn{width:100%;justify-content:center}
   .audx-dots{display:none}
-}
-
-@media(prefers-reduced-motion:reduce){
-  .audx-rail{transition:none}
-  .ap-ph img{transform:none !important}
 }

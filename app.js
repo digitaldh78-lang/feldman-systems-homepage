@@ -469,32 +469,29 @@
     drawSteps();
   }
 
-  /* ── פאנלי "למי זה מיועד": מסלול אופקי נעוץ ──
-     גובה המסלול נקבע מ-JS ולא מ-CSS: הוא חייב להיגזר ממספר הפאנלים
-     בפועל, אחרת הוספת פאנל רביעי תשבור את הקצב בלי שאף אחד ישים לב. */
+  /* ── "למי זה מיועד": חפיסת כרטיסים שנערמת בגלילה ──
+     כל כרטיס נכנס מצד שמאל אל מעל הקודם ואז עוצר. שני שלישים מהמקטע
+     הם התנועה והשליש האחרון הוא העצירה — בלי ההשהיה הזו זה מרגיש
+     כמו גלילה רציפה ולא כמו כרטיס שנח במקומו.                        */
   var audTrack = document.getElementById('audTrack');
   var audRail  = document.getElementById('audRail');
   if (audTrack && audRail) {
     unclipAncestors(audTrack);
-    var aPanels = Array.prototype.slice.call(audRail.querySelectorAll('.ap'));
-    var aDots   = Array.prototype.slice.call(document.querySelectorAll('#audDots li'));
-    var aImgs   = Array.prototype.slice.call(audRail.querySelectorAll('.ap-ph img'));
-    var aMq     = window.matchMedia('(min-width:761px)');
-    var aTick   = false, aCur = -1;
+    var aCards = Array.prototype.slice.call(audRail.querySelectorAll('.ap'));
+    var aDots  = Array.prototype.slice.call(document.querySelectorAll('#audDots li'));
+    var aMq    = window.matchMedia('(min-width:761px)');
+    var aTick  = false, aCur = -1;
+
+    aCards.forEach(function (el, i) { el.style.zIndex = String(i + 1); });
 
     function audMeasure() {
       if (!aMq.matches) {
         audTrack.style.height = '';
-        audRail.style.transform = '';
-        aPanels.forEach(function (el) { el.classList.remove('dim'); });
+        aCards.forEach(function (el) { el.style.transform = ''; });
         return;
       }
-      /* אורך המסלול נגזר ממה שבאמת צריך לגלול לרוחב, ועוד מסך אחד
-         לעצירה בסוף. יחס 1:1 בין פיקסל גלילה לפיקסל תזוזה מרגיש טבעי;
-         נוסחה שמבוססת על מספר הכרטיסים נשברת ברגע שרוחבם משתנה. */
-      var stage = audRail.parentElement.clientWidth || window.innerWidth;
-      var span  = Math.max(0, audRail.scrollWidth - stage);
-      audTrack.style.height = (window.innerHeight + span) + 'px';
+      /* מסך לכל כרטיס שנכנס, ועוד מסך לעצירה על האחרון */
+      audTrack.style.height = (aCards.length * 100) + 'vh';
     }
 
     function audDraw() {
@@ -506,33 +503,40 @@
       if (scrollable <= 0) return;
       var p = Math.max(0, Math.min(1, -r.top / scrollable));
 
-      /* המרחק נגזר מרוחב המסילה בפועל ולא ממספר הפאנלים: הכרטיסים צרים
-         מהמסך, ולכן "מסך לכל כרטיס" היה מגלגל הרבה יותר מדי.
-         חיובי ב-RTL — הכרטיס הראשון מימין, הבאים נכנסים משמאל. */
-      var stage = audRail.parentElement.clientWidth;
-      var span  = Math.max(0, audRail.scrollWidth - stage);
-      audRail.style.transform = 'translateX(' + (p * span).toFixed(2) + 'px)';
+      var steps = aCards.length - 1;          /* כמה כרטיסים נכנסים */
+      var pos   = p * steps;                  /* 0..steps */
+      var top   = 0;
 
-      /* מי הכרטיס שנמצא כרגע במרכז הבמה */
-      var seen = 0, centre = p * span + stage / 2, idx = 0;
-      for (var i = 0; i < aPanels.length; i++) {
-        var w = aPanels[i].offsetWidth;
-        if (centre >= seen && centre < seen + w) { idx = i; break; }
-        seen += w;
-        idx = i;
-      }
-
-      /* פרלקסה קלה בתמונות — נעות נגד כיוון המסילה וקונות עומק */
-      aImgs.forEach(function (img, i) {
-        var d = Math.max(-1, Math.min(1, (idx - (i + 1))));
-        img.style.transform = 'scale(1.08) translateX(' + (d * -4).toFixed(2) + '%)';
+      aCards.forEach(function (el, i) {
+        var t;
+        if (i === 0) {
+          t = 1;                              /* כרטיס הפתיחה תמיד במקומו */
+        } else {
+          /* 0 → מחוץ למסך משמאל, 1 → נח במקומו. הכפלה ב-1.5 מסיימת
+             את התנועה בשני שלישים מהמקטע ומשאירה שליש לעצירה. */
+          t = Math.max(0, Math.min(1, (pos - (i - 1)) * 1.5));
+        }
+        /* easeOutCubic — נחיתה רכה במקום עצירה חדה */
+        var e = 1 - Math.pow(1 - t, 3);
+        el.style.transform = 'translate3d(' + ((e - 1) * 108).toFixed(2) + '%,0,0)';
+        if (t > 0.5) { top = i; }
       });
 
-      if (idx !== aCur) {
-        aCur = idx;
-        aPanels.forEach(function (el, i) { el.classList.toggle('dim', i !== idx); });
+      /* הכרטיסים שמתחת נסוגים מעט — כך נראית חפיסה ולא כרטיס בודד */
+      aCards.forEach(function (el, i) {
+        var depth = top - i;
+        if (depth > 0) {
+          var k = Math.min(depth, 2);
+          el.style.filter = 'brightness(' + (1 - k * 0.18).toFixed(2) + ')';
+        } else {
+          el.style.filter = '';
+        }
+      });
+
+      if (top !== aCur) {
+        aCur = top;
         /* כרטיס הפתיחה אינו קהל — האינדיקטור מתחיל ממנו והלאה */
-        aDots.forEach(function (d, i) { d.classList.toggle('on', i === idx - 1); });
+        aDots.forEach(function (d, i) { d.classList.toggle('on', i === top - 1); });
       }
     }
 
