@@ -1944,16 +1944,16 @@ body.admin-bar-showing .nav{top:32px}
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .hub-wrap{position:relative}
-.hub-pin{position:sticky;top:calc(var(--nav-h) + 18px)}
+.hub-pin{position:sticky;top:calc(var(--nav-h) + 18px);
+  --p:0}                       /* התקדמות הגלילה, 0→1, נכתב מ-JS.
+     יושב כאן ולא על הבמה כדי שגם מד ההתקדמות שמתחת יירש אותו. */
 
 .hub-stage{
   position:relative;width:100%;max-width:1180px;margin-inline:auto;
   aspect-ratio:16/10;
   /* הכותרת נעוצה יחד עם הבמה, ולכן הבמה חייבת להשאיר לה מקום —
      בלי התקרה הזו שורת הכרטיסים העליונה נחתכת מתחת להדר. */
-  max-height:calc(100vh - var(--nav-h) - 268px);
-  --p:0;                       /* התקדמות הגלילה, 0→1, נכתב מ-JS */
-}
+  max-height:calc(100vh - var(--nav-h) - 268px)}
 
 /* ── הקווים ── */
 .hub-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
@@ -1973,7 +1973,7 @@ body.admin-bar-showing .nav{top:32px}
    בלעדיהן זה נקרא כקופסה שחורה עם לוגו — וזה בדיוק מה שקרה בגרסה
    הראשונה.                                                              */
 .hub-core{
-  width:150px;height:150px;border-radius:34px;
+  width:194px;height:194px;border-radius:42px;
   display:grid;place-items:center;
   background:
     linear-gradient(90deg,transparent 22%,var(--accent) 22% 78%,transparent 78%)
@@ -1990,13 +1990,26 @@ body.admin-bar-showing .nav{top:32px}
   content:"";position:absolute;inset:-26px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,var(--a-14) 0%,transparent 68%)}
 .hub-core::after{
-  content:"";position:absolute;inset:-4px;border-radius:38px;pointer-events:none;
+  content:"";position:absolute;inset:-4px;border-radius:46px;pointer-events:none;
   border:1px solid var(--a-28);opacity:.55;
   animation:hubBreathe 3.6s var(--e-io) infinite}
 @keyframes hubBreathe{
   0%,100%{transform:scale(1);opacity:.5}
   50%{transform:scale(1.045);opacity:.16}}
-.hub-core .lg{width:96px;height:auto;color:#FFFFFF;position:relative;z-index:1}
+
+/* תוכן המארז: לוגו, קו מפריד, ושורת Home Assistant.
+   ה-HA יושב כאן ולא כצומת חיצוני כי הוא לא מכשיר שמתחבר לרכזת —
+   הוא התוכנה שרצה עליה, וזה ההבדל שכל הסקשן מנסה להסביר. */
+.hub-core-in{position:relative;z-index:1;display:flex;flex-direction:column;
+  align-items:center;gap:11px;padding-inline:14px}
+.hub-core .lg{width:118px;height:auto;color:#FFFFFF}
+.hub-core-rule{width:64px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--a-28) 22% 78%,transparent)}
+.hub-core-ha{display:flex;align-items:center;gap:7px}
+.hub-core-ha svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;color:var(--accent);flex:0 0 auto}
+.hub-core-ha b{font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
+  color:#FFFFFF;letter-spacing:.01em;white-space:nowrap;direction:ltr}
 /* הכיתוב מעוגן לליבה עצמה. בגרסה הקודמת הליבה איבדה position במובייל,
    העיגון "ברח" לאב הקדמון הקרוב, והכיתוב נחת בתחתית כל העץ.            */
 .hub-core-cap{
@@ -2038,12 +2051,18 @@ body.admin-bar-showing .nav{top:32px}
 .hub-dev em{display:block;font-style:normal;font-size:11.5px;line-height:1.45;
   color:var(--text);opacity:.82;margin-top:5px}
 
-/* ── מד התקדמות דק מתחת לבמה ── */
-.hub-bar{position:relative;height:3px;width:200px;margin:18px auto 0;
-  border-radius:3px;background:var(--g-10);overflow:hidden}
+/* ── מד התקדמות דק מתחת לבמה ──
+   overflow גלוי כדי שהכיתוב יוכל לשבת מתחת; המילוי מעוגל בעצמו
+   ולכן אין צורך לחתוך אותו. הכיתוב דוהה ככל שהמערכת נפרשת. */
+.hub-bar{position:relative;height:3px;width:200px;margin:18px auto 34px;
+  border-radius:3px;background:var(--g-10)}
 .hub-bar i{position:absolute;inset:0;transform-origin:left center;
   transform:scaleX(var(--p,0));border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--btn))}
+.hub-bar-cap{position:absolute;top:13px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:'Heebo',sans-serif;font-size:11.5px;font-weight:600;
+  letter-spacing:.04em;color:var(--text);opacity:calc(.72 - var(--p,0) * .95);
+  pointer-events:none}
 
 .hub-head{max-width:720px;margin:0 auto 26px;text-align:center}
 .hub-pin .hub-head h2{font-size:clamp(26px,2.4vw,38px);line-height:1.18;margin-bottom:8px}
@@ -2058,17 +2077,23 @@ body.admin-bar-showing .nav{top:32px}
 
   .hub-stage{aspect-ratio:1/1;max-width:360px;max-height:none;margin-bottom:0}
 
-  .hub-core{width:104px;height:104px;border-radius:26px}
-  .hub-core::after{inset:-3px;border-radius:29px}
+  .hub-core{width:126px;height:126px;border-radius:30px}
+  .hub-core::after{inset:-3px;border-radius:33px}
   .hub-core::before{inset:-18px}
-  .hub-core .lg{width:66px}
+  .hub-core-in{gap:7px;padding-inline:8px}
+  .hub-core .lg{width:78px}
+  .hub-core-rule{width:44px}
+  .hub-core-ha svg{width:14px;height:14px}
+  .hub-core-ha b{font-size:9.5px}
   .hub-core-cap{bottom:-22px;font-size:10.5px;letter-spacing:.06em}
 
-  .hub-plat{width:60px;height:60px;border-radius:19px;
+  /* שישה צמתים במשושה על במה של 345px — הריבוע קטן מ-60 כדי
+     שהתוויות של הצמתים הסמוכים לא ידרכו זו על זו. */
+  .hub-plat{width:54px;height:54px;border-radius:17px;
     box-shadow:0 10px 20px -10px var(--btn-45),inset 0 1px 0 rgba(255,255,255,.45)}
-  .hub-plat svg{width:24px;height:24px}
-  .hub-plat b{top:calc(100% + 7px);font-size:10.5px;white-space:normal;
-    width:104px;text-align:center;line-height:1.2}
+  .hub-plat svg{width:22px;height:22px}
+  .hub-plat b{top:calc(100% + 6px);font-size:9.5px;white-space:normal;
+    width:88px;text-align:center;line-height:1.18}
   .hub-plat:hover{transform:translate(-50%,-50%)}
 
   .hub-svg path{stroke-width:1.4}
@@ -2085,13 +2110,14 @@ body.admin-bar-showing .nav{top:32px}
   .hub-grid .hub-dev b{font-size:12.5px;line-height:1.25}
   .hub-grid .hub-dev em{font-size:11px;line-height:1.4;margin-top:3px}
 
-  .hub-bar{width:150px;margin-top:16px}
+  .hub-bar{width:150px;margin:16px auto 30px}
+  .hub-bar-cap{font-size:10.5px}
 }
 
 @media(max-width:400px){
   .hub-stage{max-width:330px}
   .hub-grid{max-width:330px}
-  .hub-plat b{width:92px;font-size:10px}
+  .hub-plat b{width:80px;font-size:9px}
 }
 
 @media(prefers-reduced-motion:reduce){

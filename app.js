@@ -844,26 +844,35 @@
     clima: '<path d="M3 8h13a3 3 0 1 0-3-3"/><path d="M3 14h16a3 3 0 1 1-3 3"/>',
     motion:'<circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/>',
     cam:   '<path d="M3 7.5h11v9H3z"/><path d="M14 11l7-3.5v9L14 13z"/>',
-    lock:  '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>'
+    lock:  '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+    media: '<rect x="6.2" y="2.6" width="11.6" height="18.8" rx="3.2"/><circle cx="12" cy="14.6" r="3.3"/><circle cx="12" cy="6.9" r="1.25" fill="currentColor" stroke="none"/>',
+    shield:'<path d="M12 3.2 5.2 5.9v5.5c0 4.2 2.8 7.5 6.8 9.1 4-1.6 6.8-4.9 6.8-9.1V5.9z"/><path d="M9.3 12.1l1.9 1.9 3.5-3.7"/>',
+    drop:  '<path d="M12 3.3c3.4 4 5.3 6.8 5.3 9.3A5.3 5.3 0 1 1 6.7 12.6c0-2.5 1.9-5.3 5.3-9.3z"/><path d="M12 17.4a3 3 0 0 1-2.6-2.4"/>'
   };
   function svg(d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; }
 
   /* x/y = מיקום המרכז באחוזי הבמה. d* = דסקטופ, m* = מובייל.
-     במובייל הבמה ריבועית והצמתים קטנים, ולכן הרדיוס שונה.        */
+     דסקטופ: שני טורים של שלושה משני צדי הליבה — הציר האופקי צר מדי
+     לטבעת אמיתית, וטבעת דחוקה גרמה לכרטיסים לדרוך על הצמתים.
+     מובייל: הבמה ריבועית, ולכן שם דווקא משושה עובד.                */
   var PLATFORMS = [
-    { id:'ha',    dx:29,   dy:26.5, mx:23, my:23, icon:I.ha,    label:'Home&nbsp;Assistant' },
-    { id:'parts', dx:71,   dy:26.5, mx:77, my:23, icon:I.parts, label:'בקרים ורכיבים' },
-    { id:'net',   dx:24.5, dy:73,   mx:23, my:77, icon:I.net,   label:'רשת ותקשורת' },
-    { id:'scene', dx:75.5, dy:73,   mx:77, my:77, icon:I.scene, label:'סצנות ואוטומציות' }
+    { id:'media',  dx:25, dy:16, mx:33.5, my:21, icon:I.media,  label:'מולטימדיה ואודיו' },
+    { id:'parts',  dx:75, dy:16, mx:66.5, my:21, icon:I.parts,  label:'בקרים ורכיבים' },
+    { id:'net',    dx:25, dy:50, mx:17,   my:50, icon:I.net,    label:'רשת ותקשורת' },
+    { id:'secure', dx:75, dy:50, mx:83,   my:50, icon:I.shield, label:'אבטחה והתראות' },
+    { id:'garden', dx:25, dy:84, mx:33.5, my:79, icon:I.drop,   label:'חוץ וגינה' },
+    { id:'scene',  dx:75, dy:84, mx:66.5, my:79, icon:I.scene,  label:'סצנות ואוטומציות' }
   ];
 
+  /* כרטיס הסבר אחד לכל צומת — לא רשימת מכשירים. הצומת אומר "מה זה",
+     הכרטיס אומר "מה זה נותן ללקוח".                                  */
   var DEVICES = [
-    { p:'ha',    dx:9.5,  dy:11, icon:I.bulb,   t:'תאורה אדריכלית',  d:'עמעום וגוני לבן לפי שעה' },
-    { p:'parts', dx:90.5, dy:11, icon:I.blind,  t:'תריסים וּוילונות', d:'נסגרים בשיא החום' },
-    { p:'parts', dx:93,   dy:41, icon:I.clima,  t:'אקלים ומיזוג',     d:'מגיב לנוכחות בחדר' },
-    { p:'net',   dx:8,    dy:44, icon:I.motion, t:'חיישני נוכחות',    d:'זיהוי מקומי, בלי ענן' },
-    { p:'net',   dx:11,   dy:90, icon:I.cam,    t:'מצלמות IP',        d:'הקלטה בנכס, בלי מנוי' },
-    { p:'scene', dx:89,   dy:90, icon:I.lock,   t:'בקרת כניסה',       d:'קוד לאורח, יומן כניסות' }
+    { p:'media',  dx:9.5,  dy:16, icon:I.media,  t:'אודיו בכל חדר',      d:'רב־אזורי, קולנוע ביתי ואינטרקום וידאו' },
+    { p:'parts',  dx:90.5, dy:16, icon:I.blind,  t:'כל יצרן, ממשק אחד',  d:'תאורה, תריסים ומיזוג באותה מערכת' },
+    { p:'net',    dx:9.5,  dy:50, icon:I.net,    t:'רשת שלא נופלת',      d:'VLAN ייעודי, כיסוי מלא ו־PoE לכל נקודה' },
+    { p:'secure', dx:90.5, dy:50, icon:I.cam,    t:'יודעים מה קורה בנכס', d:'אזעקה, מצלמות IP והתראה לנייד' },
+    { p:'garden', dx:9.5,  dy:84, icon:I.drop,   t:'גם מחוץ לקירות',     d:'השקיה, בריכה, תאורת חוץ ושער' },
+    { p:'scene',  dx:90.5, dy:84, icon:I.scene,  t:'הבית פועל לבד',      d:'בוקר, יציאה ולילה — לפי שעה ונוכחות' }
   ];
 
   /* ── DOM ── */
@@ -887,8 +896,15 @@
   coreEl.className = 'hub-node hub-core';
   coreEl.style.left = '50%';
   coreEl.style.top  = '50%';
+  /* Home Assistant יושב בתוך המארז ולא לצידו — הוא לא עוד מכשיר
+     שמתחבר לרכזת, הוא התוכנה שרצה עליה. הלוגו למעלה, קו מפריד,
+     ומתחתיו האייקון והשם.                                          */
   coreEl.innerHTML =
-    '<svg class="lg" viewBox="0 0 1069.703 145.19" role="img" aria-label="פלדמן מערכות"><use href="#fs-logo"></use></svg>' +
+    '<span class="hub-core-in">' +
+      '<svg class="lg" viewBox="0 0 1069.703 145.19" role="img" aria-label="פלדמן מערכות"><use href="#fs-logo"></use></svg>' +
+      '<span class="hub-core-rule"></span>' +
+      '<span class="hub-core-ha">' + svg(I.ha) + '<b>Home Assistant</b></span>' +
+    '</span>' +
     '<span class="hub-core-cap">מחשב הבקרה</span>';
   stage.appendChild(coreEl);
 
@@ -909,9 +925,12 @@
     d.el = el;
   });
 
+  /* הסרגל הוא מד התקדמות של הגלילה הנעוצה. בלי תווית הוא נקרא כקו
+     אפור אקראי, ולכן יש מתחתיו כיתוב שמסביר מה קורה — והוא דוהה
+     ברגע שהמערכת נפרשה במלואה.                                     */
   var bar = document.createElement('div');
   bar.className = 'hub-bar';
-  bar.innerHTML = '<i></i>';
+  bar.innerHTML = '<i></i><span class="hub-bar-cap">גללו — המערכת נפרשת</span>';
 
   pin.appendChild(stage);
   pin.appendChild(grid);
@@ -1005,7 +1024,9 @@
   function seg(p, a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
 
   function draw(p) {
-    stage.style.setProperty('--p', p);
+    /* על ה-pin ולא על ה-stage: מד ההתקדמות הוא אח של הבמה, ומשתנה
+       שנכתב על הבמה לא מגיע אליו בירושה — ולכן הסרגל נשאר תקוע על 0. */
+    pin.style.setProperty('--p', p);
     var desk = mq.matches;
 
     paths.forEach(function (o) {
