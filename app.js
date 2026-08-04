@@ -518,7 +518,10 @@
         }
         /* easeOutCubic — נחיתה רכה במקום עצירה חדה */
         var e = 1 - Math.pow(1 - t, 3);
-        el.style.transform = 'translate3d(' + ((e - 1) * 108).toFixed(2) + '%,0,0)';
+        el.style.transform = 'translate3d(' + ((e - 1) * 125).toFixed(2) + '%,0,0)';
+        /* כרטיס שטרם התחיל לזוז חייב להיות שקוף לגמרי: אחרת העמוק
+           בערימה מציץ בקצה השמאלי, ונראה כאילו 03 הגיע ראשון. */
+        el.style.opacity = (i === 0 || t > 0) ? '1' : '0';
         if (t > 0.5) { top = i; }
       });
 

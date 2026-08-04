@@ -2285,7 +2285,9 @@ body.admin-bar-showing .nav{top:32px}
   background:linear-gradient(165deg,#132447 0%,var(--primary) 58%,#050B1C 100%);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 40px 90px -40px rgba(8,14,34,.75);
-  will-change:transform;transform:translate3d(-108%,0,0)}
+  will-change:transform,opacity;transform:translate3d(-125%,0,0);
+  opacity:0}
+.ap-intro{opacity:1}
 
 .ap-copy{display:flex;flex-direction:column;justify-content:center;min-height:0;
   padding:0 clamp(28px,4vw,64px);position:relative;z-index:1}
@@ -2316,8 +2318,7 @@ body.admin-bar-showing .nav{top:32px}
 .ap-ph::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(270deg,rgba(10,17,40,0) 74%,rgba(10,17,40,.5) 94%,rgba(10,17,40,.78) 100%)}
 
-.ap-intro{grid-template-columns:1fr}
-.ap-intro .ap-copy{padding-inline:clamp(32px,6vw,110px);align-items:flex-start}
+.ap-intro .ap-copy{align-items:flex-start}
 .ap-intro h2{color:#FFFFFF;font-size:clamp(30px,3.2vw,48px);font-weight:900;
   line-height:1.12;margin-bottom:16px}
 .ap-intro p{color:var(--lite-70);font-size:clamp(15px,1.15vw,18px);line-height:1.68;
@@ -2343,8 +2344,7 @@ body.admin-bar-showing .nav{top:32px}
   .ap-ph{order:-1}
   .ap-ph::after{background:linear-gradient(0deg,rgba(10,17,40,.92) 2%,rgba(10,17,40,.3) 42%,rgba(10,17,40,0) 74%)}
   .ap-copy{padding:16px clamp(20px,4vw,34px) 0;justify-content:flex-start;margin-top:-30px}
-  .ap-intro{grid-template-rows:1fr}
-  .ap-intro .ap-copy{margin-top:0;justify-content:center;padding-inline:26px}
+  .ap-intro .ap-copy{justify-content:flex-start}
   .ap-n{font-size:40px}
 }
 
@@ -2357,8 +2357,7 @@ body.admin-bar-showing .nav{top:32px}
     border-radius:var(--r-l);box-shadow:0 20px 46px -26px rgba(8,14,34,.5)}
   .ap-ph{aspect-ratio:16/10;height:auto}
   .ap-copy{padding:0 20px 24px;margin-top:-40px}
-  .ap-intro{background:none;border:0;box-shadow:none}
-  .ap-intro .ap-copy{padding:0 4px;margin-top:0;text-align:center;align-items:center}
+  .ap-intro .ap-copy{align-items:flex-start}
   .ap-intro h2{font-size:26px}
   .ap-intro p{font-size:14.5px;margin-bottom:0}
   .ap-hint{display:none}
